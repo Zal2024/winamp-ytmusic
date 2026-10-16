@@ -2609,26 +2609,29 @@ html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="rep"]::after
   z-index: 1 !important;
 }
 
-/* 3. SHUFFLE BUTTON */
+/* 3. SHUFFLE BUTTON (Authentic Winamp 3x5 Bitmap Font Sprite) */
 html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"] {
-  width: 54px !important;
-  min-width: 54px !important;
+  width: 47px !important;
+  min-width: 47px !important;
 }
 html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"]::after {
-  content: "SHUFFLE" !important;
-  font-family: var(--wa-font) !important;
-  font-size: 8px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.1px !important;
-  color: #2f374d !important;
-  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7) !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: flex-end !important;
-  height: 100% !important;
-  padding-right: 5px !important;
-  margin-left: 0 !important;
+  content: "" !important;
+  position: absolute !important;
+  top: 50% !important;
+  right: 5px !important;
+  transform: translateY(-50%) !important;
+  width: 28px !important;
+  height: 6px !important;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2028%206%27%20shape-rendering%3D%27crispEdges%27%3E%3Cpath%20d%3D%27M1%2C1h1v1h-1zM2%2C1h1v1h-1zM3%2C1h1v1h-1zM1%2C2h1v1h-1zM1%2C3h1v1h-1zM2%2C3h1v1h-1zM3%2C3h1v1h-1zM3%2C4h1v1h-1zM1%2C5h1v1h-1zM2%2C5h1v1h-1zM3%2C5h1v1h-1zM5%2C1h1v1h-1zM7%2C1h1v1h-1zM5%2C2h1v1h-1zM7%2C2h1v1h-1zM5%2C3h1v1h-1zM6%2C3h1v1h-1zM7%2C3h1v1h-1zM5%2C4h1v1h-1zM7%2C4h1v1h-1zM5%2C5h1v1h-1zM7%2C5h1v1h-1zM9%2C1h1v1h-1zM11%2C1h1v1h-1zM9%2C2h1v1h-1zM11%2C2h1v1h-1zM9%2C3h1v1h-1zM11%2C3h1v1h-1zM9%2C4h1v1h-1zM11%2C4h1v1h-1zM9%2C5h1v1h-1zM10%2C5h1v1h-1zM11%2C5h1v1h-1zM13%2C1h1v1h-1zM14%2C1h1v1h-1zM15%2C1h1v1h-1zM13%2C2h1v1h-1zM13%2C3h1v1h-1zM14%2C3h1v1h-1zM15%2C3h1v1h-1zM13%2C4h1v1h-1zM13%2C5h1v1h-1zM17%2C1h1v1h-1zM18%2C1h1v1h-1zM19%2C1h1v1h-1zM17%2C2h1v1h-1zM17%2C3h1v1h-1zM18%2C3h1v1h-1zM19%2C3h1v1h-1zM17%2C4h1v1h-1zM17%2C5h1v1h-1zM21%2C1h1v1h-1zM21%2C2h1v1h-1zM21%2C3h1v1h-1zM21%2C4h1v1h-1zM21%2C5h1v1h-1zM22%2C5h1v1h-1zM23%2C5h1v1h-1zM25%2C1h1v1h-1zM26%2C1h1v1h-1zM27%2C1h1v1h-1zM25%2C2h1v1h-1zM25%2C3h1v1h-1zM26%2C3h1v1h-1zM27%2C3h1v1h-1zM25%2C4h1v1h-1zM25%2C5h1v1h-1zM26%2C5h1v1h-1zM27%2C5h1v1h-1z%27%20fill%3D%27%2523ffffff%27%20opacity%3D%270.7%27/%3E%3Cpath%20d%3D%27M0%2C0h1v1h-1zM1%2C0h1v1h-1zM2%2C0h1v1h-1zM0%2C1h1v1h-1zM0%2C2h1v1h-1zM1%2C2h1v1h-1zM2%2C2h1v1h-1zM2%2C3h1v1h-1zM0%2C4h1v1h-1zM1%2C4h1v1h-1zM2%2C4h1v1h-1zM4%2C0h1v1h-1zM6%2C0h1v1h-1zM4%2C1h1v1h-1zM6%2C1h1v1h-1zM4%2C2h1v1h-1zM5%2C2h1v1h-1zM6%2C2h1v1h-1zM4%2C3h1v1h-1zM6%2C3h1v1h-1zM4%2C4h1v1h-1zM6%2C4h1v1h-1zM8%2C0h1v1h-1zM10%2C0h1v1h-1zM8%2C1h1v1h-1zM10%2C1h1v1h-1zM8%2C2h1v1h-1zM10%2C2h1v1h-1zM8%2C3h1v1h-1zM10%2C3h1v1h-1zM8%2C4h1v1h-1zM9%2C4h1v1h-1zM10%2C4h1v1h-1zM12%2C0h1v1h-1zM13%2C0h1v1h-1zM14%2C0h1v1h-1zM12%2C1h1v1h-1zM12%2C2h1v1h-1zM13%2C2h1v1h-1zM14%2C2h1v1h-1zM12%2C3h1v1h-1zM12%2C4h1v1h-1zM16%2C0h1v1h-1zM17%2C0h1v1h-1zM18%2C0h1v1h-1zM16%2C1h1v1h-1zM16%2C2h1v1h-1zM17%2C2h1v1h-1zM18%2C2h1v1h-1zM16%2C3h1v1h-1zM16%2C4h1v1h-1zM20%2C0h1v1h-1zM20%2C1h1v1h-1zM20%2C2h1v1h-1zM20%2C3h1v1h-1zM20%2C4h1v1h-1zM21%2C4h1v1h-1zM22%2C4h1v1h-1zM24%2C0h1v1h-1zM25%2C0h1v1h-1zM26%2C0h1v1h-1zM24%2C1h1v1h-1zM24%2C2h1v1h-1zM25%2C2h1v1h-1zM26%2C2h1v1h-1zM24%2C3h1v1h-1zM24%2C4h1v1h-1zM25%2C4h1v1h-1zM26%2C4h1v1h-1z%27%20fill%3D%27%25232f374d%27/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-size: 28px 6px !important;
+  image-rendering: pixelated !important;
   pointer-events: none !important;
+}
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"]:active::after,
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"].is-on::after,
+html.winamp-ytm-on ytmusic-player-bar[data-wa-shuffle="on"] #right-controls [data-wa-btn="shuf"]::after {
+  transform: translate(1px, calc(-50% + 1px)) !important;
 }
 
 /* 4. PLAYER PAGE / QUEUE TOGGLE BUTTON [■ PL] */

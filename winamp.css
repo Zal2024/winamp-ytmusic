@@ -1,0 +1,3783 @@
+/* ============================================================================
+   Winamp 2.x YouTube Music Skin
+   Strictly following the classic Winamp 2.x hardware design specification:
+   - Metaphor: Physical hi-fi component rendered in pixels.
+   - Pixel-perfect: border-radius: 0 everywhere, no soft/blurred shadows,
+     no gradients on shapes. 1px borders and flat color blocks.
+   - Lighting: 1px light highlight on top/left, 1px dark shadow on bottom/right.
+     Inset elements (screens, grooves) reverse this.
+   - Palette: Chassis navy/slate (#222436), silver-gray buttons (#b4b8c4),
+     pure black screens (#000000), LED green (#00e000), olive seek thumb (#c8c090),
+     signature blue playlist selection (#0000c6), olive grip lines (#6b6648).
+   - Typography: Single bitmap pixel font, ALL CAPS, uniform compact sizes.
+   ============================================================================ */
+
+:root,
+:root[data-wa-skin="classic"] {
+  /* Chassis: metallic dark navy/slate */
+  --wa-chassis: #222436;
+  --wa-chassis-dark: #141520;
+  --wa-chassis-bevel-lt: #4c4f6f;
+  --wa-chassis-grad: radial-gradient(ellipse 130% 85% at 50% -15%, #353954 0%, #222436 40%, #151624 75%, #0b0c13 100%);
+  --wa-chassis-topbar: linear-gradient(to bottom, #343750 0%, #222436 45%, #181926 100%);
+  --wa-panel-bg: #11121d;
+
+  /* Button System Recipe */
+  --wa-btn-face: #b4b8c4;
+  --wa-btn-face-pressed: #a0a4b0;
+  --wa-btn-highlight: #ffffff;
+  --wa-btn-shadow: #5a5a66;
+  --wa-btn-outline: #1a1a1a;
+  --wa-btn-glyph: #1c1c28;
+  --wa-btn-glyph-shadow: 1px 1px 0 rgba(255, 255, 255, 0.65);
+
+  /* Screens: pure black */
+  --wa-screen-bg: #000000;
+  --wa-screen-bevel-dk: #101014;
+  --wa-screen-bevel-lt: #3e4056;
+
+  /* Accents */
+  --wa-led-green: #00e000;
+  --wa-led-secondary: #00a000;
+  --wa-led-off: #2a3a1a;
+  --wa-seek-thumb: #c8c090;
+  --wa-playlist-selected: #0000c6;
+  --wa-playlist-selected-text: #ffffff;
+  --wa-titlebar-btn: #6b6648;
+}
+
+/* Skin 1: Modern Onyx / Bento */
+:root[data-wa-skin="modern"] {
+  --wa-chassis: #191a22;
+  --wa-chassis-dark: #0e0f14;
+  --wa-chassis-bevel-lt: #383a48;
+  --wa-chassis-grad: radial-gradient(ellipse 130% 85% at 50% -15%, #2a2c38 0%, #191a22 40%, #101117 75%, #07070a 100%);
+  --wa-chassis-topbar: linear-gradient(to bottom, #2d2f3d 0%, #191a22 45%, #101117 100%);
+  --wa-panel-bg: #111218;
+  --wa-btn-face: #8e92a0;
+  --wa-btn-face-pressed: #7c808e;
+  --wa-btn-highlight: #c0c4d4;
+  --wa-btn-shadow: #484a56;
+  --wa-btn-outline: #0f1016;
+  --wa-btn-glyph: #0f1016;
+  --wa-screen-bg: #08090d;
+  --wa-led-green: #00e5ff;
+  --wa-led-secondary: #00b0c8;
+  --wa-playlist-selected: #004899;
+  --wa-seek-thumb: #00c8e0;
+}
+
+/* Skin 2: Champagne Gold / Vintage Hi-Fi */
+:root[data-wa-skin="gold"] {
+  --wa-chassis: #2b261e;
+  --wa-chassis-dark: #16130f;
+  --wa-chassis-bevel-lt: #544b3c;
+  --wa-chassis-grad: radial-gradient(ellipse 130% 85% at 50% -15%, #463d30 0%, #2b261e 40%, #1b1712 75%, #0d0b08 100%);
+  --wa-chassis-topbar: linear-gradient(to bottom, #443c2f 0%, #2b261e 45%, #181410 100%);
+  --wa-panel-bg: #1a1610;
+  --wa-btn-face: #c8bc9e;
+  --wa-btn-face-pressed: #b4a88a;
+  --wa-btn-highlight: #f0e8d0;
+  --wa-btn-shadow: #6a624e;
+  --wa-btn-outline: #181510;
+  --wa-btn-glyph: #221c14;
+  --wa-screen-bg: #100d08;
+  --wa-led-green: #ffb81c;
+  --wa-led-secondary: #dfac30;
+  --wa-playlist-selected: #8c5c00;
+  --wa-seek-thumb: #dfac30;
+}
+
+/* Skin 3: Acid Cyberpunk / Neon */
+:root[data-wa-skin="cyberpunk"] {
+  --wa-chassis: #121118;
+  --wa-chassis-dark: #08070c;
+  --wa-chassis-bevel-lt: #3e284e;
+  --wa-chassis-grad: radial-gradient(ellipse 130% 85% at 50% -15%, #2a1638 0%, #171120 40%, #0e0914 75%, #060309 100%);
+  --wa-chassis-topbar: linear-gradient(to bottom, #2b183a 0%, #171120 45%, #0b0710 100%);
+  --wa-panel-bg: #0f0b18;
+  --wa-btn-face: #5c4c68;
+  --wa-btn-face-pressed: #4a3c54;
+  --wa-btn-highlight: #8a749c;
+  --wa-btn-shadow: #282030;
+  --wa-btn-outline: #0a080e;
+  --wa-btn-glyph: #0a080e;
+  --wa-screen-bg: #08040c;
+  --wa-led-green: #39ff14;
+  --wa-led-secondary: #ff007f;
+  --wa-playlist-selected: #a80055;
+  --wa-seek-thumb: #ff007f;
+}
+
+/* ---------- AUDIO-ONLY: kill the video, keep the album art ----------------- */
+html.winamp-ytm-audio #song-video,
+html.winamp-ytm-audio ytmusic-player #movie_player,
+html.winamp-ytm-audio ytmusic-player .player-wrapper {
+  display: none !important;
+}
+html.winamp-ytm-audio ytmusic-player #song-image,
+html.winamp-ytm-audio ytmusic-player #thumbnail {
+  display: block !important;
+  opacity: 1 !important;
+}
+
+/* Hide floating miniplayer over browse/playlist views */
+html.winamp-ytm-on ytmusic-player[player-ui-state="MINIPLAYER"],
+html.winamp-ytm-on ytmusic-player-page:not([player-page-open]) #player.ytmusic-player-page,
+html.winamp-ytm-on ytmusic-player-page[player-ui-state="MINIPLAYER"] #player.ytmusic-player-page {
+  display: none !important;
+}
+
+/* ====================  WINAMP SKIN (everything below)  ===================== */
+
+/* Root Viewport: Single non-tiling realistic lighting gradient */
+html.winamp-ytm-on,
+html.winamp-ytm-on body {
+  background: #0b0c13 !important;
+  background-image: var(--wa-chassis-grad) !important;
+  background-attachment: fixed !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  scrollbar-color: #5a5a66 #1a1a1a;
+  -webkit-font-smoothing: none !important;
+  image-rendering: pixelated !important;
+}
+
+/* Intermediate containers: transparent so realistic lighting never tiles */
+html.winamp-ytm-on ytmusic-app,
+html.winamp-ytm-on ytmusic-app-layout,
+html.winamp-ytm-on #layout.ytmusic-app-layout,
+html.winamp-ytm-on #content.ytmusic-app-layout,
+html.winamp-ytm-on ytmusic-browse-response,
+html.winamp-ytm-on ytmusic-search-page,
+html.winamp-ytm-on ytmusic-explore-page,
+html.winamp-ytm-on ytmusic-section-list-renderer,
+html.winamp-ytm-on ytmusic-tabbed-search-results-renderer {
+  background: transparent !important;
+  background-image: none !important;
+  scrollbar-color: #5a5a66 #1a1a1a;
+}
+
+/* Player Page (Full screen view): Solid chassis background during slide-up/down animations */
+html.winamp-ytm-on ytmusic-player-page {
+  background: #0b0c13 !important;
+  background-image: var(--wa-chassis-grad) !important;
+  background-attachment: fixed !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  scrollbar-color: #5a5a66 #1a1a1a;
+}
+
+/* Strict zero radius app-wide: real hardware has sharp pixel corners */
+html.winamp-ytm-on ytmusic-app *,
+html.winamp-ytm-on ytmusic-app *::before,
+html.winamp-ytm-on ytmusic-app *::after {
+  border-radius: 0 !important;
+}
+
+/* Kill modern ripples, circular interactions, and focus borders */
+html.winamp-ytm-on yt-interaction,
+html.winamp-ytm-on tp-yt-paper-ripple,
+html.winamp-ytm-on paper-ripple {
+  display: none !important;
+}
+
+/* Universal single bitmap pixel font, uppercase (Requirement 2) */
+html.winamp-ytm-on ytmusic-app,
+html.winamp-ytm-on ytmusic-app *:not([class*="icon"]):not(yt-icon):not(.yt-icon-shape) {
+  font-family: "Lucida Console", "Courier New", "Consolas", monospace !important;
+  text-transform: uppercase !important;
+  -webkit-font-smoothing: none !important;
+}
+
+/* Titles: 11px bold */
+html.winamp-ytm-on .title,
+html.winamp-ytm-on yt-formatted-string.title,
+html.winamp-ytm-on ytmusic-responsive-list-item-renderer .title,
+html.winamp-ytm-on ytmusic-two-row-item-renderer .title {
+  font-size: 11px !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0.5px !important;
+  text-shadow: none !important;
+}
+
+/* Subtitles / Secondary text: 10px dim green (Requirement 2) */
+html.winamp-ytm-on .subtitle,
+html.winamp-ytm-on yt-formatted-string.subtitle,
+html.winamp-ytm-on .complex-string,
+html.winamp-ytm-on ytmusic-two-row-item-renderer .subtitle,
+html.winamp-ytm-on ytmusic-two-row-item-renderer .subtitle a,
+html.winamp-ytm-on ytmusic-two-row-item-renderer .subtitle span,
+html.winamp-ytm-on ytmusic-responsive-list-item-renderer .subtitle,
+html.winamp-ytm-on ytmusic-responsive-list-item-renderer .subtitle a,
+html.winamp-ytm-on ytmusic-responsive-list-item-renderer .subtitle span,
+html.winamp-ytm-on ytmusic-responsive-list-item-renderer .flex-column:nth-child(2) yt-formatted-string,
+html.winamp-ytm-on ytmusic-responsive-list-item-renderer .flex-column:nth-child(2) a,
+html.winamp-ytm-on ytmusic-responsive-list-item-renderer .flex-column:nth-child(2) span,
+html.winamp-ytm-on ytmusic-responsive-list-item-renderer .secondary-flex-columns yt-formatted-string {
+  font-size: 10px !important;
+  color: var(--wa-led-secondary, #00a000) !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0.3px !important;
+}
+
+/* Kill all blurred gradients and color washes */
+html.winamp-ytm-on ytmusic-browse-response > #background.immersive-background,
+html.winamp-ytm-on .immersive-background,
+html.winamp-ytm-on ytmusic-fullbleed-thumbnail-renderer,
+html.winamp-ytm-on img.image.ytmusic-fullbleed-thumbnail-renderer,
+html.winamp-ytm-on .blurred-background,
+html.winamp-ytm-on #background-blur,
+html.winamp-ytm-on #gradient.ytmusic-detail-header-renderer {
+  display: none !important;
+  background: transparent !important;
+}
+html.winamp-ytm-on .background-gradient.ytmusic-browse-response,
+html.winamp-ytm-on ytmusic-browse-response .background-gradient {
+  background: transparent !important;
+  background-image: none !important;
+}
+
+/* Eliminate top dead gaps under nav bar (Requirement 4) */
+html.winamp-ytm-on ytmusic-search-page,
+html.winamp-ytm-on ytmusic-browse-response {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+html.winamp-ytm-on #header.ytmusic-browse-response {
+  padding: 0 !important;
+  margin: 0 !important;
+  height: 0 !important;
+  min-height: 0 !important;
+}
+html.winamp-ytm-on ytmusic-browse-response ytmusic-section-list-renderer {
+  padding-top: 4px !important;
+}
+
+/* ---- 2. Top Title Bar: Authentic Winamp 2.x Metallic Title Bar ------------ */
+html.winamp-ytm-on,
+html.winamp-ytm-on ytmusic-app,
+html.winamp-ytm-on ytmusic-app-layout,
+html.winamp-ytm-on ytmusic-browse-response,
+html.winamp-ytm-on ytmusic-search-page,
+html.winamp-ytm-on ytmusic-explore-page,
+html.winamp-ytm-on ytmusic-section-list-renderer,
+html.winamp-ytm-on ytmusic-player-page {
+  --ytmusic-nav-bar-height: 48px !important;
+  --ytmusic-player-bar-height: 55px !important;
+}
+
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer,
+html.winamp-ytm-on ytmusic-carousel,
+html.winamp-ytm-on ytmusic-carousel-shelf-basic-header-renderer {
+  --ytmusic-content-width: calc(100vw - 284px) !important;
+  --ytmusic-shelf-margin: 0px !important;
+}
+
+html.winamp-ytm-on ytmusic-player-page {
+  top: 48px !important;
+  bottom: 55px !important;
+  height: calc(100vh - 103px) !important;
+}
+
+html.winamp-ytm-on ytmusic-nav-bar {
+  background: var(--wa-chassis-topbar, linear-gradient(to bottom, #343750 0%, #222436 45%, #181926 100%)) !important;
+  border-bottom: 2px solid #0d0e16 !important;
+  box-shadow: inset 0 1px 0 #54587c,
+    inset 0 -1px 0 #12131d,
+    0 1px 0 #000000 !important;
+  height: 48px !important;
+}
+
+/* Kill native YouTube Music fixed background spacer bars & floating scroll divider line */
+html.winamp-ytm-on #nav-bar-background,
+html.winamp-ytm-on #nav-bar-divider,
+html.winamp-ytm-on ytmusic-app-layout #nav-bar-divider,
+html.winamp-ytm-on #player-bar-background {
+  display: none !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Nav Bar Hamburger Button: Raised silver bevel button with pixel glyph (Requirement 9) */
+html.winamp-ytm-on #guide-button {
+  width: 22px !important;
+  height: 18px !important;
+  min-width: 22px !important;
+  min-height: 18px !important;
+  margin-right: 8px !important;
+  background: var(--wa-btn-face) !important;
+  border: 1px solid var(--wa-btn-outline) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight), inset -1px -1px 0 var(--wa-btn-shadow) !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: default !important;
+}
+html.winamp-ytm-on #guide-button:active {
+  background: var(--wa-btn-face-pressed) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-shadow), inset -1px -1px 0 var(--wa-btn-highlight) !important;
+}
+html.winamp-ytm-on #guide-button yt-icon svg {
+  display: none !important;
+}
+html.winamp-ytm-on #guide-button yt-icon {
+  width: 14px !important;
+  height: 12px !important;
+  background-color: var(--wa-btn-glyph) !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='1' y='2' width='12' height='2' fill='%23000'/%3E%3Crect x='1' y='5' width='12' height='2' fill='%23000'/%3E%3Crect x='1' y='8' width='12' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='1' y='2' width='12' height='2' fill='%23000'/%3E%3Crect x='1' y='5' width='12' height='2' fill='%23000'/%3E%3Crect x='1' y='8' width='12' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+}
+
+/* Nav Bar Logo: Authentic YouTube Music Branding perfectly aligned with title buttons */
+html.winamp-ytm-on ytmusic-nav-bar .left-content {
+  display: flex !important;
+  align-items: center !important;
+  height: 100% !important;
+}
+html.winamp-ytm-on ytmusic-logo {
+  display: flex !important;
+  align-items: center !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+html.winamp-ytm-on ytmusic-logo a {
+  display: flex !important;
+  align-items: center !important;
+  text-decoration: none !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+html.winamp-ytm-on ytmusic-logo picture {
+  display: flex !important;
+  align-items: center !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+html.winamp-ytm-on ytmusic-logo img,
+html.winamp-ytm-on ytmusic-logo svg {
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+html.winamp-ytm-on ytmusic-logo img.logo {
+  height: 20px !important;
+  width: auto !important;
+  display: block !important;
+}
+
+/* Nav Bar Icon Buttons: Clean transparent background */
+html.winamp-ytm-on ytmusic-nav-bar .right-content yt-icon-button,
+html.winamp-ytm-on ytmusic-nav-bar .right-content tp-yt-paper-icon-button,
+html.winamp-ytm-on ytmusic-nav-bar ytmusic-cast-button,
+html.winamp-ytm-on ytmusic-nav-bar ytmusic-settings-button,
+html.winamp-ytm-on ytmusic-nav-bar #menu-button {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Classic Gold Lightning Bolt badge (for window titlebars & popups) */
+html.winamp-ytm-on .wa-lightning-bolt {
+  display: inline-block !important;
+  width: 12px !important;
+  height: 14px !important;
+  margin-right: 6px !important;
+  vertical-align: middle !important;
+  background-color: #f0c030 !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Cpolygon points='9,1 3,9 8,9 6,15 13,6 8,6' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 12px 14px !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Cpolygon points='9,1 3,9 8,9 6,15 13,6 8,6' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 12px 14px !important;
+}
+
+/* Window Title Bar Buttons (for window titlebars) */
+html.winamp-ytm-on .wa-tb-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 11px !important;
+  height: 10px !important;
+  background: var(--wa-titlebar-btn) !important;
+  border: 1px solid #1a1a1a !important;
+  color: #1a1a1a !important;
+  font-family: monospace !important;
+  font-size: 8px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  cursor: default !important;
+  box-shadow: inset 1px 1px 0 #9e976c, inset -1px -1px 0 #3e3b2a !important;
+  user-select: none !important;
+}
+html.winamp-ytm-on .wa-tb-btn:active {
+  background: #524e37 !important;
+  box-shadow: inset 1px 1px 0 #3e3b2a, inset -1px -1px 0 #9e976c !important;
+}
+
+/* ---- 3. Search Box: Inset LCD Data Screen (Requirement 9) ----------------- */
+html.winamp-ytm-on ytmusic-search-box {
+  background: #000000 !important;
+  border: 1px solid #101018 !important;
+  box-shadow: inset 1px 1px 0 #000, inset -1px -1px 0 var(--wa-chassis-bevel-lt) !important;
+  height: 32px !important;
+  max-height: 32px !important;
+  margin-top: 8px !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+html.winamp-ytm-on ytmusic-search-box .search-container,
+html.winamp-ytm-on ytmusic-search-box .search-box {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  height: 100% !important;
+  max-height: 32px !important;
+  overflow: hidden !important;
+}
+html.winamp-ytm-on ytmusic-search-box input#input {
+  color: var(--wa-led-green) !important;
+  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-size: 11px !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+  background: transparent !important;
+  height: 30px !important;
+  line-height: 30px !important;
+  border: 0 !important;
+}
+html.winamp-ytm-on ytmusic-search-box #placeholder {
+  color: var(--wa-led-off) !important;
+  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-size: 11px !important;
+  line-height: 30px !important;
+}
+html.winamp-ytm-on ytmusic-search-box yt-icon.search-button,
+html.winamp-ytm-on ytmusic-search-box yt-icon-button.search-button {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+/* Clear button bevel (Requirement 9) */
+html.winamp-ytm-on ytmusic-search-box #clear-button {
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px !important;
+  min-height: 16px !important;
+  margin-right: 6px !important;
+  background: var(--wa-btn-face) !important;
+  border: 1px solid var(--wa-btn-outline) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight), inset -1px -1px 0 var(--wa-btn-shadow) !important;
+}
+html.winamp-ytm-on ytmusic-search-box #clear-button yt-icon {
+  width: 10px !important;
+  height: 10px !important;
+  color: var(--wa-btn-glyph) !important;
+}
+
+html.winamp-ytm-on #suggestion-list.ytmusic-search-box,
+html.winamp-ytm-on ytmusic-search-suggestions-section {
+  background: var(--wa-screen-bg) !important;
+  border: 1px solid var(--wa-btn-outline) !important;
+  box-shadow: 2px 2px 0 var(--wa-chassis-bevel-dk) !important;
+}
+html.winamp-ytm-on ytmusic-search-suggestion {
+  border-bottom: 1px solid #1a1a24 !important;
+}
+html.winamp-ytm-on ytmusic-search-suggestion:hover,
+html.winamp-ytm-on ytmusic-search-suggestion[aria-selected="true"] {
+  background: var(--wa-playlist-selected) !important;
+}
+html.winamp-ytm-on ytmusic-search-suggestion:hover .left-content,
+html.winamp-ytm-on ytmusic-search-suggestion:hover yt-formatted-string,
+html.winamp-ytm-on ytmusic-search-suggestion[aria-selected="true"] .left-content,
+html.winamp-ytm-on ytmusic-search-suggestion[aria-selected="true"] yt-formatted-string {
+  color: #ffffff !important;
+}
+html.winamp-ytm-on ytmusic-search-suggestion .left-content,
+html.winamp-ytm-on ytmusic-search-suggestion yt-formatted-string {
+  color: var(--wa-led-green) !important;
+  font-family: "Lucida Console", "Consolas", monospace !important;
+}
+
+/* ====================  CORE BUTTON SYSTEM RECIPE  ========================= */
+.wa-btn,
+html.winamp-ytm-on tp-yt-paper-icon-button,
+html.winamp-ytm-on ytmusic-menu-renderer tp-yt-paper-icon-button,
+html.winamp-ytm-on yt-button-shape > button,
+html.winamp-ytm-on ytmusic-navigation-button-renderer button,
+html.winamp-ytm-on ytmusic-nav-bar a.sign-in-link,
+html.winamp-ytm-on #more.ytmusic-shelf-renderer,
+html.winamp-ytm-on #more.ytmusic-carousel-shelf-renderer,
+html.winamp-ytm-on ytmusic-shelf-renderer #more,
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer #more,
+html.winamp-ytm-on ytmusic-shelf-renderer .more-button,
+html.winamp-ytm-on yt-button-renderer#more,
+html.winamp-ytm-on ytmusic-play-button-renderer,
+html.winamp-ytm-on ytmusic-item-thumbnail-overlay-renderer ytmusic-play-button-renderer,
+html.winamp-ytm-on ytmusic-player-bar .left-controls-buttons yt-icon-button,
+html.winamp-ytm-on ytmusic-player-bar #play-pause-button,
+html.winamp-ytm-on ytmusic-like-button-renderer button,
+html.winamp-ytm-on ytmusic-player-bar #right-controls yt-icon-button,
+html.winamp-ytm-on ytmusic-guide-signin-promo-renderer #sign-in-button button,
+html.winamp-ytm-on ytmusic-chip-cloud-chip-renderer .gradient-box,
+html.winamp-ytm-on ytmusic-carousel-shelf-basic-header-renderer #previous-button,
+html.winamp-ytm-on ytmusic-carousel-shelf-basic-header-renderer #next-button {
+  background: var(--wa-btn-face) !important;
+  border: 1px solid var(--wa-btn-outline) !important;
+  border-radius: 0 !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight),
+    inset -1px -1px 0 var(--wa-btn-shadow) !important;
+  image-rendering: pixelated !important;
+  color: var(--wa-btn-glyph) !important;
+  fill: var(--wa-btn-glyph) !important;
+  cursor: default !important;
+  font-family: "Lucida Console", "Consolas", monospace, sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+  text-shadow: var(--wa-btn-glyph-shadow) !important;
+  transition: none !important;
+  box-sizing: border-box !important;
+}
+
+/* Hover */
+.wa-btn:hover,
+html.winamp-ytm-on tp-yt-paper-icon-button:hover,
+html.winamp-ytm-on yt-button-shape > button:hover,
+html.winamp-ytm-on ytmusic-navigation-button-renderer button:hover,
+html.winamp-ytm-on ytmusic-nav-bar a.sign-in-link:hover,
+html.winamp-ytm-on #more.ytmusic-shelf-renderer:hover,
+html.winamp-ytm-on #more.ytmusic-carousel-shelf-renderer:hover,
+html.winamp-ytm-on ytmusic-player-bar .left-controls-buttons yt-icon-button:hover,
+html.winamp-ytm-on ytmusic-player-bar #play-pause-button:hover,
+html.winamp-ytm-on ytmusic-chip-cloud-chip-renderer:hover .gradient-box,
+html.winamp-ytm-on ytmusic-guide-signin-promo-renderer #sign-in-button button:hover {
+  background: #c0c4d0 !important;
+}
+
+/* Pressed / Active */
+.wa-btn:active,
+.wa-btn.is-active,
+html.winamp-ytm-on tp-yt-paper-icon-button:active,
+html.winamp-ytm-on yt-button-shape > button:active,
+html.winamp-ytm-on ytmusic-navigation-button-renderer button:active,
+html.winamp-ytm-on ytmusic-nav-bar a.sign-in-link:active,
+html.winamp-ytm-on #more.ytmusic-shelf-renderer:active,
+html.winamp-ytm-on #more.ytmusic-carousel-shelf-renderer:active,
+html.winamp-ytm-on ytmusic-player-bar .left-controls-buttons yt-icon-button:active,
+html.winamp-ytm-on ytmusic-player-bar #play-pause-button:active,
+html.winamp-ytm-on ytmusic-chip-cloud-chip-renderer .gradient-box:active,
+html.winamp-ytm-on ytmusic-guide-signin-promo-renderer #sign-in-button button:active {
+  background: var(--wa-btn-face-pressed) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-shadow),
+    inset -1px -1px 0 var(--wa-btn-highlight) !important;
+  transform: translate(1px, 1px) !important;
+}
+
+/* ---- Mood Chips & Category Pills ----------------------------------------- */
+html.winamp-ytm-on ytmusic-chip-cloud-renderer {
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 2px 6px !important;
+  padding: 2px 0 !important;
+}
+html.winamp-ytm-on ytmusic-chip-cloud-chip-renderer {
+  display: inline-block !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 2px 3px 2px 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+html.winamp-ytm-on ytmusic-chip-cloud-chip-renderer .gradient-box {
+  height: 24px !important;
+  padding: 0 8px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+html.winamp-ytm-on ytmusic-chip-cloud-chip-renderer a.yt-simple-endpoint {
+  height: 100% !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: var(--wa-btn-glyph) !important;
+}
+html.winamp-ytm-on ytmusic-chip-cloud-chip-renderer .text {
+  color: var(--wa-btn-glyph) !important;
+  font-family: "Lucida Console", "Consolas", monospace, sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+  text-shadow: var(--wa-btn-glyph-shadow) !important;
+}
+html.winamp-ytm-on ytmusic-chip-cloud-chip-renderer[is-selected] .gradient-box,
+html.winamp-ytm-on ytmusic-chip-cloud-chip-renderer a[aria-selected="true"] .gradient-box,
+html.winamp-ytm-on ytmusic-chip-cloud-chip-renderer[selected] .gradient-box {
+  background: var(--wa-btn-face-pressed) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-shadow),
+    inset -1px -1px 0 var(--wa-btn-highlight) !important;
+}
+html.winamp-ytm-on ytmusic-chip-cloud-chip-renderer[is-selected] .text,
+html.winamp-ytm-on ytmusic-chip-cloud-chip-renderer a[aria-selected="true"] .text,
+html.winamp-ytm-on ytmusic-chip-cloud-chip-renderer[selected] .text {
+  color: #008800 !important;
+  text-shadow: 1px 1px 0 #ffffff !important;
+}
+
+/* Explore & Mood/Genre Grid Buttons (Requirement 5) */
+html.winamp-ytm-on ytmusic-grid-renderer {
+  margin: 2px 6px !important;
+  padding: 0 !important;
+}
+html.winamp-ytm-on ytmusic-explore-page ytmusic-navigation-button-renderer button,
+html.winamp-ytm-on ytmusic-navigation-button-renderer button {
+  min-height: 36px !important;
+  height: auto !important;
+  padding: 4px 6px !important;
+  font-size: 9px !important;
+  line-height: 1.15 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+}
+
+/* ---- 4. Left Sidebar: Winamp Media Library Tree (Requirement 9) ----------- */
+/* Sidebar Chassis Base: Solid background on outer drawer wrapper only so inner children don't occlude the inset right bevel */
+html.winamp-ytm-on tp-yt-app-drawer,
+html.winamp-ytm-on #guide-wrapper,
+html.winamp-ytm-on #mini-guide,
+html.winamp-ytm-on #mini-guide-background {
+  background: var(--wa-chassis) !important;
+}
+
+/* Inner guide children stay transparent so #guide-wrapper's inset -1px right bevel runs uninterrupted from top to bottom */
+html.winamp-ytm-on #guide-content,
+html.winamp-ytm-on ytmusic-guide-renderer,
+html.winamp-ytm-on #sections,
+html.winamp-ytm-on ytmusic-guide-section-renderer {
+  background: transparent !important;
+  border-right: none !important;
+  box-shadow: none !important;
+}
+
+/* Explicitly reset any borders and shadows on drawer/inner elements to prevent 1px nested seam jogs */
+html.winamp-ytm-on tp-yt-app-drawer,
+html.winamp-ytm-on #mini-guide-background {
+  border-right: none !important;
+  box-shadow: none !important;
+}
+
+/* Single Unified Right Bevel Border (Sole authority for the sidebar edge) */
+html.winamp-ytm-on #guide-wrapper,
+html.winamp-ytm-on #mini-guide {
+  border-right: 1px solid var(--wa-btn-outline) !important;
+  box-shadow: inset -1px 0 0 var(--wa-chassis-bevel-lt) !important;
+  box-sizing: border-box !important;
+}
+html.winamp-ytm-on ytmusic-guide-entry-renderer tp-yt-paper-item {
+  min-height: 0 !important;
+  padding: 6px 10px 6px 18px !important;
+  margin: 0 !important;
+  border-bottom: 1px solid var(--wa-chassis-bevel-dk) !important;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+  box-sizing: border-box !important;
+}
+html.winamp-ytm-on ytmusic-guide-entry-renderer:hover tp-yt-paper-item {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+/* Active Nav Row: Signature Winamp blue bar with white text */
+html.winamp-ytm-on ytmusic-guide-entry-renderer[active] tp-yt-paper-item {
+  background: var(--wa-playlist-selected) !important;
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+html.winamp-ytm-on ytmusic-guide-entry-renderer[active] .title {
+  color: var(--wa-playlist-selected-text) !important;
+  background: transparent !important;
+}
+html.winamp-ytm-on ytmusic-guide-entry-renderer[active] .guide-icon {
+  background-color: var(--wa-playlist-selected-text) !important;
+}
+html.winamp-ytm-on ytmusic-guide-entry-renderer .title {
+  color: #d6d6e0 !important;
+  font-weight: 700 !important;
+  font-size: 10px !important;
+  letter-spacing: 0.5px !important;
+}
+
+/* Sidebar Dotted Tree Connectors (Requirement 9) */
+html.winamp-ytm-on #sections > ytmusic-guide-section-renderer:first-child #items {
+  position: relative !important;
+}
+html.winamp-ytm-on #sections > ytmusic-guide-section-renderer:first-child ytmusic-guide-entry-renderer {
+  position: relative !important;
+}
+html.winamp-ytm-on #sections > ytmusic-guide-section-renderer:first-child ytmusic-guide-entry-renderer::before,
+html.winamp-ytm-on #sections > ytmusic-guide-section-renderer:first-child ytmusic-guide-entry-renderer::after {
+  display: none !important;
+}
+
+/* Hide stray YouTube divider lines */
+html.winamp-ytm-on #divider.ytmusic-guide-section-renderer,
+html.winamp-ytm-on ytmusic-guide-section-renderer #divider,
+html.winamp-ytm-on ytmusic-divider-renderer,
+html.winamp-ytm-on #divider,
+html.winamp-ytm-on .divider {
+  display: none !important;
+}
+
+/* Sidebar Sign-In Box: Flush with column and framed like a window (Requirement 9) */
+html.winamp-ytm-on ytmusic-guide-signin-promo-renderer {
+  display: block !important;
+  margin: 4px 6px !important;
+  padding: 8px 6px !important;
+  width: calc(100% - 12px) !important;
+  background: var(--wa-screen-bg) !important;
+  border: 1px solid var(--wa-btn-outline) !important;
+  box-shadow: inset 1px 1px 0 #000, inset -1px -1px 0 var(--wa-chassis-bevel-lt) !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+html.winamp-ytm-on tp-yt-app-drawer,
+html.winamp-ytm-on ytmusic-guide-renderer,
+html.winamp-ytm-on #guide-wrapper,
+html.winamp-ytm-on #guide-content,
+html.winamp-ytm-on #mini-guide {
+  overflow: hidden !important;
+  scrollbar-width: none !important;
+}
+html.winamp-ytm-on #guide-wrapper::-webkit-scrollbar,
+html.winamp-ytm-on #guide-content::-webkit-scrollbar,
+html.winamp-ytm-on ytmusic-guide-renderer::-webkit-scrollbar,
+html.winamp-ytm-on tp-yt-app-drawer::-webkit-scrollbar,
+html.winamp-ytm-on #mini-guide::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+html.winamp-ytm-on ytmusic-guide-signin-promo-renderer #sign-in-button {
+  display: block !important;
+  margin: 8px 0 4px 0 !important;
+}
+html.winamp-ytm-on ytmusic-guide-signin-promo-renderer #sign-in-button button {
+  width: 100% !important;
+  height: 26px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin: 0 !important;
+}
+html.winamp-ytm-on ytmusic-guide-signin-promo-renderer .descriptive-text {
+  color: #7a7e8a !important;
+  font-size: 9px !important;
+  line-height: 1.3 !important;
+}
+
+/* ---- 5. Shelves & Panels: Authentic Raised Window Frames (Req 3, 4) ------- */
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer,
+html.winamp-ytm-on ytmusic-shelf-renderer,
+html.winamp-ytm-on ytmusic-card-shelf-renderer {
+  display: block !important;
+  margin: 4px 6px 8px 6px !important;
+  padding: 6px 8px 8px 8px !important;
+  background: var(--wa-panel-bg, #11121d) !important;
+  border: 1px solid var(--wa-btn-outline, #10111a) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-chassis-bevel-lt, #4c4f6f), inset -1px -1px 0 var(--wa-chassis-dark, #0d0e16), 0 1px 0 #000000 !important;
+  box-sizing: border-box !important;
+}
+
+/* Carousel spacing: fill full shelf width without left or right void (Requirement 4) */
+html.winamp-ytm-on ytmusic-carousel #items,
+html.winamp-ytm-on ytmusic-carousel ul#items {
+  width: calc(100% - 8px) !important;
+  max-width: none !important;
+  margin: 0 4px !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+html.winamp-ytm-on ytmusic-carousel {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 2px 0 !important;
+  padding: 0 !important;
+}
+
+/* Real Winamp Window Title Bar (Used for floating dialogs, promo modals, search bar) */
+.wa-window-titlebar {
+  display: flex !important;
+  align-items: center !important;
+  height: 24px !important;
+  min-height: 24px !important;
+  max-height: 24px !important;
+  padding: 0 6px !important;
+  background: var(--wa-chassis, #232537) !important;
+  border: 1px solid #10111a !important;
+  box-shadow: inset 1px 1px 0 var(--wa-chassis-bevel-lt, #4c4f6f), inset -1px -1px 0 #0d0e16 !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+
+/* Ribbed olive/khaki grip bars (Only inside floating windows) */
+.wa-tb-grip {
+  flex: 1 1 auto !important;
+  height: 8px !important;
+  margin: 0 6px !important;
+  background: repeating-linear-gradient(to bottom, #6b6648 0px, #6b6648 1px, #141520 1px, #141520 2px) !important;
+  border-top: 1px solid #101018 !important;
+  border-bottom: 1px solid #3e3b2a !important;
+}
+
+/* Clean Hi-Fi Shelf Header: Compact Winamp window framing */
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer #header-group,
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer .header-group,
+html.winamp-ytm-on ytmusic-shelf-renderer #header-group,
+html.winamp-ytm-on ytmusic-shelf-renderer .header-group {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  padding: 0 !important;
+  margin: 0 4px !important;
+  width: calc(100% - 8px) !important;
+  max-width: none !important;
+}
+
+html.winamp-ytm-on ytmusic-carousel-shelf-basic-header-renderer #content-group,
+html.winamp-ytm-on ytmusic-carousel-shelf-basic-header-renderer #details {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+html.winamp-ytm-on ytmusic-carousel-shelf-basic-header-renderer,
+html.winamp-ytm-on ytmusic-shelf-renderer .header,
+html.winamp-ytm-on ytmusic-card-shelf-renderer #card-shelf-header {
+  display: flex !important;
+  flex: 1 1 auto !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  min-height: 26px !important;
+  height: auto !important;
+  max-height: none !important;
+  max-width: none !important;
+  padding: 0 4px 5px 4px !important;
+  margin: 2px 0 6px 0 !important;
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid var(--wa-chassis-dark, #141520) !important;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+}
+
+/* Shelf Title Text: Bold, embossed, authentic pixel typography */
+.wa-tb-title-text,
+html.winamp-ytm-on ytmusic-carousel-shelf-basic-header-renderer .title,
+html.winamp-ytm-on ytmusic-carousel-shelf-basic-header-renderer h2.title,
+html.winamp-ytm-on ytmusic-shelf-renderer .header .title,
+html.winamp-ytm-on ytmusic-card-shelf-renderer #card-shelf-header .title {
+  color: #e2e4ee !important;
+  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.8px !important;
+  text-transform: uppercase !important;
+  text-shadow: 1px 1px 0 #000000 !important;
+  white-space: nowrap !important;
+  padding: 0 4px !important;
+  margin: 0 !important;
+  line-height: normal !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Shelf Strapline / Subtitle */
+html.winamp-ytm-on ytmusic-carousel-shelf-basic-header-renderer .strapline,
+html.winamp-ytm-on ytmusic-shelf-renderer .header .strapline {
+  color: #8a8e9e !important;
+  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-size: 9px !important;
+  text-transform: uppercase !important;
+  margin-top: 2px !important;
+  letter-spacing: 0.5px !important;
+}
+
+/* Avatar / Profile Picture in shelf header ("Listen Again") */
+html.winamp-ytm-on ytmusic-carousel-shelf-basic-header-renderer ytmusic-thumbnail-renderer,
+html.winamp-ytm-on ytmusic-carousel-shelf-basic-header-renderer .thumbnail,
+html.winamp-ytm-on ytmusic-shelf-renderer .header ytmusic-thumbnail-renderer,
+html.winamp-ytm-on ytmusic-shelf-renderer .header .thumbnail {
+  width: 56px !important;
+  height: 56px !important;
+  min-width: 56px !important;
+  min-height: 56px !important;
+  max-width: 56px !important;
+  max-height: 56px !important;
+  margin-right: 12px !important;
+  border: 1px solid var(--wa-btn-outline, #101018) !important;
+  box-shadow: inset 1px 1px 0 #0a0a12, inset -1px -1px 0 var(--wa-chassis-bevel-lt, #4c4f6f), 0 1px 2px rgba(0, 0, 0, 0.6) !important;
+  border-radius: 0 !important;
+  overflow: hidden !important;
+  background: #000000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 0 0 56px !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+html.winamp-ytm-on ytmusic-carousel-shelf-basic-header-renderer yt-img-shadow,
+html.winamp-ytm-on ytmusic-shelf-renderer .header yt-img-shadow {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 100% !important;
+  min-height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  border: none !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  display: block !important;
+  overflow: hidden !important;
+}
+
+html.winamp-ytm-on ytmusic-carousel-shelf-basic-header-renderer img,
+html.winamp-ytm-on ytmusic-carousel-shelf-basic-header-renderer yt-img-shadow img,
+html.winamp-ytm-on ytmusic-shelf-renderer .header img,
+html.winamp-ytm-on ytmusic-shelf-renderer .header yt-img-shadow img {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 100% !important;
+  min-height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Shelf Action Buttons (e.g. 'MORE', 'PLAY ALL') */
+html.winamp-ytm-on ytmusic-carousel-shelf-basic-header-renderer yt-button-shape button,
+html.winamp-ytm-on ytmusic-shelf-renderer .header yt-button-shape button {
+  height: 22px !important;
+  min-height: 22px !important;
+  padding: 0 10px !important;
+  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  color: var(--wa-btn-glyph) !important;
+  background: var(--wa-btn-face) !important;
+  border: 1px solid var(--wa-btn-outline) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight),
+              inset -1px -1px 0 var(--wa-btn-shadow),
+              0 1px 2px rgba(0, 0, 0, 0.6) !important;
+  border-radius: 0 !important;
+  text-shadow: var(--wa-btn-glyph-shadow, 1px 1px 0 rgba(255, 255, 255, 0.65)) !important;
+  cursor: pointer !important;
+}
+
+html.winamp-ytm-on ytmusic-carousel-shelf-basic-header-renderer yt-button-shape button:hover,
+html.winamp-ytm-on ytmusic-shelf-renderer .header yt-button-shape button:hover {
+  background: #c6cad6 !important;
+}
+
+html.winamp-ytm-on ytmusic-carousel-shelf-basic-header-renderer yt-button-shape button:active,
+html.winamp-ytm-on ytmusic-shelf-renderer .header yt-button-shape button:active {
+  background: var(--wa-btn-face-pressed) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-shadow),
+              inset -1px -1px 0 var(--wa-btn-highlight) !important;
+  transform: translate(1px, 1px) !important;
+}
+
+/* Carousel Pagination Buttons (< and >) - 3D Embossed Hardware Tactile Buttons */
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer #header-group > .button-group,
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer .header-group > .button-group,
+html.winamp-ytm-on ytmusic-shelf-renderer #header-group > .button-group,
+html.winamp-ytm-on ytmusic-shelf-renderer .header-group > .button-group,
+html.winamp-ytm-on ytmusic-card-shelf-renderer #header-group > .button-group,
+html.winamp-ytm-on ytmusic-card-shelf-renderer .header-group > .button-group {
+  display: flex !important;
+  align-self: flex-start !important;
+  align-items: center !important;
+  margin: 2px 0 0 0 !important;
+  padding: 0 !important;
+  height: 22px !important;
+}
+
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer #previous-items-button,
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer #next-items-button,
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer .previous-items-button,
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer .next-items-button,
+html.winamp-ytm-on ytmusic-shelf-renderer #previous-button,
+html.winamp-ytm-on ytmusic-shelf-renderer #next-button {
+  width: 24px !important;
+  height: 22px !important;
+  min-width: 24px !important;
+  min-height: 22px !important;
+  max-width: 24px !important;
+  max-height: 22px !important;
+  padding: 0 !important;
+  margin: 0 2px !important;
+  border-radius: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+}
+
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer #previous-items-button #button,
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer #next-items-button #button,
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer .previous-items-button #button,
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer .next-items-button #button,
+html.winamp-ytm-on ytmusic-shelf-renderer #previous-button #button,
+html.winamp-ytm-on ytmusic-shelf-renderer #next-button #button {
+  width: 24px !important;
+  height: 22px !important;
+  min-width: 24px !important;
+  min-height: 22px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  background: var(--wa-btn-face, #b4b8c4) !important;
+  border: 1px solid var(--wa-btn-outline, #1a1a1a) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight, #ffffff),
+              inset -1px -1px 0 var(--wa-btn-shadow, #5a5a66),
+              0 1px 2px rgba(0, 0, 0, 0.6) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+}
+
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer #previous-items-button #button:hover:not([disabled]),
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer #next-items-button #button:hover:not([disabled]),
+html.winamp-ytm-on ytmusic-shelf-renderer #previous-button #button:hover:not([disabled]),
+html.winamp-ytm-on ytmusic-shelf-renderer #next-button #button:hover:not([disabled]) {
+  background: #c6cad6 !important;
+}
+
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer #previous-items-button #button:active:not([disabled]),
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer #next-items-button #button:active:not([disabled]),
+html.winamp-ytm-on ytmusic-shelf-renderer #previous-button #button:active:not([disabled]),
+html.winamp-ytm-on ytmusic-shelf-renderer #next-button #button:active:not([disabled]) {
+  background: var(--wa-btn-face-pressed, #a0a4b0) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-shadow, #5a5a66),
+              inset -1px -1px 0 var(--wa-btn-highlight, #ffffff) !important;
+  transform: translate(1px, 1px) !important;
+}
+
+/* Chevron Glyphs inside Navigation Buttons */
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer #previous-items-button yt-icon,
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer #next-items-button yt-icon,
+html.winamp-ytm-on ytmusic-shelf-renderer #previous-button yt-icon,
+html.winamp-ytm-on ytmusic-shelf-renderer #next-button yt-icon {
+  width: 14px !important;
+  height: 14px !important;
+  min-width: 14px !important;
+  min-height: 14px !important;
+  fill: var(--wa-btn-glyph, #1c1c28) !important;
+  color: var(--wa-btn-glyph, #1c1c28) !important;
+  filter: drop-shadow(1px 1px 0 rgba(255, 255, 255, 0.7)) !important;
+}
+
+/* Disabled Carousel Buttons (Sunken tactile state) */
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer #previous-items-button[disabled] #button,
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer #next-items-button[disabled] #button,
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer #previous-items-button #button[disabled],
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer #next-items-button #button[disabled],
+html.winamp-ytm-on ytmusic-shelf-renderer #previous-button[disabled] #button,
+html.winamp-ytm-on ytmusic-shelf-renderer #next-button[disabled] #button,
+html.winamp-ytm-on ytmusic-shelf-renderer #previous-button #button[disabled],
+html.winamp-ytm-on ytmusic-shelf-renderer #next-button #button[disabled] {
+  background: var(--wa-chassis, #222436) !important;
+  border: 1px solid var(--wa-btn-outline, #101018) !important;
+  box-shadow: inset 1px 1px 0 #0a0a12, inset -1px -1px 0 rgba(255, 255, 255, 0.08) !important;
+  cursor: default !important;
+}
+
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer #previous-items-button[disabled] yt-icon,
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer #next-items-button[disabled] yt-icon,
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer #previous-items-button #button[disabled] yt-icon,
+html.winamp-ytm-on ytmusic-carousel-shelf-renderer #next-items-button #button[disabled] yt-icon,
+html.winamp-ytm-on ytmusic-shelf-renderer #previous-button[disabled] yt-icon,
+html.winamp-ytm-on ytmusic-shelf-renderer #next-button[disabled] yt-icon {
+  fill: #545668 !important;
+  color: #545668 !important;
+  filter: drop-shadow(1px 1px 0 rgba(255, 255, 255, 0.12)) !important;
+  opacity: 0.6 !important;
+}
+
+/* Floating window buttons */
+.wa-tb-btns {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 2px !important;
+  flex: 0 0 auto !important;
+  margin-left: 4px !important;
+}
+
+/* Album Art Thumbnails: Inset frame (Requirement 5) */
+html.winamp-ytm-on ytmusic-thumbnail-renderer,
+html.winamp-ytm-on .image-wrapper.ytmusic-thumbnail-renderer {
+  padding: 1px !important;
+  box-sizing: border-box !important;
+  background: #000000 !important;
+  border: 1px solid #101018 !important;
+  box-shadow: inset 1px 1px 0 #0a0a12, inset -1px -1px 0 #4c4f6f !important;
+}
+
+/* Fixed Height Cards with Single-line Truncation (Requirement 5) */
+html.winamp-ytm-on ytmusic-two-row-item-renderer {
+  display: flex !important;
+  flex-direction: column !important;
+}
+html.winamp-ytm-on ytmusic-two-row-item-renderer .title,
+html.winamp-ytm-on ytmusic-two-row-item-renderer yt-formatted-string.title {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  display: block !important;
+  max-width: 100% !important;
+  color: #d6d6e0 !important;
+  font-weight: 700 !important;
+}
+html.winamp-ytm-on ytmusic-two-row-item-renderer .subtitle,
+html.winamp-ytm-on ytmusic-two-row-item-renderer yt-formatted-string.subtitle {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  display: block !important;
+  max-width: 100% !important;
+  color: #00a000 !important;
+}
+
+/* ====================  6. SEARCH RESULTS PAGE (Requirement 1) ============== */
+html.winamp-ytm-on ytmusic-tabbed-search-results-renderer {
+  padding: 8px 12px !important;
+}
+
+/* Winamp Playlist Window frame around search results */
+html.winamp-ytm-on ytmusic-tabbed-search-results-renderer ytmusic-section-list-renderer {
+  background: var(--wa-chassis) !important;
+  border: 1px solid #10111a !important;
+  box-shadow: inset 1px 1px 0 #4c4f6f, inset -1px -1px 0 #0d0e16, 0 1px 0 #000000 !important;
+  padding: 6px 8px 8px 8px !important;
+  margin: 8px 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Recessed pure black scrolling list area */
+html.winamp-ytm-on ytmusic-tabbed-search-results-renderer #contents.ytmusic-section-list-renderer {
+  background: #000000 !important;
+  border: 1px solid #1a1a1a !important;
+  box-shadow: inset 1px 1px 0 #000000, inset -1px -1px 0 #3e4056 !important;
+  max-height: calc(100vh - 250px) !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 2px !important;
+  scrollbar-width: thin;
+  scrollbar-color: #6b6648 #000000;
+}
+html.winamp-ytm-on ytmusic-tabbed-search-results-renderer #contents.ytmusic-section-list-renderer::-webkit-scrollbar {
+  width: 12px !important;
+  background: #000000 !important;
+}
+html.winamp-ytm-on ytmusic-tabbed-search-results-renderer #contents.ytmusic-section-list-renderer::-webkit-scrollbar-thumb {
+  background: #6b6648 !important;
+  border: 1px solid #1a1a1a !important;
+  box-shadow: inset 1px 1px 0 #9e976c, inset -1px -1px 0 #3e3b2a !important;
+}
+
+/* Search results rows: flush thumbnails, green text, blue hover */
+html.winamp-ytm-on ytmusic-tabbed-search-results-renderer ytmusic-responsive-list-item-renderer {
+  margin: 0 !important;
+  width: 100% !important;
+  height: 32px !important;
+  min-height: 32px !important;
+  padding: 2px 6px !important;
+  border-bottom: 1px solid #141520 !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  background: #000000 !important;
+}
+html.winamp-ytm-on ytmusic-tabbed-search-results-renderer ytmusic-responsive-list-item-renderer .left-items,
+html.winamp-ytm-on ytmusic-tabbed-search-results-renderer ytmusic-responsive-list-item-renderer .thumbnail-container,
+html.winamp-ytm-on ytmusic-tabbed-search-results-renderer ytmusic-responsive-list-item-renderer ytmusic-thumbnail-renderer {
+  margin: 0 8px 0 0 !important;
+  padding: 0 !important;
+  width: 26px !important;
+  height: 26px !important;
+  min-width: 26px !important;
+  min-height: 26px !important;
+}
+html.winamp-ytm-on ytmusic-tabbed-search-results-renderer ytmusic-responsive-list-item-renderer .title,
+html.winamp-ytm-on ytmusic-tabbed-search-results-renderer ytmusic-responsive-list-item-renderer yt-formatted-string.title {
+  color: var(--wa-led-green) !important;
+  font-size: 11px !important;
+  line-height: 1.2 !important;
+}
+html.winamp-ytm-on ytmusic-tabbed-search-results-renderer ytmusic-responsive-list-item-renderer .subtitle,
+html.winamp-ytm-on ytmusic-tabbed-search-results-renderer ytmusic-responsive-list-item-renderer yt-formatted-string.subtitle,
+html.winamp-ytm-on ytmusic-tabbed-search-results-renderer ytmusic-responsive-list-item-renderer .flex-column:nth-child(2) a,
+html.winamp-ytm-on ytmusic-tabbed-search-results-renderer ytmusic-responsive-list-item-renderer .flex-column:nth-child(2) span {
+  color: #00a000 !important;
+  font-size: 10px !important;
+}
+html.winamp-ytm-on ytmusic-tabbed-search-results-renderer ytmusic-responsive-list-item-renderer:hover,
+html.winamp-ytm-on ytmusic-tabbed-search-results-renderer ytmusic-responsive-list-item-renderer[selected] {
+  background: var(--wa-playlist-selected) !important; /* solid blue #0000c6 */
+}
+html.winamp-ytm-on ytmusic-tabbed-search-results-renderer ytmusic-responsive-list-item-renderer:hover *,
+html.winamp-ytm-on ytmusic-tabbed-search-results-renderer ytmusic-responsive-list-item-renderer[selected] * {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+
+/* Top "YOU MAY ALSO BE INTERESTED IN" block */
+html.winamp-ytm-on ytmusic-card-shelf-renderer {
+  background: var(--wa-chassis) !important;
+  border: 1px solid #10111a !important;
+  box-shadow: inset 1px 1px 0 #4c4f6f, inset -1px -1px 0 #0d0e16, 0 1px 0 #000000 !important;
+  padding: 6px 8px !important;
+  margin-bottom: 8px !important;
+}
+html.winamp-ytm-on ytmusic-card-shelf-renderer .card-container {
+  background: #000000 !important;
+  border: 1px solid #1a1a1a !important;
+  box-shadow: inset 1px 1px 0 #000000, inset -1px -1px 0 #3e4056 !important;
+  padding: 8px !important;
+}
+html.winamp-ytm-on ytmusic-card-shelf-renderer ytmusic-play-button-renderer {
+  width: 90px !important;
+  height: 24px !important;
+  background: var(--wa-btn-face) !important;
+  border: 1px solid var(--wa-btn-outline) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight), inset -1px -1px 0 var(--wa-btn-shadow) !important;
+  color: var(--wa-btn-glyph) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+html.winamp-ytm-on ytmusic-card-shelf-renderer ytmusic-play-button-renderer::after {
+  content: "PLAY" !important;
+  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  color: var(--wa-btn-glyph) !important;
+  margin-left: 4px !important;
+}
+
+/* Playlist Footer bar (ADD / REM / SEL / MISC / readout / LIST OPTS) */
+.wa-pl-footer {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  height: 24px !important;
+  padding: 2px 4px !important;
+  margin-top: 4px !important;
+  background: var(--wa-chassis) !important;
+  border-top: 1px solid var(--wa-btn-outline) !important;
+  box-sizing: border-box !important;
+}
+.wa-pl-btn-group {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 2px !important;
+}
+.wa-pl-btn {
+  height: 18px !important;
+  padding: 0 6px !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+}
+.wa-pl-readout {
+  background: #000000 !important;
+  border: 1px solid #1a1a1a !important;
+  box-shadow: inset 1px 1px 0 #000, inset -1px -1px 0 #3e4056 !important;
+  padding: 1px 6px !important;
+  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-size: 9px !important;
+  color: var(--wa-led-green) !important;
+}
+
+/* ==========================================================================
+   PLAYLIST & ALBUM DETAIL VIEW (Seamless Layout & Clean Jewel Case)
+   ========================================================================== */
+
+/* Two-column layout container: seamless margins and full flow */
+html.winamp-ytm-on ytmusic-two-column-browse-results-renderer {
+  margin: 16px 24px !important;
+  box-sizing: border-box !important;
+}
+
+/* Eliminate harsh floating boxes - allow Winamp chassis texture to flow seamlessly */
+html.winamp-ytm-on ytmusic-two-column-browse-results-renderer #primary ytmusic-section-list-renderer,
+html.winamp-ytm-on ytmusic-two-column-browse-results-renderer #secondary ytmusic-section-list-renderer {
+  background: transparent !important;
+  background-image: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin-top: 0 !important;
+}
+
+html.winamp-ytm-on ytmusic-two-column-browse-results-renderer #contents.ytmusic-playlist-shelf-renderer {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* Left Column: Width and alignment */
+html.winamp-ytm-on ytmusic-two-column-browse-results-renderer #primary {
+  width: 320px !important;
+  min-width: 300px !important;
+  max-width: 340px !important;
+  flex: 0 0 320px !important;
+  --ytmusic-content-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+html.winamp-ytm-on ytmusic-two-column-browse-results-renderer #primary ytmusic-section-list-renderer,
+html.winamp-ytm-on ytmusic-two-column-browse-results-renderer #primary #contents.ytmusic-section-list-renderer {
+  width: 100% !important;
+  max-width: 100% !important;
+  --ytmusic-content-width: 100% !important;
+}
+
+html.winamp-ytm-on ytmusic-two-column-browse-results-renderer #secondary {
+  flex: 1 1 auto !important;
+  max-width: none !important;
+  --ytmusic-content-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Detail Header container */
+html.winamp-ytm-on ytmusic-responsive-header-renderer,
+html.winamp-ytm-on ytmusic-editable-playlist-detail-header-renderer,
+html.winamp-ytm-on ytmusic-detail-header-renderer {
+  width: 100% !important;
+  max-width: 100% !important;
+  --ytmusic-content-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  box-sizing: border-box !important;
+}
+
+/* Album Thumbnail: Clean Jewel Case with subtle frame and shadow */
+html.winamp-ytm-on ytmusic-responsive-header-renderer .thumbnail,
+html.winamp-ytm-on ytmusic-responsive-header-renderer ytmusic-thumbnail-renderer,
+html.winamp-ytm-on ytmusic-editable-playlist-detail-header-renderer .thumbnail,
+html.winamp-ytm-on ytmusic-detail-header-renderer .thumbnail {
+  border: 1px solid #141520 !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7) !important;
+  border-radius: 0 !important;
+  background: #000000 !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  margin: 0 auto 12px auto !important;
+}
+
+html.winamp-ytm-on ytmusic-responsive-header-renderer .thumbnail img,
+html.winamp-ytm-on ytmusic-editable-playlist-detail-header-renderer .thumbnail img,
+html.winamp-ytm-on ytmusic-detail-header-renderer .thumbnail img {
+  border-radius: 0 !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+
+/* Edit button on thumbnail: subtle dark glass overlay instead of solid grey block */
+html.winamp-ytm-on .thumbnail yt-button-shape > button,
+html.winamp-ytm-on .thumbnail #edit-button button,
+html.winamp-ytm-on ytmusic-thumbnail-renderer yt-button-shape > button {
+  background: rgba(16, 17, 26, 0.75) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: none !important;
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  border-radius: 0 !important;
+}
+
+html.winamp-ytm-on .thumbnail yt-button-shape > button yt-icon,
+html.winamp-ytm-on .thumbnail yt-button-shape > button svg {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+}
+
+/* Album / Playlist Title: Crisp Bold Pixel Headline */
+html.winamp-ytm-on ytmusic-responsive-header-renderer h1,
+html.winamp-ytm-on ytmusic-responsive-header-renderer h1 .title,
+html.winamp-ytm-on ytmusic-responsive-header-renderer .title.ytmusic-responsive-header-renderer,
+html.winamp-ytm-on ytmusic-editable-playlist-detail-header-renderer .title,
+html.winamp-ytm-on ytmusic-detail-header-renderer .title {
+  font-family: var(--wa-font) !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  text-shadow: 1px 1px 0 #000000, 2px 2px 0 rgba(0, 0, 0, 0.6) !important;
+  letter-spacing: 0.8px !important;
+  text-transform: uppercase !important;
+  line-height: 1.3 !important;
+  text-align: center !important;
+  margin: 6px 0 6px 0 !important;
+  padding: 0 4px !important;
+}
+
+/* Author / Channel / Facepile */
+html.winamp-ytm-on ytmusic-responsive-header-renderer .facepile-container,
+html.winamp-ytm-on ytmusic-responsive-header-renderer .facepile-container yt-formatted-string,
+html.winamp-ytm-on ytmusic-responsive-header-renderer .strapline,
+html.winamp-ytm-on ytmusic-responsive-header-renderer .strapline a {
+  font-family: var(--wa-font) !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  color: var(--wa-led-green) !important;
+  text-align: center !important;
+  letter-spacing: 0.3px !important;
+}
+
+/* Subtitle 1 (Type • Year) */
+html.winamp-ytm-on ytmusic-responsive-header-renderer .subtitle-wrapper,
+html.winamp-ytm-on ytmusic-responsive-header-renderer .subtitle-wrapper yt-formatted-string,
+html.winamp-ytm-on ytmusic-responsive-header-renderer .subtitle-wrapper a,
+html.winamp-ytm-on ytmusic-responsive-header-renderer .subtitle-wrapper span,
+html.winamp-ytm-on ytmusic-editable-playlist-detail-header-renderer .subtitle,
+html.winamp-ytm-on ytmusic-detail-header-renderer .subtitle {
+  font-family: var(--wa-font) !important;
+  font-size: 11px !important;
+  color: var(--wa-led-green) !important;
+  text-align: center !important;
+  margin: 2px 0 !important;
+}
+
+/* Subtitle 2 (Stats: Views • Tracks • Duration) - Clean Wrap */
+html.winamp-ytm-on ytmusic-responsive-header-renderer .second-subtitle-container,
+html.winamp-ytm-on ytmusic-responsive-header-renderer .second-subtitle-container yt-formatted-string,
+html.winamp-ytm-on ytmusic-responsive-header-renderer .second-subtitle-container span,
+html.winamp-ytm-on ytmusic-responsive-header-renderer .second-subtitle,
+html.winamp-ytm-on ytmusic-editable-playlist-detail-header-renderer .second-subtitle-container {
+  font-family: var(--wa-font) !important;
+  font-size: 10px !important;
+  color: #00b000 !important;
+  text-align: center !important;
+  line-height: 1.4 !important;
+  white-space: normal !important;
+  word-break: normal !important;
+  margin: 2px 0 !important;
+}
+
+/* Header Description */
+html.winamp-ytm-on ytmusic-responsive-header-renderer .header-description,
+html.winamp-ytm-on ytmusic-responsive-header-renderer .header-description yt-formatted-string,
+html.winamp-ytm-on ytmusic-editable-playlist-detail-header-renderer .header-description {
+  font-family: var(--wa-font) !important;
+  font-size: 10px !important;
+  color: #8c909e !important;
+  text-align: center !important;
+  margin-top: 4px !important;
+}
+
+/* Action Buttons Cluster: Clean, single bevel, centered icons */
+html.winamp-ytm-on ytmusic-responsive-header-renderer .action-buttons,
+html.winamp-ytm-on ytmusic-editable-playlist-detail-header-renderer .action-buttons,
+html.winamp-ytm-on ytmusic-detail-header-renderer .action-buttons {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-wrap: wrap !important;
+  gap: 4px !important;
+  margin-top: 14px !important;
+  box-sizing: border-box !important;
+}
+
+/* Outer button wrappers must NEVER have bevel or background (prevents double boxes) */
+html.winamp-ytm-on .action-buttons > *,
+html.winamp-ytm-on .action-buttons ytmusic-toggle-button-renderer,
+html.winamp-ytm-on .action-buttons yt-button-renderer,
+html.winamp-ytm-on .action-buttons yt-button-shape,
+html.winamp-ytm-on .action-buttons yt-icon-button,
+html.winamp-ytm-on .action-buttons ytmusic-menu-renderer {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+/* Remove modern touch ripples & circular feedback badges inside action buttons */
+html.winamp-ytm-on .action-buttons yt-touch-feedback-shape,
+html.winamp-ytm-on .action-buttons .yt-spec-touch-feedback-shape,
+html.winamp-ytm-on .action-buttons tp-yt-paper-ripple,
+html.winamp-ytm-on .action-buttons yt-interaction {
+  display: none !important;
+}
+
+/* Secondary Action Buttons (Save, Edit, Share, More): 36px x 28px raised Winamp bevel */
+html.winamp-ytm-on .action-buttons yt-button-shape > button,
+html.winamp-ytm-on .action-buttons yt-icon-button > button,
+html.winamp-ytm-on .action-buttons tp-yt-paper-icon-button,
+html.winamp-ytm-on .action-buttons yt-button-renderer button {
+  width: 36px !important;
+  height: 28px !important;
+  min-width: 36px !important;
+  min-height: 28px !important;
+  max-width: 36px !important;
+  max-height: 28px !important;
+  padding: 0 !important;
+  margin: 0 2px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  background: var(--wa-btn-face) !important;
+  border: 1px solid var(--wa-btn-outline) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight), inset -1px -1px 0 var(--wa-btn-shadow) !important;
+  border-radius: 0 !important;
+  cursor: default !important;
+}
+
+/* Play Button: 56px x 28px prominent raised Winamp bevel */
+html.winamp-ytm-on .action-buttons ytmusic-play-button-renderer {
+  width: 56px !important;
+  height: 28px !important;
+  min-width: 56px !important;
+  min-height: 28px !important;
+  max-width: 56px !important;
+  max-height: 28px !important;
+  padding: 0 !important;
+  margin: 0 4px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: var(--wa-btn-face) !important;
+  border: 1px solid var(--wa-btn-outline) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight), inset -1px -1px 0 var(--wa-btn-shadow) !important;
+  border-radius: 0 !important;
+  box-sizing: border-box !important;
+  cursor: default !important;
+  transform: none !important;
+}
+
+/* Centered icon inside all action buttons */
+html.winamp-ytm-on .action-buttons yt-icon,
+html.winamp-ytm-on .action-buttons yt-icon svg,
+html.winamp-ytm-on .action-buttons .ytSpecButtonShapeNextIcon,
+html.winamp-ytm-on .action-buttons .yt-icon-shape,
+html.winamp-ytm-on .action-buttons iron-icon,
+html.winamp-ytm-on .action-buttons ytmusic-play-button-renderer yt-icon,
+html.winamp-ytm-on .action-buttons ytmusic-play-button-renderer yt-icon svg {
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px !important;
+  min-height: 16px !important;
+  max-width: 16px !important;
+  max-height: 16px !important;
+  padding: 0 !important;
+  margin: 0 auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  fill: var(--wa-btn-glyph) !important;
+  color: var(--wa-btn-glyph) !important;
+  position: static !important;
+  transform: none !important;
+}
+
+/* Button States: Hover and Active */
+html.winamp-ytm-on .action-buttons yt-button-shape > button:hover,
+html.winamp-ytm-on .action-buttons yt-icon-button > button:hover,
+html.winamp-ytm-on .action-buttons tp-yt-paper-icon-button:hover,
+html.winamp-ytm-on .action-buttons ytmusic-play-button-renderer:hover {
+  background: #c0c4d0 !important;
+}
+
+html.winamp-ytm-on .action-buttons yt-button-shape > button:active,
+html.winamp-ytm-on .action-buttons yt-icon-button > button:active,
+html.winamp-ytm-on .action-buttons tp-yt-paper-icon-button:active,
+html.winamp-ytm-on .action-buttons ytmusic-play-button-renderer:active {
+  background: var(--wa-btn-face-pressed) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-shadow), inset -1px -1px 0 var(--wa-btn-highlight) !important;
+}
+
+/* ====================  7. THE WINAMP PLAYER BAR (Requirement 6) ============ */
+html.winamp-ytm-on ytmusic-player-bar {
+  background: var(--wa-chassis) !important;
+  border-top: 1px solid var(--wa-btn-outline) !important;
+  box-shadow: inset 0 1px 0 var(--wa-chassis-bevel-lt),
+    inset 0 -1px 0 var(--wa-chassis-bevel-dk) !important;
+  height: 54px !important;
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  z-index: 1000 !important;
+  overflow: visible !important;
+}
+html.winamp-ytm-on ytmusic-player-bar[inert] {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* All controls stay visible during ads (Requirement 6) */
+html.winamp-ytm-on ytmusic-player-bar[is-advertisement] #progress-bar,
+html.winamp-ytm-on ytmusic-player-bar[is-advertisement] .time-info,
+html.winamp-ytm-on ytmusic-player-bar[is-advertisement] #volume-slider,
+html.winamp-ytm-on ytmusic-player-bar[is-advertisement] .wa-audio-stats,
+html.winamp-ytm-on ytmusic-player-bar[is-advertisement] .winamp-viz,
+html.winamp-ytm-on ytmusic-player-bar[is-advertisement] .left-controls-buttons,
+html.winamp-ytm-on ytmusic-player-bar[is-advertisement] #right-controls {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+html.winamp-ytm-on ytmusic-player-bar[is-advertisement] #progress-bar .slider-knob-inner {
+  display: none !important;
+}
+
+/* Ad text in marquee (Requirement 6) */
+html.winamp-ytm-on ytmusic-player-bar[is-advertisement] .title,
+html.winamp-ytm-on ytmusic-player-bar[is-advertisement] .subtitle,
+html.winamp-ytm-on ytmusic-player-bar .text.ytmusic-player-bar {
+  color: var(--wa-led-green) !important;
+  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-size: 11px !important;
+  text-transform: uppercase !important;
+}
+html.winamp-ytm-on ytmusic-player-bar .wa-sponsored-badge {
+  color: #e0d080 !important;
+  margin-right: 4px !important;
+  font-weight: 700 !important;
+}
+
+/* Transport Buttons: tight row, exactly 23x18px (Requirement 6) */
+html.winamp-ytm-on ytmusic-player-bar #left-controls,
+html.winamp-ytm-on ytmusic-player-bar .left-controls,
+html.winamp-ytm-on ytmusic-player-bar .left-controls-buttons {
+  display: flex !important;
+  align-items: center !important;
+  gap: 1px !important;
+  overflow: visible !important;
+}
+html.winamp-ytm-on ytmusic-player-bar .left-controls-buttons yt-icon-button,
+html.winamp-ytm-on ytmusic-player-bar #play-pause-button {
+  width: 23px !important;
+  height: 18px !important;
+  min-width: 23px !important;
+  min-height: 18px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: var(--wa-btn-face) !important;
+  border: 1px solid var(--wa-btn-outline) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight),
+    inset -1px -1px 0 var(--wa-btn-shadow) !important;
+  box-sizing: border-box !important;
+}
+html.winamp-ytm-on ytmusic-player-bar .left-controls-buttons yt-icon-button > #button,
+html.winamp-ytm-on ytmusic-player-bar #play-pause-button > #button {
+  width: 100% !important;
+  height: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+/* Active / pressed state */
+html.winamp-ytm-on ytmusic-player-bar .left-controls-buttons yt-icon-button:active,
+html.winamp-ytm-on ytmusic-player-bar #play-pause-button:active {
+  background: var(--wa-btn-face-pressed) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-shadow),
+    inset -1px -1px 0 var(--wa-btn-highlight) !important;
+}
+/* Play/Pause active pressed state (Requirement 6) */
+html.winamp-ytm-on ytmusic-player-bar[is-playing] #play-pause-button,
+html.winamp-ytm-on ytmusic-player-bar #play-pause-button.is-playing,
+html.winamp-ytm-on ytmusic-player-bar #play-pause-button[data-wa-playstate="playing"],
+html.winamp-ytm-on ytmusic-player-bar:has(.winamp-viz.is-playing) #play-pause-button,
+html.winamp-ytm-on ytmusic-player-bar #play-pause-button[aria-label*="Pause"],
+html.winamp-ytm-on ytmusic-player-bar #play-pause-button[title*="Pause"] {
+  background: var(--wa-btn-face-pressed) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-shadow), inset -1px -1px 0 var(--wa-btn-highlight) !important;
+}
+
+/* Hide YouTube native SVG shapes inside left buttons */
+html.winamp-ytm-on ytmusic-player-bar .left-controls-buttons yt-icon svg,
+html.winamp-ytm-on ytmusic-player-bar #play-pause-button yt-icon svg,
+html.winamp-ytm-on ytmusic-player-bar .left-controls-buttons yt-icon .yt-icon-shape,
+html.winamp-ytm-on ytmusic-player-bar #play-pause-button yt-icon .yt-icon-shape {
+  display: none !important;
+}
+
+/* Pixel-art Winamp 2.x transport glyphs */
+html.winamp-ytm-on ytmusic-player-bar .left-controls-buttons yt-icon,
+html.winamp-ytm-on ytmusic-player-bar #play-pause-button yt-icon {
+  width: 14px !important;
+  height: 12px !important;
+  display: inline-block !important;
+  background-color: var(--wa-btn-glyph) !important;
+}
+/* 1. Previous: |◀◀ */
+html.winamp-ytm-on ytmusic-player-bar .previous-button yt-icon {
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='2' y='2' width='2' height='8' fill='%23000'/%3E%3Crect x='4' y='5' width='1' height='2' fill='%23000'/%3E%3Crect x='5' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='6' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='7' y='2' width='1' height='8' fill='%23000'/%3E%3Crect x='8' y='5' width='1' height='2' fill='%23000'/%3E%3Crect x='9' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='10' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='11' y='2' width='1' height='8' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='2' y='2' width='2' height='8' fill='%23000'/%3E%3Crect x='4' y='5' width='1' height='2' fill='%23000'/%3E%3Crect x='5' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='6' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='7' y='2' width='1' height='8' fill='%23000'/%3E%3Crect x='8' y='5' width='1' height='2' fill='%23000'/%3E%3Crect x='9' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='10' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='11' y='2' width='1' height='8' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+}
+/* 2. Rewind 10s: ◀◀ */
+html.winamp-ytm-on ytmusic-player-bar .rewind-button yt-icon {
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='2' y='5' width='1' height='2' fill='%23000'/%3E%3Crect x='3' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='4' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='5' y='2' width='1' height='8' fill='%23000'/%3E%3Crect x='7' y='5' width='1' height='2' fill='%23000'/%3E%3Crect x='8' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='9' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='10' y='2' width='1' height='8' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='2' y='5' width='1' height='2' fill='%23000'/%3E%3Crect x='3' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='4' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='5' y='2' width='1' height='8' fill='%23000'/%3E%3Crect x='7' y='5' width='1' height='2' fill='%23000'/%3E%3Crect x='8' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='9' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='10' y='2' width='1' height='8' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+}
+/* 3. Play / Pause button */
+/* Paused: Play ▶ */
+html.winamp-ytm-on ytmusic-player-bar #play-pause-button yt-icon,
+html.winamp-ytm-on ytmusic-player-bar[is-paused] #play-pause-button yt-icon,
+html.winamp-ytm-on ytmusic-player-bar #play-pause-button.is-paused yt-icon,
+html.winamp-ytm-on ytmusic-player-bar #play-pause-button[data-wa-playstate="paused"] yt-icon {
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='3' y='1' width='2' height='10' fill='%23000'/%3E%3Crect x='5' y='2' width='2' height='8' fill='%23000'/%3E%3Crect x='7' y='3' width='2' height='6' fill='%23000'/%3E%3Crect x='9' y='4' width='2' height='4' fill='%23000'/%3E%3Crect x='11' y='5' width='1' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='3' y='1' width='2' height='10' fill='%23000'/%3E%3Crect x='5' y='2' width='2' height='8' fill='%23000'/%3E%3Crect x='7' y='3' width='2' height='6' fill='%23000'/%3E%3Crect x='9' y='4' width='2' height='4' fill='%23000'/%3E%3Crect x='11' y='5' width='1' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+}
+/* Playing: Pause ❚❚ */
+html.winamp-ytm-on ytmusic-player-bar[is-playing] #play-pause-button yt-icon,
+html.winamp-ytm-on ytmusic-player-bar #play-pause-button.is-playing yt-icon,
+html.winamp-ytm-on ytmusic-player-bar #play-pause-button[data-wa-playstate="playing"] yt-icon,
+html.winamp-ytm-on ytmusic-player-bar:has(.winamp-viz.is-playing) #play-pause-button yt-icon,
+html.winamp-ytm-on ytmusic-player-bar #play-pause-button[aria-label*="Pause"] yt-icon,
+html.winamp-ytm-on ytmusic-player-bar #play-pause-button[title*="Pause"] yt-icon {
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='3' y='1' width='3' height='10' fill='%23000'/%3E%3Crect x='8' y='1' width='3' height='10' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='3' y='1' width='3' height='10' fill='%23000'/%3E%3Crect x='8' y='1' width='3' height='10' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+}
+/* 4. Fast forward 30s: ▶▶ */
+html.winamp-ytm-on ytmusic-player-bar .fast-forward-button yt-icon {
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='3' y='2' width='1' height='8' fill='%23000'/%3E%3Crect x='4' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='5' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='6' y='5' width='1' height='2' fill='%23000'/%3E%3Crect x='8' y='2' width='1' height='8' fill='%23000'/%3E%3Crect x='9' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='10' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='11' y='5' width='1' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='3' y='2' width='1' height='8' fill='%23000'/%3E%3Crect x='4' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='5' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='6' y='5' width='1' height='2' fill='%23000'/%3E%3Crect x='8' y='2' width='1' height='8' fill='%23000'/%3E%3Crect x='9' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='10' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='11' y='5' width='1' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+}
+/* 5. Next: ▶▶| */
+html.winamp-ytm-on ytmusic-player-bar .next-button yt-icon {
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='2' y='2' width='1' height='8' fill='%23000'/%3E%3Crect x='3' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='4' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='5' y='5' width='1' height='2' fill='%23000'/%3E%3Crect x='6' y='2' width='1' height='8' fill='%23000'/%3E%3Crect x='7' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='8' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='9' y='5' width='1' height='2' fill='%23000'/%3E%3Crect x='11' y='2' width='2' height='8' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='2' y='2' width='1' height='8' fill='%23000'/%3E%3Crect x='3' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='4' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='5' y='5' width='1' height='2' fill='%23000'/%3E%3Crect x='6' y='2' width='1' height='8' fill='%23000'/%3E%3Crect x='7' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='8' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='9' y='5' width='1' height='2' fill='%23000'/%3E%3Crect x='11' y='2' width='2' height='8' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+}
+
+/* Song thumbnail in player bar: inset beveled frame, centered with clearance below seek bar */
+html.winamp-ytm-on ytmusic-player-bar .thumbnail-image-wrapper {
+  height: 34px !important;
+  width: 34px !important;
+  min-width: 34px !important;
+  margin-top: 6px !important;
+  margin-bottom: 2px !important;
+  margin-right: 8px !important;
+  border: 1px solid #101018 !important;
+  box-shadow: inset 1px 1px 0 #000, 1px 1px 0 rgba(255, 255, 255, 0.15) !important;
+  box-sizing: border-box !important;
+  border-radius: 0 !important;
+  overflow: hidden !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+html.winamp-ytm-on ytmusic-player-bar .thumbnail-image-wrapper img.image {
+  height: 100% !important;
+  width: 100% !important;
+  object-fit: cover !important;
+  border-radius: 0 !important;
+  display: block !important;
+}
+html.winamp-ytm-on ytmusic-player-bar .middle-controls .content-info-wrapper {
+  margin-top: 4px !important;
+}
+
+/* Song Title Marquee: Pure black recessed strip with green LED text */
+html.winamp-ytm-on ytmusic-player-bar .content-info-wrapper {
+  background: var(--wa-screen-bg) !important;
+  border: 1px solid var(--wa-btn-outline) !important;
+  box-shadow: inset 1px 1px 0 #000, inset -1px -1px 0 var(--wa-chassis-bevel-lt) !important;
+  padding: 2px 8px !important;
+  max-height: 34px !important;
+}
+html.winamp-ytm-on ytmusic-player-bar .content-info-wrapper .title {
+  color: var(--wa-led-green) !important;
+  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+}
+html.winamp-ytm-on ytmusic-player-bar .content-info-wrapper .subtitle,
+html.winamp-ytm-on ytmusic-player-bar .content-info-wrapper .subtitle a {
+  color: #00aa00 !important;
+  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-size: 10px !important;
+}
+
+/* Time readout: Pure black inset LCD box with large green digits */
+html.winamp-ytm-on ytmusic-player-bar .time-info {
+  color: var(--wa-led-green) !important;
+  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  background: var(--wa-screen-bg) !important;
+  border: 1px solid var(--wa-btn-outline) !important;
+  box-shadow: inset 1px 1px 0 #000, inset -1px -1px 0 var(--wa-chassis-bevel-lt) !important;
+  padding: 2px 6px !important;
+}
+
+/* ============================================================================
+   Winamp Main LCD Display (Clutterbar + Status + 7-Segment Time + Spectrum)
+   ============================================================================ */
+
+html.winamp-ytm-on .winamp-viz {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: stretch !important;
+  height: 35px !important;
+  min-height: 35px !important;
+  max-height: 35px !important;
+  width: 130px !important;
+  min-width: 130px !important;
+  max-width: 130px !important;
+  margin: 5px 4px 2px 4px !important;
+  padding: 2px 3px !important;
+  background-color: var(--wa-screen-bg, #000000) !important;
+  background-image: radial-gradient(rgba(0, 255, 0, 0.12) 1px, transparent 1px) !important;
+  background-size: 3px 3px !important;
+  border: 1px solid var(--wa-btn-outline, #101018) !important;
+  box-shadow: inset 1px 1px 0 #000000, inset -1px -1px 0 var(--wa-chassis-bevel-lt, #3e4056) !important;
+  border-radius: 0 !important;
+  vertical-align: middle !important;
+  box-sizing: border-box !important;
+  user-select: none !important;
+  overflow: hidden !important;
+  flex-shrink: 0 !important;
+}
+
+/* 1. Clutterbar column (O A I D V) */
+html.winamp-ytm-on .wa-lcd-clutterbar {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  width: 8px !important;
+  min-width: 8px !important;
+  max-width: 8px !important;
+  padding-right: 2px !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-sizing: border-box !important;
+}
+html.winamp-ytm-on .wa-lcd-clutterbar span {
+  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-size: 6px !important;
+  font-weight: 700 !important;
+  color: #4a5568 !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  display: block !important;
+  transform: scaleY(0.9) !important;
+}
+
+/* 2. Main LCD Area */
+html.winamp-ytm-on .wa-lcd-main {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  flex: 1 1 auto !important;
+  padding-left: 3px !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+/* Top Row: Status LEDs & 7-Segment Digital Clock */
+html.winamp-ytm-on .wa-lcd-top {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  height: 13px !important;
+  min-height: 13px !important;
+  line-height: 13px !important;
+  box-sizing: border-box !important;
+}
+
+html.winamp-ytm-on .wa-lcd-status {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 3px !important;
+}
+
+/* Dual LEDs (green top, red bottom) */
+html.winamp-ytm-on .wa-lcd-dots {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+}
+html.winamp-ytm-on .wa-dot-green {
+  display: block !important;
+  width: 3px !important;
+  height: 3px !important;
+  background: var(--wa-led-green, #00ff00) !important;
+  box-shadow: 0 0 2px var(--wa-led-green, #00ff00) !important;
+}
+html.winamp-ytm-on .wa-dot-red {
+  display: block !important;
+  width: 3px !important;
+  height: 3px !important;
+  background: #330000 !important;
+}
+html.winamp-ytm-on .winamp-viz.is-paused .wa-dot-green {
+  background: #003300 !important;
+  box-shadow: none !important;
+}
+html.winamp-ytm-on .winamp-viz.is-paused .wa-dot-red {
+  background: #ff2200 !important;
+  box-shadow: 0 0 2px #ff2200 !important;
+}
+
+/* Mode Icon: Play (▶) or Pause (==) */
+html.winamp-ytm-on .wa-lcd-mode-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 10px !important;
+  height: 10px !important;
+}
+html.winamp-ytm-on .wa-icon-play {
+  display: inline-block !important;
+  font-size: 8px !important;
+  line-height: 1 !important;
+  color: var(--wa-led-green, #00ff00) !important;
+  text-shadow: 0 0 2px var(--wa-led-green, #00ff00) !important;
+}
+html.winamp-ytm-on .wa-icon-pause {
+  display: none !important;
+  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-size: 9px !important;
+  font-weight: 900 !important;
+  letter-spacing: -1px !important;
+  line-height: 1 !important;
+  color: var(--wa-led-green, #00ff00) !important;
+  text-shadow: 0 0 2px var(--wa-led-green, #00ff00) !important;
+}
+html.winamp-ytm-on .winamp-viz.is-paused .wa-icon-play {
+  display: none !important;
+}
+html.winamp-ytm-on .winamp-viz.is-paused .wa-icon-pause {
+  display: inline-block !important;
+}
+
+/* 7-Segment Digital Clock */
+html.winamp-ytm-on .wa-lcd-clock {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+}
+html.winamp-ytm-on .wa-clock-digits {
+  font-family: "Lucida Console", "Courier New", "Consolas", monospace !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  letter-spacing: 1px !important;
+  color: var(--wa-led-green, #00ff00) !important;
+  text-shadow: 0 0 3px rgba(0, 255, 0, 0.7), 0 0 6px rgba(0, 255, 0, 0.3) !important;
+  line-height: 1 !important;
+}
+html.winamp-ytm-on .winamp-viz.is-paused .wa-clock-digits {
+  color: var(--wa-led-green, #00ff00) !important;
+  opacity: 0.85 !important;
+}
+
+/* Bottom Row: Spectrum Analyzer */
+html.winamp-ytm-on .wa-lcd-spectrum {
+  position: relative !important;
+  display: flex !important;
+  align-items: flex-end !important;
+  height: 17px !important;
+  min-height: 17px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Dotted Axis */
+html.winamp-ytm-on .wa-spectrum-axis {
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  top: 0 !important;
+  border-left: 1px dotted rgba(255, 255, 255, 0.3) !important;
+  border-bottom: 1px dotted rgba(255, 255, 255, 0.3) !important;
+  pointer-events: none !important;
+}
+
+/* Spectrum Columns Container */
+html.winamp-ytm-on .wa-spectrum-bars {
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  height: 100% !important;
+  padding-left: 3px !important;
+  padding-bottom: 1px !important;
+  box-sizing: border-box !important;
+  gap: 1px !important;
+}
+
+html.winamp-ytm-on .wa-spec-col {
+  position: relative !important;
+  flex: 1 1 0 !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: flex-end !important;
+}
+
+/* Vertical LED Bar with Segmented Scanlines */
+html.winamp-ytm-on .wa-spec-bar {
+  display: block !important;
+  width: 100% !important;
+  height: 25% !important;
+  background: linear-gradient(to top, #00e000 0%, #ffff00 65%, #ff0000 100%) !important;
+  -webkit-mask-image: repeating-linear-gradient(to bottom, #000 0px, #000 1px, transparent 1px, transparent 2px) !important;
+  mask-image: repeating-linear-gradient(to bottom, #000 0px, #000 1px, transparent 1px, transparent 2px) !important;
+  animation-name: wa-spec-bounce !important;
+  animation-iteration-count: infinite !important;
+  animation-timing-function: steps(8, end) !important;
+}
+
+/* Floating Peak Dash */
+html.winamp-ytm-on .wa-spec-peak {
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 1px !important;
+  background: #ffffff !important;
+  box-shadow: 0 0 2px rgba(255, 255, 255, 0.9) !important;
+  bottom: 30% !important;
+  pointer-events: none !important;
+  animation-name: wa-peak-bounce !important;
+  animation-iteration-count: infinite !important;
+  animation-timing-function: ease-out !important;
+}
+
+/* Real Audio Reactive Spectrum Analyzer (disables CSS loop when live PCM is running) */
+html.winamp-ytm-on .winamp-viz.wa-real-audio .wa-spec-bar {
+  animation: none !important;
+}
+html.winamp-ytm-on .winamp-viz.wa-real-audio .wa-spec-peak {
+  animation: none !important;
+}
+
+/* Paused / Inactive state */
+html.winamp-ytm-on .winamp-viz.is-paused .wa-spec-bar {
+  height: 0% !important;
+  animation: none !important;
+}
+html.winamp-ytm-on .winamp-viz.is-paused .wa-spec-peak {
+  opacity: 0 !important;
+  animation: none !important;
+}
+
+/* Staggered Timings across the 16 Frequency Columns */
+html.winamp-ytm-on .wa-col-0 .wa-spec-bar  { animation-duration: 0.55s; animation-delay: 0.00s; }
+html.winamp-ytm-on .wa-col-0 .wa-spec-peak { animation-duration: 0.55s; animation-delay: 0.00s; }
+html.winamp-ytm-on .wa-col-1 .wa-spec-bar  { animation-duration: 0.72s; animation-delay: 0.12s; }
+html.winamp-ytm-on .wa-col-1 .wa-spec-peak { animation-duration: 0.72s; animation-delay: 0.12s; }
+html.winamp-ytm-on .wa-col-2 .wa-spec-bar  { animation-duration: 0.60s; animation-delay: 0.24s; }
+html.winamp-ytm-on .wa-col-2 .wa-spec-peak { animation-duration: 0.60s; animation-delay: 0.24s; }
+html.winamp-ytm-on .wa-col-3 .wa-spec-bar  { animation-duration: 0.85s; animation-delay: 0.08s; }
+html.winamp-ytm-on .wa-col-3 .wa-spec-peak { animation-duration: 0.85s; animation-delay: 0.08s; }
+html.winamp-ytm-on .wa-col-4 .wa-spec-bar  { animation-duration: 0.65s; animation-delay: 0.18s; }
+html.winamp-ytm-on .wa-col-4 .wa-spec-peak { animation-duration: 0.65s; animation-delay: 0.18s; }
+html.winamp-ytm-on .wa-col-5 .wa-spec-bar  { animation-duration: 0.78s; animation-delay: 0.04s; }
+html.winamp-ytm-on .wa-col-5 .wa-spec-peak { animation-duration: 0.78s; animation-delay: 0.04s; }
+html.winamp-ytm-on .wa-col-6 .wa-spec-bar  { animation-duration: 0.58s; animation-delay: 0.22s; }
+html.winamp-ytm-on .wa-col-6 .wa-spec-peak { animation-duration: 0.58s; animation-delay: 0.22s; }
+html.winamp-ytm-on .wa-col-7 .wa-spec-bar  { animation-duration: 0.90s; animation-delay: 0.14s; }
+html.winamp-ytm-on .wa-col-7 .wa-spec-peak { animation-duration: 0.90s; animation-delay: 0.14s; }
+html.winamp-ytm-on .wa-col-8 .wa-spec-bar  { animation-duration: 0.62s; animation-delay: 0.06s; }
+html.winamp-ytm-on .wa-col-8 .wa-spec-peak { animation-duration: 0.62s; animation-delay: 0.06s; }
+html.winamp-ytm-on .wa-col-9 .wa-spec-bar  { animation-duration: 0.70s; animation-delay: 0.16s; }
+html.winamp-ytm-on .wa-col-9 .wa-spec-peak { animation-duration: 0.70s; animation-delay: 0.16s; }
+html.winamp-ytm-on .wa-col-10 .wa-spec-bar { animation-duration: 0.82s; animation-delay: 0.10s; }
+html.winamp-ytm-on .wa-col-10 .wa-spec-peak{ animation-duration: 0.82s; animation-delay: 0.10s; }
+html.winamp-ytm-on .wa-col-11 .wa-spec-bar { animation-duration: 0.54s; animation-delay: 0.20s; }
+html.winamp-ytm-on .wa-col-11 .wa-spec-peak{ animation-duration: 0.54s; animation-delay: 0.20s; }
+html.winamp-ytm-on .wa-col-12 .wa-spec-bar { animation-duration: 0.68s; animation-delay: 0.02s; }
+html.winamp-ytm-on .wa-col-12 .wa-spec-peak{ animation-duration: 0.68s; animation-delay: 0.02s; }
+html.winamp-ytm-on .wa-col-13 .wa-spec-bar { animation-duration: 0.76s; animation-delay: 0.15s; }
+html.winamp-ytm-on .wa-col-13 .wa-spec-peak{ animation-duration: 0.76s; animation-delay: 0.15s; }
+html.winamp-ytm-on .wa-col-14 .wa-spec-bar { animation-duration: 0.64s; animation-delay: 0.07s; }
+html.winamp-ytm-on .wa-col-14 .wa-spec-peak{ animation-duration: 0.64s; animation-delay: 0.07s; }
+html.winamp-ytm-on .wa-col-15 .wa-spec-bar { animation-duration: 0.88s; animation-delay: 0.11s; }
+html.winamp-ytm-on .wa-col-15 .wa-spec-peak{ animation-duration: 0.88s; animation-delay: 0.11s; }
+
+/* Bar Bounce Keyframe */
+@keyframes wa-spec-bounce {
+  0%   { height: 15%; }
+  18%  { height: 85%; }
+  32%  { height: 35%; }
+  52%  { height: 95%; }
+  68%  { height: 45%; }
+  82%  { height: 75%; }
+  92%  { height: 20%; }
+  100% { height: 15%; }
+}
+
+/* Peak Dash Keyframe: jumps with the bar, holds, then falls with gravity */
+@keyframes wa-peak-bounce {
+  0%   { bottom: 35%; opacity: 0.8; }
+  18%  { bottom: 88%; opacity: 1; }
+  30%  { bottom: 88%; opacity: 0.95; }
+  45%  { bottom: 60%; opacity: 0.85; }
+  52%  { bottom: 98%; opacity: 1; }
+  65%  { bottom: 98%; opacity: 0.95; }
+  80%  { bottom: 55%; opacity: 0.85; }
+  92%  { bottom: 35%; opacity: 0.8; }
+  100% { bottom: 35%; opacity: 0.8; }
+}
+
+/* Skin-specific Spectrum Gradients */
+:root[data-wa-skin="modern"] .wa-spec-bar {
+  background: linear-gradient(to top, #0099cc 0%, #00e5ff 65%, #ffffff 100%) !important;
+}
+:root[data-wa-skin="gold"] .wa-spec-bar {
+  background: linear-gradient(to top, #c88a00 0%, #ffb81c 65%, #ff4400 100%) !important;
+}
+:root[data-wa-skin="cyberpunk"] .wa-spec-bar {
+  background: linear-gradient(to top, #8800ff 0%, #ff007f 65%, #39ff14 100%) !important;
+}
+
+/* Seek Bar: Long black groove + wide olive/cream ridged thumb centered on fill tip */
+html.winamp-ytm-on tp-yt-paper-slider#progress-bar {
+  --paper-slider-active-color: var(--wa-led-green) !important;
+  --paper-slider-container-color: #000000 !important;
+  --paper-slider-knob-color: var(--wa-seek-thumb) !important;
+  --paper-progress-active-color: var(--wa-led-green) !important;
+  --paper-progress-container-color: #000000 !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 8px !important;
+  transform: none !important;
+  z-index: 10 !important;
+}
+html.winamp-ytm-on tp-yt-paper-slider#progress-bar #sliderContainer {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  height: 8px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+html.winamp-ytm-on tp-yt-paper-slider#progress-bar .bar-container {
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+}
+html.winamp-ytm-on tp-yt-paper-slider#progress-bar #sliderBar {
+  position: relative !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100% !important;
+  height: 6px !important;
+}
+html.winamp-ytm-on tp-yt-paper-slider#progress-bar #sliderBar #progressContainer {
+  position: relative !important;
+  background: #000000 !important;
+  border: 1px solid var(--wa-btn-outline) !important;
+  height: 6px !important;
+  width: 100% !important;
+  margin: 0 !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+}
+html.winamp-ytm-on tp-yt-paper-slider#progress-bar #primaryProgress {
+  background: var(--wa-led-green) !important;
+  height: 100% !important;
+}
+html.winamp-ytm-on tp-yt-paper-slider#progress-bar #sliderKnobContainer {
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  pointer-events: none !important;
+}
+html.winamp-ytm-on tp-yt-paper-slider#progress-bar #sliderKnob {
+  position: absolute !important;
+  top: 50% !important;
+  margin: 0 0 0 -16px !important;
+  transform: translateY(-50%) !important;
+  height: 8px !important;
+  width: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  pointer-events: auto !important;
+}
+html.winamp-ytm-on tp-yt-paper-slider#progress-bar .slider-knob-inner {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  margin: 0 !important;
+  background: var(--wa-seek-thumb) !important;
+  border: 1px solid var(--wa-btn-outline) !important;
+  box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #7a7450 !important;
+  border-radius: 0 !important;
+  width: 26px !important;
+  height: 10px !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+html.winamp-ytm-on tp-yt-paper-slider#progress-bar .slider-knob-inner::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 2px !important;
+  left: 5px !important;
+  right: 5px !important;
+  bottom: 2px !important;
+  background: repeating-linear-gradient(to bottom, #7a7450 0px, #7a7450 1px, #ffffff 1px, #ffffff 2px) !important;
+  pointer-events: none !important;
+}
+
+/* Audio Stats Readout: 256 KBPS | 44.1 KHZ | STEREO (Requirement 10) */
+html.winamp-ytm-on .wa-audio-stats {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 3px !important;
+  height: 22px !important;
+  padding: 2px 4px !important;
+  background: #000000 !important;
+  border: 1px solid var(--wa-btn-outline) !important;
+  box-shadow: inset 1px 1px 0 #000, inset -1px -1px 0 var(--wa-chassis-bevel-lt) !important;
+  margin: 0 3px !important;
+  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  box-sizing: border-box !important;
+}
+html.winamp-ytm-on .wa-audio-stats .val {
+  color: var(--wa-led-green) !important;
+}
+html.winamp-ytm-on .wa-audio-stats .lbl {
+  color: #6b6648 !important; /* olive scale label */
+  font-size: 8px !important;
+  margin-right: 2px !important;
+}
+html.winamp-ytm-on .wa-audio-stats .mode {
+  color: #2a3a1a !important;
+  font-size: 8px !important;
+  margin-left: 2px !important;
+}
+html.winamp-ytm-on .wa-audio-stats .mode.is-stereo {
+  color: var(--wa-led-green) !important;
+}
+
+/* Volume Slider: Inset groove + classic orange gradient fill centered on fill tip */
+html.winamp-ytm-on ytmusic-player-bar:not([inert]) #volume-slider,
+html.winamp-ytm-on ytmusic-player-bar:not([inert]) .volume-slider,
+html.winamp-ytm-on ytmusic-player-bar:not([inert]) tp-yt-paper-slider#volume-slider {
+  --paper-slider-active-color: #ff8800 !important;
+  --paper-slider-knob-color: var(--wa-btn-face) !important;
+  --paper-progress-active-color: #ff8800 !important;
+  --paper-progress-container-color: #000000 !important;
+  height: 18px !important;
+  width: 72px !important;
+  min-width: 60px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  position: relative !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  margin: 0 16px 0 4px !important;
+}
+html.winamp-ytm-on tp-yt-paper-slider#volume-slider #sliderContainer {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  height: 18px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+html.winamp-ytm-on tp-yt-paper-slider#volume-slider .bar-container {
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+}
+html.winamp-ytm-on tp-yt-paper-slider#volume-slider #sliderBar {
+  position: relative !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100% !important;
+  height: 6px !important;
+}
+html.winamp-ytm-on tp-yt-paper-slider#volume-slider #primaryProgress {
+  background: linear-gradient(to right, #ff2200, #ffaa00) !important;
+  height: 100% !important;
+}
+html.winamp-ytm-on tp-yt-paper-slider#volume-slider #sliderBar #progressContainer {
+  position: relative !important;
+  background: #000000 !important;
+  border: 1px solid var(--wa-btn-outline) !important;
+  height: 6px !important;
+  width: 100% !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  margin: 0 !important;
+}
+html.winamp-ytm-on tp-yt-paper-slider#volume-slider #sliderKnobContainer {
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  pointer-events: none !important;
+}
+html.winamp-ytm-on tp-yt-paper-slider#volume-slider #sliderKnob {
+  position: absolute !important;
+  top: 50% !important;
+  margin: 0 0 0 -16px !important;
+  transform: translateY(-50%) !important;
+  height: 18px !important;
+  width: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  pointer-events: auto !important;
+}
+html.winamp-ytm-on tp-yt-paper-slider#volume-slider .slider-knob-inner {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  margin: 0 !important;
+  background: var(--wa-btn-face) !important;
+  border: 1px solid var(--wa-btn-outline) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight),
+    inset -1px -1px 0 var(--wa-btn-shadow) !important;
+  border-radius: 0 !important;
+  width: 14px !important;
+  height: 12px !important;
+}
+html.winamp-ytm-on tp-yt-paper-slider#volume-slider .slider-knob-inner::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 2px !important;
+  left: 2px !important;
+  right: 2px !important;
+  bottom: 2px !important;
+  background: repeating-linear-gradient(to right, #5a5a66 0px, #5a5a66 1px, #ffffff 1px, #ffffff 2px) !important;
+  pointer-events: none !important;
+}
+
+/* Right Controls: Classic Winamp 2.x Hardware Button System (Requirement 6) */
+html.winamp-ytm-on ytmusic-player-bar #right-controls yt-icon-button,
+html.winamp-ytm-on ytmusic-player-bar #right-controls tp-yt-paper-icon-button {
+  position: relative !important;
+  height: 18px !important;
+  min-height: 18px !important;
+  background: var(--wa-btn-face) !important;
+  border: 1px solid var(--wa-btn-outline) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight), inset -1px -1px 0 var(--wa-btn-shadow) !important;
+  margin: 0 1px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  vertical-align: middle !important;
+  border-radius: 0 !important;
+}
+
+/* Ensure inner native button covers the entire face so clicking is 100% reliable */
+html.winamp-ytm-on ytmusic-player-bar #right-controls yt-icon-button > button,
+html.winamp-ytm-on ytmusic-player-bar #right-controls tp-yt-paper-icon-button > button,
+html.winamp-ytm-on ytmusic-player-bar #right-controls button#button {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+  z-index: 5 !important;
+  pointer-events: auto !important;
+  border-radius: 0 !important;
+}
+
+/* Pressed state for active toggle buttons */
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn].is-on,
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn]:active,
+html.winamp-ytm-on ytmusic-player-bar[data-wa-shuffle="on"] #right-controls [data-wa-btn="shuf"],
+html.winamp-ytm-on ytmusic-player-bar[data-wa-repeat="on"] #right-controls [data-wa-btn="rep"] {
+  background: var(--wa-btn-face-pressed) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-shadow), inset -1px -1px 0 var(--wa-btn-highlight) !important;
+}
+
+/* Hide native SVGs in right controls buttons */
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn] yt-icon,
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn] .yt-icon-shape,
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn] svg,
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn] yt-interaction {
+  display: none !important;
+}
+
+/* Common LED indicator for REP, SHUF */
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="rep"]::before,
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"]::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 6px !important;
+  left: 4px !important;
+  width: 4px !important;
+  height: 4px !important;
+  background: #243618 !important;
+  border: 1px solid #10180c !important;
+  box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.5) !important;
+  box-sizing: border-box !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+}
+
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="rep"].is-on::before,
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"].is-on::before,
+html.winamp-ytm-on ytmusic-player-bar[data-wa-shuffle="on"] #right-controls [data-wa-btn="shuf"]::before,
+html.winamp-ytm-on ytmusic-player-bar[data-wa-repeat="on"] #right-controls [data-wa-btn="rep"]::before {
+  background: #00ff00 !important;
+  border: 1px solid #005500 !important;
+  box-shadow: 0 0 3px #00ff00 !important;
+}
+
+/* Common text typography for REP, SHUF */
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="rep"]::after,
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"]::after {
+  font-family: var(--wa-font) !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+  color: var(--wa-btn-glyph) !important;
+  text-shadow: var(--wa-btn-glyph-shadow) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 100% !important;
+  margin-left: 6px !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+  user-select: none !important;
+}
+
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="rep"].is-on::after,
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"].is-on::after,
+html.winamp-ytm-on ytmusic-player-bar[data-wa-shuffle="on"] #right-controls [data-wa-btn="shuf"]::after,
+html.winamp-ytm-on ytmusic-player-bar[data-wa-repeat="on"] #right-controls [data-wa-btn="rep"]::after {
+  color: #000000 !important;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7) !important;
+}
+
+/* 1. VOLUME / MUTE BUTTON (Centered pixel horn) */
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="vol"] {
+  width: 22px !important;
+  min-width: 22px !important;
+  margin-left: 2px !important;
+}
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="vol"]::before {
+  display: none !important;
+}
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="vol"]::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 11px !important;
+  height: 9px !important;
+  background-color: var(--wa-btn-glyph) !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 11 9' shape-rendering='crispEdges'%3E%3Crect x='0' y='3' width='3' height='3' fill='%23000'/%3E%3Crect x='3' y='2' width='2' height='5' fill='%23000'/%3E%3Crect x='5' y='1' width='2' height='7' fill='%23000'/%3E%3Crect x='8' y='2' width='1' height='5' fill='%23000'/%3E%3Crect x='10' y='0' width='1' height='9' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 11 9' shape-rendering='crispEdges'%3E%3Crect x='0' y='3' width='3' height='3' fill='%23000'/%3E%3Crect x='3' y='2' width='2' height='5' fill='%23000'/%3E%3Crect x='5' y='1' width='2' height='7' fill='%23000'/%3E%3Crect x='8' y='2' width='1' height='5' fill='%23000'/%3E%3Crect x='10' y='0' width='1' height='9' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+/* 2. REPEAT BUTTON */
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="rep"] {
+  width: 36px !important;
+  min-width: 36px !important;
+}
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="rep"]::after {
+  content: "REP" !important;
+}
+
+/* 3. SHUFFLE BUTTON */
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"] {
+  width: 44px !important;
+  min-width: 44px !important;
+}
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"]::after {
+  content: "SHUF" !important;
+}
+
+/* 4. PLAYER PAGE / QUEUE TOGGLE BUTTON (Expand/Collapse Arrow) */
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="pl"],
+html.winamp-ytm-on ytmusic-player-bar #right-controls .toggle-player-page-button {
+  width: 22px !important;
+  min-width: 22px !important;
+}
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="pl"]::before,
+html.winamp-ytm-on ytmusic-player-bar #right-controls .toggle-player-page-button::before {
+  display: none !important;
+}
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="pl"]::after,
+html.winamp-ytm-on ytmusic-player-bar #right-controls .toggle-player-page-button::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 8px !important;
+  height: 5px !important;
+  background-color: var(--wa-btn-glyph) !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 5' shape-rendering='crispEdges'%3E%3Cpolygon points='0,0 8,0 4,5' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 5' shape-rendering='crispEdges'%3E%3Cpolygon points='0,0 8,0 4,5' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+/* 5. FULLSCREEN / EXPAND BUTTON (Winamp Maximize Window Icon) */
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="fs"] {
+  width: 22px !important;
+  min-width: 22px !important;
+}
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="fs"]::before {
+  display: none !important;
+}
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="fs"]::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 10px !important;
+  height: 9px !important;
+  background-color: var(--wa-btn-glyph) !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 9' shape-rendering='crispEdges'%3E%3Crect x='0' y='0' width='10' height='2' fill='%23000'/%3E%3Crect x='0' y='2' width='1' height='7' fill='%23000'/%3E%3Crect x='9' y='2' width='1' height='7' fill='%23000'/%3E%3Crect x='0' y='8' width='10' height='1' fill='%23000'/%3E%3Crect x='2' y='0' width='6' height='1' fill='%23fff'/%3E%3C/svg%3E") no-repeat center !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 9' shape-rendering='crispEdges'%3E%3Crect x='0' y='0' width='10' height='2' fill='%23000'/%3E%3Crect x='0' y='2' width='1' height='7' fill='%23000'/%3E%3Crect x='9' y='2' width='1' height='7' fill='%23000'/%3E%3Crect x='0' y='8' width='10' height='1' fill='%23000'/%3E%3Crect x='2' y='0' width='6' height='1' fill='%23fff'/%3E%3C/svg%3E") no-repeat center !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+/* 6. CC BUTTON (Captions) */
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="cc"] {
+  width: 26px !important;
+  min-width: 26px !important;
+}
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="cc"]::before {
+  display: none !important;
+}
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="cc"]::after {
+  content: "CC" !important;
+  font-family: var(--wa-font) !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  color: var(--wa-btn-glyph) !important;
+  text-shadow: var(--wa-btn-glyph-shadow) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+/* 7. SPEED BUTTON (1X) */
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="spd"] {
+  width: 24px !important;
+  min-width: 24px !important;
+}
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="spd"]::before {
+  display: none !important;
+}
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="spd"]::after {
+  content: "1X" !important;
+  font-family: var(--wa-font) !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  color: var(--wa-btn-glyph) !important;
+  text-shadow: var(--wa-btn-glyph-shadow) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+/* Hide duplicate expand controls and miniplayer overlay */
+html.winamp-ytm-on ytmusic-player-bar #right-controls #expand-volume,
+html.winamp-ytm-on ytmusic-player-bar #right-controls #expand-repeat,
+html.winamp-ytm-on ytmusic-player-bar #right-controls #expand-shuffle,
+html.winamp-ytm-on ytmusic-player-bar #right-controls .expand-button,
+html.winamp-ytm-on ytmusic-player-bar #right-controls #expanding-menu,
+html.winamp-ytm-on ytmusic-miniplayer,
+html.winamp-ytm-on .ytMusicMiniPlayerLeftSection,
+html.winamp-ytm-on .ytmusicTrackInfoThumbnailWrapper,
+html.winamp-ytm-on .ytmusicTrackInfoThumbnail {
+  display: none !important;
+}
+
+/* Card Shelf Menu Button */
+html.winamp-ytm-on ytmusic-card-shelf-renderer #menu-button,
+html.winamp-ytm-on ytmusic-card-shelf-renderer ytmusic-menu-renderer {
+  width: 22px !important;
+  height: 22px !important;
+  min-width: 22px !important;
+  min-height: 22px !important;
+  background: var(--wa-btn-face) !important;
+  border: 1px solid var(--wa-btn-outline) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight), inset -1px -1px 0 var(--wa-btn-shadow) !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* ---- 8. Now Playing Page (Requirement 8) ---------------------------------- */
+/* Center the player page content container with bounded height */
+html.winamp-ytm-on ytmusic-player-page .content {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: stretch !important;
+  margin: 0 auto !important;
+  max-width: 100% !important;
+  height: calc(100vh - 130px) !important;
+  max-height: calc(100vh - 130px) !important;
+  box-sizing: border-box !important;
+}
+
+/* Video / album art: framed in its own window with title bar & centered */
+html.winamp-ytm-on ytmusic-player-page #main-panel {
+  background: #11121d !important;
+  border: 1px solid #10111a !important;
+  box-shadow: inset 1px 1px 0 #4c4f6f, inset -1px -1px 0 #0d0e16, 0 1px 0 #000 !important;
+  padding: 8px !important;
+  margin: 0 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  align-self: center !important;
+  box-sizing: border-box !important;
+}
+
+/* Ensure Side Panel (Queue / Lyrics / Related) fills available height and enables smooth vertical scrolling */
+html.winamp-ytm-on ytmusic-player-page #side-panel {
+  height: 100% !important;
+  max-height: 100% !important;
+  align-self: stretch !important;
+  display: flex !important;
+  flex-direction: column !important;
+  box-sizing: border-box !important;
+  min-height: 0 !important;
+}
+
+html.winamp-ytm-on ytmusic-player-page #side-panel #tab-renderer,
+html.winamp-ytm-on ytmusic-player-page #side-panel ytmusic-tab-renderer {
+  flex: 1 1 0% !important;
+  min-height: 0 !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: #5a5a66 #1a1a1a !important;
+}
+
+html.winamp-ytm-on ytmusic-player-page #tab-renderer::-webkit-scrollbar,
+html.winamp-ytm-on ytmusic-player-page #queue::-webkit-scrollbar,
+html.winamp-ytm-on ytmusic-player-page ytmusic-player-queue::-webkit-scrollbar {
+  width: 10px !important;
+  background: #000000 !important;
+}
+
+html.winamp-ytm-on ytmusic-player-page #tab-renderer::-webkit-scrollbar-thumb,
+html.winamp-ytm-on ytmusic-player-page #queue::-webkit-scrollbar-thumb,
+html.winamp-ytm-on ytmusic-player-page ytmusic-player-queue::-webkit-scrollbar-thumb {
+  background: var(--wa-btn-face, #b4b8c4) !important;
+  border: 1px solid var(--wa-btn-outline, #1a1a1a) !important;
+  box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #5a5a66 !important;
+}
+
+/* Player host container centered */
+html.winamp-ytm-on ytmusic-player-page #player {
+  margin: 0 auto !important;
+  display: block !important;
+  position: relative !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Player artwork centering */
+html.winamp-ytm-on ytmusic-player-page ytmusic-player #song-image {
+  margin: 0 auto !important;
+  display: block !important;
+  width: 100% !important;
+  position: relative !important;
+}
+
+html.winamp-ytm-on ytmusic-player-page ytmusic-player #thumbnail {
+  position: absolute !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  margin: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+html.winamp-ytm-on ytmusic-player-page ytmusic-player #song-image img,
+html.winamp-ytm-on ytmusic-player-page ytmusic-player #thumbnail img,
+html.winamp-ytm-on ytmusic-player-page ytmusic-player img {
+  margin: 0 auto !important;
+  display: block !important;
+  object-fit: contain !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Video element centering when video mode is active */
+html.winamp-ytm-on ytmusic-player-page ytmusic-player #song-video video {
+  margin: 0 auto !important;
+  display: block !important;
+  object-fit: contain !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+
+/* ---- Song / Video AV Switcher (ytmusic-av-toggle) ------------------------- */
+
+/* Rule 1: Hide AV toggle completely when Video is disabled (Audio-Only mode active or track disabled) */
+html.winamp-ytm-audio ytmusic-av-toggle,
+html.winamp-ytm-audio #av-id,
+html.winamp-ytm-audio .av.ytmusic-player-page,
+html.winamp-ytm-on ytmusic-av-toggle[toggle-disabled],
+html.winamp-ytm-on ytmusic-av-toggle[disabled],
+html.winamp-ytm-on [data-wa-video-disabled],
+html.winamp-ytm-on #av-id:has(ytmusic-av-toggle[toggle-disabled]),
+html.winamp-ytm-on #av-id:has(ytmusic-av-toggle[disabled]) {
+  display: none !important;
+}
+
+/* Rule 2: When Video is enabled and available, show and skin ytmusic-av-toggle with Winamp retro bevels */
+html.winamp-ytm-on:not(.winamp-ytm-audio) #av-id {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 auto 12px auto !important;
+  padding: 0 !important;
+  width: auto !important;
+}
+
+html.winamp-ytm-on:not(.winamp-ytm-audio) ytmusic-av-toggle {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+/* Button container: seamless side-by-side matching reference carousel button pair */
+html.winamp-ytm-on:not(.winamp-ytm-audio) ytmusic-av-toggle .av-toggle {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  gap: 4px !important;
+  box-sizing: border-box !important;
+}
+
+/* Base button styling */
+html.winamp-ytm-on:not(.winamp-ytm-audio) ytmusic-av-toggle .song-button,
+html.winamp-ytm-on:not(.winamp-ytm-audio) ytmusic-av-toggle .video-button {
+  height: 22px !important;
+  min-height: 22px !important;
+  padding: 0 10px !important;
+  margin: 0 !important;
+  font-family: "Lucida Console", "Consolas", monospace, sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+  border-radius: 0 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  outline: none !important;
+  transition: none !important;
+}
+
+/* Kill any pseudo LED dot */
+html.winamp-ytm-on ytmusic-av-toggle button::before {
+  display: none !important;
+  content: none !important;
+}
+
+/* 1. Inactive / Unselected State: Sunken dark chassis bevel (matching '<' in reference) */
+html.winamp-ytm-on:not(.winamp-ytm-audio) ytmusic-av-toggle .song-button,
+html.winamp-ytm-on:not(.winamp-ytm-audio) ytmusic-av-toggle .video-button,
+html.winamp-ytm-on:not(.winamp-ytm-audio) ytmusic-av-toggle .song-button[aria-pressed="false"],
+html.winamp-ytm-on:not(.winamp-ytm-audio) ytmusic-av-toggle .video-button[aria-pressed="false"] {
+  background: var(--wa-chassis, #222436) !important;
+  border: 1px solid var(--wa-btn-outline, #101018) !important;
+  box-shadow: inset 1px 1px 0 #0a0a12,
+              inset -1px -1px 0 rgba(255, 255, 255, 0.08) !important;
+  color: #545668 !important;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Hover on inactive button */
+html.winamp-ytm-on:not(.winamp-ytm-audio) ytmusic-av-toggle .song-button:not([aria-pressed="true"]):hover,
+html.winamp-ytm-on:not(.winamp-ytm-audio) ytmusic-av-toggle .video-button:not([aria-pressed="true"]):hover {
+  background: #2b2d42 !important;
+  color: #8c8e9f !important;
+}
+
+/* 2. Active / Selected State: Crisp raised silver bevel with white 3D highlight (matching '>' in reference) */
+html.winamp-ytm-on:not(.winamp-ytm-audio) ytmusic-av-toggle .song-button[aria-pressed="true"],
+html.winamp-ytm-on:not(.winamp-ytm-audio) ytmusic-av-toggle .video-button[aria-pressed="true"],
+html.winamp-ytm-on:not(.winamp-ytm-audio) ytmusic-av-toggle[is-audio-playback-mode-selected="true"] .song-button,
+html.winamp-ytm-on:not(.winamp-ytm-audio) ytmusic-av-toggle[is-video-playback-mode-selected="true"] .video-button {
+  background: var(--wa-btn-face, #b4b8c4) !important;
+  border: 1px solid var(--wa-btn-outline, #1a1a1a) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight, #ffffff),
+              inset -1px -1px 0 var(--wa-btn-shadow, #5a5a66),
+              0 1px 2px rgba(0, 0, 0, 0.6) !important;
+  color: var(--wa-btn-glyph, #1c1c28) !important;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Hover on active button */
+html.winamp-ytm-on:not(.winamp-ytm-audio) ytmusic-av-toggle .song-button[aria-pressed="true"]:hover,
+html.winamp-ytm-on:not(.winamp-ytm-audio) ytmusic-av-toggle .video-button[aria-pressed="true"]:hover {
+  background: #c6cad6 !important;
+}
+
+/* Active click / press transition */
+html.winamp-ytm-on:not(.winamp-ytm-audio) ytmusic-av-toggle .song-button:active,
+html.winamp-ytm-on:not(.winamp-ytm-audio) ytmusic-av-toggle .video-button:active {
+  transform: translate(1px, 1px) !important;
+}
+
+/* Kill ripple/touch feedback animations */
+html.winamp-ytm-on ytmusic-av-toggle yt-ripple-shape,
+html.winamp-ytm-on ytmusic-av-toggle yt-touch-feedback-shape {
+  display: none !important;
+}
+
+/* Now Playing Tab Strip (UP NEXT / LYRICS / COMMENTS / RELATED) */
+html.winamp-ytm-on ytmusic-player-page tp-yt-paper-tab {
+  background: var(--wa-btn-face) !important;
+  border: 1px solid var(--wa-btn-outline) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight), inset -1px -1px 0 var(--wa-btn-shadow) !important;
+  height: 24px !important;
+  min-height: 24px !important;
+  padding: 0 8px !important;
+  margin: 0 2px !important;
+  color: var(--wa-btn-glyph) !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  cursor: default !important;
+}
+html.winamp-ytm-on ytmusic-player-page tp-yt-paper-tab.iron-selected {
+  background: var(--wa-btn-face-pressed) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-shadow), inset -1px -1px 0 var(--wa-btn-highlight) !important;
+  color: #008800 !important;
+}
+html.winamp-ytm-on ytmusic-player-page tp-yt-paper-tabs #selectionBar {
+  display: none !important;
+}
+
+/* Playing from info strip */
+html.winamp-ytm-on ytmusic-player-page ytmusic-queue-header-renderer,
+html.winamp-ytm-on ytmusic-player-page .queue-header {
+  background: #000000 !important;
+  border: 1px solid #1a1a1a !important;
+  box-shadow: inset 1px 1px 0 #000, inset -1px -1px 0 #3e4056 !important;
+  padding: 2px 6px !important;
+  margin-bottom: 4px !important;
+}
+html.winamp-ytm-on ytmusic-player-page ytmusic-queue-header-renderer yt-formatted-string {
+  color: #00e000 !important;
+  font-size: 10px !important;
+}
+
+/* Up Next: Single-line Winamp playlist rows (about 16px tall) green on black (Requirement 8) */
+html.winamp-ytm-on ytmusic-player-queue-item {
+  height: 18px !important;
+  min-height: 18px !important;
+  max-height: 18px !important;
+  padding: 1px 6px !important;
+  background: #000000 !important;
+  border-bottom: 1px solid #141520 !important;
+  display: flex !important;
+  align-items: center !important;
+  box-sizing: border-box !important;
+  cursor: pointer !important;
+  user-select: none !important;
+}
+html.winamp-ytm-on ytmusic-player-queue-item * {
+  cursor: pointer !important;
+}
+html.winamp-ytm-on ytmusic-player-queue-item .left-items,
+html.winamp-ytm-on ytmusic-player-queue-item .thumbnail,
+html.winamp-ytm-on ytmusic-player-queue-item yt-img-shadow.thumbnail {
+  display: none !important;
+}
+html.winamp-ytm-on ytmusic-player-queue-item .song-info {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 8px !important;
+  height: 16px !important;
+  overflow: hidden !important;
+}
+html.winamp-ytm-on ytmusic-player-queue-item .song-title {
+  color: var(--wa-led-green) !important;
+  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  line-height: 16px !important;
+  white-space: nowrap !important;
+}
+html.winamp-ytm-on ytmusic-player-queue-item .byline,
+html.winamp-ytm-on ytmusic-player-queue-item .byline-wrapper {
+  color: #00a000 !important;
+  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-size: 10px !important;
+  line-height: 16px !important;
+  white-space: nowrap !important;
+}
+html.winamp-ytm-on ytmusic-player-queue-item .duration {
+  color: var(--wa-led-green) !important;
+  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-size: 10px !important;
+  line-height: 16px !important;
+  margin-left: auto !important;
+}
+html.winamp-ytm-on ytmusic-player-queue-item .menu {
+  display: none !important;
+}
+/* Selected / Playing / Hover row: solid blue with white text */
+html.winamp-ytm-on ytmusic-player-queue-item:hover,
+html.winamp-ytm-on ytmusic-player-queue-item[selected],
+html.winamp-ytm-on ytmusic-player-queue-item[play-button-state="playing"] {
+  background: var(--wa-playlist-selected) !important; /* solid blue #0000c6 */
+}
+html.winamp-ytm-on ytmusic-player-queue-item:hover *,
+html.winamp-ytm-on ytmusic-player-queue-item[selected] *,
+html.winamp-ytm-on ytmusic-player-queue-item[play-button-state="playing"] * {
+  color: #ffffff !important;
+}
+
+/* Framing Up Next Queue container */
+html.winamp-ytm-on ytmusic-player-page #queue,
+html.winamp-ytm-on ytmusic-player-page ytmusic-tab-renderer[page-type="MUSIC_PAGE_TYPE_TRACK_QUEUE"] {
+  background: var(--wa-chassis) !important;
+  border: 1px solid #10111a !important;
+  box-shadow: inset 1px 1px 0 #4c4f6f, inset -1px -1px 0 #0d0e16, 0 1px 0 #000000 !important;
+  padding: 6px !important;
+  box-sizing: border-box !important;
+}
+
+/* ---- 9. Ad Promo Dialog Window (Requirement 7) ---------------------------- */
+html.winamp-ytm-on ytmusic-mealbar-promo-renderer,
+html.winamp-ytm-on yt-mealbar-promo-renderer,
+html.winamp-ytm-on tp-yt-paper-dialog {
+  background: var(--wa-chassis) !important;
+  border: 1px solid #1a1a1a !important;
+  box-shadow: inset 1px 1px 0 #4c4f6f, inset -1px -1px 0 #0d0e16, 0 0 0 1px #000 !important;
+  border-radius: 0 !important;
+  padding: 6px !important;
+  box-sizing: border-box !important;
+}
+/* Hide modern red YouTube play icon */
+html.winamp-ytm-on ytmusic-mealbar-promo-renderer yt-icon,
+html.winamp-ytm-on ytmusic-mealbar-promo-renderer .ytSpecIconShapeHost,
+html.winamp-ytm-on ytmusic-mealbar-promo-renderer img {
+  display: none !important;
+}
+html.winamp-ytm-on ytmusic-mealbar-promo-renderer #message-renderer,
+html.winamp-ytm-on ytmusic-mealbar-promo-renderer .message-renderer,
+html.winamp-ytm-on ytmusic-mealbar-promo-renderer #text-container {
+  background: #000000 !important;
+  border: 1px solid #1a1a1a !important;
+  box-shadow: inset 1px 1px 0 #000, inset -1px -1px 0 #3e4056 !important;
+  padding: 8px 10px !important;
+  margin-bottom: 8px !important;
+}
+html.winamp-ytm-on ytmusic-mealbar-promo-renderer #title,
+html.winamp-ytm-on ytmusic-mealbar-promo-renderer yt-formatted-string#title {
+  color: #00e000 !important;
+  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+  margin-bottom: 4px !important;
+}
+html.winamp-ytm-on ytmusic-mealbar-promo-renderer #body-text,
+html.winamp-ytm-on ytmusic-mealbar-promo-renderer yt-formatted-string#body-text {
+  color: #00a000 !important;
+  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-size: 10px !important;
+  line-height: 1.3 !important;
+}
+html.winamp-ytm-on ytmusic-mealbar-promo-renderer #button-renderer,
+html.winamp-ytm-on ytmusic-mealbar-promo-renderer .action-buttons {
+  display: flex !important;
+  gap: 8px !important;
+  justify-content: flex-end !important;
+}
+html.winamp-ytm-on ytmusic-mealbar-promo-renderer yt-button-renderer button {
+  height: 24px !important;
+  padding: 0 12px !important;
+  background: var(--wa-btn-face) !important;
+  border: 1px solid var(--wa-btn-outline) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight), inset -1px -1px 0 var(--wa-btn-shadow) !important;
+  color: var(--wa-btn-glyph) !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+}
+/* Primary button gets extra 1px outline (Requirement 7) */
+html.winamp-ytm-on ytmusic-mealbar-promo-renderer #dismiss-button ~ yt-button-renderer button,
+html.winamp-ytm-on ytmusic-mealbar-promo-renderer yt-button-renderer:last-child button {
+  outline: 1px solid #1a1a1a !important;
+}
+
+/* ====================  10. RETRO PIXEL-ART GLYPH MASKS  =================== */
+/* Hide modern vector SVGs */
+html.winamp-ytm-on ytmusic-guide-entry-renderer .guide-icon svg,
+html.winamp-ytm-on ytmusic-cast-button yt-icon svg,
+html.winamp-ytm-on ytmusic-cast-button .chromecast-animate,
+html.winamp-ytm-on #menu-button yt-icon svg,
+html.winamp-ytm-on ytmusic-menu-renderer yt-icon-button yt-icon svg,
+html.winamp-ytm-on ytmusic-menu-renderer tp-yt-paper-icon-button yt-icon svg,
+html.winamp-ytm-on ytmusic-like-button-renderer svg,
+html.winamp-ytm-on ytmusic-navigation-button-renderer yt-icon svg,
+html.winamp-ytm-on [data-wa-btn="save"] yt-icon svg,
+html.winamp-ytm-on ytmusic-queue-header-renderer ytmusic-chip-cloud-chip-renderer yt-icon svg,
+html.winamp-ytm-on ytmusic-player-bar #right-controls yt-icon svg {
+  display: none !important;
+}
+
+/* Sidebar Nav Pixel Icons (Requirement 9) - 1:1 16x16 hardware pixel grid */
+html.winamp-ytm-on ytmusic-guide-entry-renderer .guide-icon {
+  width: 16px !important;
+  height: 16px !important;
+  display: inline-block !important;
+  background-color: #b4b8c4 !important;
+  vertical-align: middle !important;
+}
+/* Home: Crisp 16x16 pixel house with chimney and doorway */
+html.winamp-ytm-on ytmusic-guide-entry-renderer[data-wa-icon="home"] .guide-icon,
+html.winamp-ytm-on #sections > ytmusic-guide-section-renderer:first-child ytmusic-guide-entry-renderer:nth-child(1) .guide-icon {
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect x='11' y='2' width='2' height='4' fill='%23000'/%3E%3Crect x='7' y='2' width='2' height='1' fill='%23000'/%3E%3Crect x='6' y='3' width='4' height='1' fill='%23000'/%3E%3Crect x='5' y='4' width='6' height='1' fill='%23000'/%3E%3Crect x='4' y='5' width='8' height='1' fill='%23000'/%3E%3Crect x='3' y='6' width='10' height='1' fill='%23000'/%3E%3Crect x='2' y='7' width='12' height='1' fill='%23000'/%3E%3Crect x='1' y='8' width='14' height='1' fill='%23000'/%3E%3Crect x='3' y='9' width='3' height='5' fill='%23000'/%3E%3Crect x='10' y='9' width='3' height='5' fill='%23000'/%3E%3Crect x='3' y='13' width='10' height='1' fill='%23000'/%3E%3Crect x='6' y='9' width='4' height='1' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 16px 16px !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect x='11' y='2' width='2' height='4' fill='%23000'/%3E%3Crect x='7' y='2' width='2' height='1' fill='%23000'/%3E%3Crect x='6' y='3' width='4' height='1' fill='%23000'/%3E%3Crect x='5' y='4' width='6' height='1' fill='%23000'/%3E%3Crect x='4' y='5' width='8' height='1' fill='%23000'/%3E%3Crect x='3' y='6' width='10' height='1' fill='%23000'/%3E%3Crect x='2' y='7' width='12' height='1' fill='%23000'/%3E%3Crect x='1' y='8' width='14' height='1' fill='%23000'/%3E%3Crect x='3' y='9' width='3' height='5' fill='%23000'/%3E%3Crect x='10' y='9' width='3' height='5' fill='%23000'/%3E%3Crect x='3' y='13' width='10' height='1' fill='%23000'/%3E%3Crect x='6' y='9' width='4' height='1' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 16px 16px !important;
+}
+/* Explore: Crisp 16x16 octagonal compass with bold diagonal needle */
+html.winamp-ytm-on ytmusic-guide-entry-renderer[data-wa-icon="explore"] .guide-icon,
+html.winamp-ytm-on #sections > ytmusic-guide-section-renderer:first-child ytmusic-guide-entry-renderer:nth-child(2) .guide-icon {
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect x='5' y='1' width='6' height='2' fill='%23000'/%3E%3Crect x='5' y='13' width='6' height='2' fill='%23000'/%3E%3Crect x='1' y='5' width='2' height='6' fill='%23000'/%3E%3Crect x='13' y='5' width='2' height='6' fill='%23000'/%3E%3Crect x='3' y='2' width='2' height='2' fill='%23000'/%3E%3Crect x='11' y='2' width='2' height='2' fill='%23000'/%3E%3Crect x='2' y='3' width='2' height='2' fill='%23000'/%3E%3Crect x='12' y='3' width='2' height='2' fill='%23000'/%3E%3Crect x='2' y='11' width='2' height='2' fill='%23000'/%3E%3Crect x='12' y='11' width='2' height='2' fill='%23000'/%3E%3Crect x='3' y='12' width='2' height='2' fill='%23000'/%3E%3Crect x='11' y='12' width='2' height='2' fill='%23000'/%3E%3Crect x='9' y='4' width='2' height='2' fill='%23000'/%3E%3Crect x='7' y='6' width='3' height='3' fill='%23000'/%3E%3Crect x='5' y='9' width='2' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 16px 16px !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect x='5' y='1' width='6' height='2' fill='%23000'/%3E%3Crect x='5' y='13' width='6' height='2' fill='%23000'/%3E%3Crect x='1' y='5' width='2' height='6' fill='%23000'/%3E%3Crect x='13' y='5' width='2' height='6' fill='%23000'/%3E%3Crect x='3' y='2' width='2' height='2' fill='%23000'/%3E%3Crect x='11' y='2' width='2' height='2' fill='%23000'/%3E%3Crect x='2' y='3' width='2' height='2' fill='%23000'/%3E%3Crect x='12' y='3' width='2' height='2' fill='%23000'/%3E%3Crect x='2' y='11' width='2' height='2' fill='%23000'/%3E%3Crect x='12' y='11' width='2' height='2' fill='%23000'/%3E%3Crect x='3' y='12' width='2' height='2' fill='%23000'/%3E%3Crect x='11' y='12' width='2' height='2' fill='%23000'/%3E%3Crect x='9' y='4' width='2' height='2' fill='%23000'/%3E%3Crect x='7' y='6' width='3' height='3' fill='%23000'/%3E%3Crect x='5' y='9' width='2' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 16px 16px !important;
+}
+/* Library: Crisp 16x16 Winamp media cabinet / tabbed folder with solid lines */
+html.winamp-ytm-on ytmusic-guide-entry-renderer[data-wa-icon="library"] .guide-icon,
+html.winamp-ytm-on #sections > ytmusic-guide-section-renderer:first-child ytmusic-guide-entry-renderer:nth-child(3) .guide-icon {
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect x='1' y='2' width='6' height='2' fill='%23000'/%3E%3Crect x='8' y='2' width='5' height='2' fill='%23000'/%3E%3Crect x='1' y='4' width='14' height='2' fill='%23000'/%3E%3Crect x='1' y='6' width='2' height='8' fill='%23000'/%3E%3Crect x='13' y='6' width='2' height='8' fill='%23000'/%3E%3Crect x='1' y='12' width='14' height='2' fill='%23000'/%3E%3Crect x='4' y='8' width='8' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 16px 16px !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect x='1' y='2' width='6' height='2' fill='%23000'/%3E%3Crect x='8' y='2' width='5' height='2' fill='%23000'/%3E%3Crect x='1' y='4' width='14' height='2' fill='%23000'/%3E%3Crect x='1' y='6' width='2' height='8' fill='%23000'/%3E%3Crect x='13' y='6' width='2' height='8' fill='%23000'/%3E%3Crect x='1' y='12' width='14' height='2' fill='%23000'/%3E%3Crect x='4' y='8' width='8' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 16px 16px !important;
+}
+
+/* 3-dots: square pixel blocks */
+html.winamp-ytm-on #menu-button yt-icon,
+html.winamp-ytm-on ytmusic-menu-renderer yt-icon-button yt-icon,
+html.winamp-ytm-on ytmusic-menu-renderer tp-yt-paper-icon-button yt-icon {
+  width: 14px !important;
+  height: 12px !important;
+  display: inline-block !important;
+  background-color: var(--wa-btn-glyph) !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='6' y='1' width='2' height='2' fill='%23000'/%3E%3Crect x='6' y='5' width='2' height='2' fill='%23000'/%3E%3Crect x='6' y='9' width='2' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='6' y='1' width='2' height='2' fill='%23000'/%3E%3Crect x='6' y='5' width='2' height='2' fill='%23000'/%3E%3Crect x='6' y='9' width='2' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+}
+
+/* Thumbs Up / Down */
+html.winamp-ytm-on ytmusic-like-button-renderer .like yt-icon,
+html.winamp-ytm-on ytmusic-like-button-renderer #button-shape-like .ytSpecButtonShapeNextIcon {
+  width: 14px !important;
+  height: 12px !important;
+  display: inline-block !important;
+  background-color: var(--wa-btn-glyph) !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='1' y='5' width='2' height='6' fill='%23000'/%3E%3Crect x='4' y='5' width='7' height='6' fill='%23000'/%3E%3Crect x='4' y='3' width='3' height='2' fill='%23000'/%3E%3Crect x='5' y='1' width='2' height='2' fill='%23000'/%3E%3Crect x='11' y='6' width='1' height='4' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='1' y='5' width='2' height='6' fill='%23000'/%3E%3Crect x='4' y='5' width='7' height='6' fill='%23000'/%3E%3Crect x='4' y='3' width='3' height='2' fill='%23000'/%3E%3Crect x='5' y='1' width='2' height='2' fill='%23000'/%3E%3Crect x='11' y='6' width='1' height='4' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+}
+html.winamp-ytm-on ytmusic-like-button-renderer .dislike yt-icon,
+html.winamp-ytm-on ytmusic-like-button-renderer #button-shape-dislike .ytSpecButtonShapeNextIcon {
+  width: 14px !important;
+  height: 12px !important;
+  display: inline-block !important;
+  background-color: var(--wa-btn-glyph) !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='1' y='1' width='2' height='6' fill='%23000'/%3E%3Crect x='4' y='1' width='7' height='6' fill='%23000'/%3E%3Crect x='4' y='7' width='3' height='2' fill='%23000'/%3E%3Crect x='5' y='9' width='2' height='2' fill='%23000'/%3E%3Crect x='11' y='2' width='1' height='4' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='1' y='1' width='2' height='6' fill='%23000'/%3E%3Crect x='4' y='1' width='7' height='6' fill='%23000'/%3E%3Crect x='4' y='7' width='3' height='2' fill='%23000'/%3E%3Crect x='5' y='9' width='2' height='2' fill='%23000'/%3E%3Crect x='11' y='2' width='1' height='4' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+}
+html.winamp-ytm-on ytmusic-like-button-renderer[like-status="LIKE"] .like yt-icon {
+  background-color: var(--wa-led-green) !important;
+}
+
+/* Middle Controls Buttons: Thumbs & Menu - scaled down to match transport/right controls */
+html.winamp-ytm-on ytmusic-player-bar ytmusic-like-button-renderer button,
+html.winamp-ytm-on ytmusic-player-bar ytmusic-like-button-renderer yt-button-shape,
+html.winamp-ytm-on ytmusic-player-bar ytmusic-menu-renderer button,
+html.winamp-ytm-on ytmusic-player-bar ytmusic-menu-renderer yt-button-shape {
+  width: 22px !important;
+  height: 20px !important;
+  min-width: 22px !important;
+  min-height: 20px !important;
+  max-width: 22px !important;
+  max-height: 20px !important;
+  margin: 0 1px !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+html.winamp-ytm-on ytmusic-player-bar .middle-controls-buttons {
+  gap: 2px !important;
+  align-items: center !important;
+  display: inline-flex !important;
+}
+
+/* Autoplay / Queue Paper Toggle Buttons (Requirement: Winamp Reskin) */
+html.winamp-ytm-on tp-yt-paper-toggle-button {
+  --paper-toggle-button-unchecked-bar-color: transparent !important;
+  --paper-toggle-button-unchecked-button-color: transparent !important;
+  --paper-toggle-button-checked-bar-color: transparent !important;
+  --paper-toggle-button-checked-button-color: transparent !important;
+  cursor: pointer !important;
+  height: 18px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+html.winamp-ytm-on tp-yt-paper-toggle-button paper-ripple,
+html.winamp-ytm-on tp-yt-paper-toggle-button .toggle-ink {
+  display: none !important;
+}
+
+html.winamp-ytm-on tp-yt-paper-toggle-button .toggle-container {
+  width: 36px !important;
+  height: 16px !important;
+  position: relative !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
+html.winamp-ytm-on tp-yt-paper-toggle-button #toggleBar {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 36px !important;
+  height: 16px !important;
+  box-sizing: border-box !important;
+  background: #090a0f !important;
+  border: 1px solid var(--wa-btn-outline, #101018) !important;
+  box-shadow: inset 1px 1px 2px #000000, inset -1px -1px 0 rgba(255, 255, 255, 0.1) !important;
+  border-radius: 0 !important;
+  opacity: 1 !important;
+  transition: background 0.15s ease, border-color 0.15s ease !important;
+}
+
+html.winamp-ytm-on tp-yt-paper-toggle-button[checked] #toggleBar {
+  background: #061608 !important;
+  border-color: #0b220e !important;
+  box-shadow: inset 1px 1px 2px #000000, inset 0 0 4px rgba(0, 255, 0, 0.25) !important;
+}
+
+html.winamp-ytm-on tp-yt-paper-toggle-button #toggleButton {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 18px !important;
+  height: 16px !important;
+  box-sizing: border-box !important;
+  border-radius: 0 !important;
+  background: var(--wa-btn-face, #b4b8c4) !important;
+  border: 1px solid var(--wa-btn-outline, #101018) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight, #ffffff), inset -1px -1px 0 var(--wa-btn-shadow, #525566), 0 1px 2px rgba(0, 0, 0, 0.5) !important;
+  transition: transform 0.12s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+html.winamp-ytm-on tp-yt-paper-toggle-button:not([checked]) #toggleButton {
+  transform: translate(0, 0) !important;
+}
+
+html.winamp-ytm-on tp-yt-paper-toggle-button[checked] #toggleButton {
+  transform: translate(18px, 0) !important;
+}
+
+html.winamp-ytm-on tp-yt-paper-toggle-button #toggleButton::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 4px !important;
+  height: 4px !important;
+  border-radius: 0 !important;
+  pointer-events: none !important;
+}
+
+html.winamp-ytm-on tp-yt-paper-toggle-button[checked] #toggleButton::after {
+  background: #00ff00 !important;
+  box-shadow: 0 0 3px #00ff00, 0 0 6px rgba(0, 255, 0, 0.6) !important;
+  border: none !important;
+}
+
+html.winamp-ytm-on tp-yt-paper-toggle-button:not([checked]) #toggleButton::after {
+  background: #1c2618 !important;
+  border: 1px solid #0d140a !important;
+  box-sizing: border-box !important;
+  box-shadow: none !important;
+}
+
+/* Volume: Stepped pixel speaker horn (1:1 14x14 grid) */
+html.winamp-ytm-on ytmusic-player-bar .volume yt-icon,
+html.winamp-ytm-on ytmusic-player-bar [data-wa-icon="volume"] yt-icon {
+  width: 14px !important;
+  height: 14px !important;
+  display: inline-block !important;
+  background-color: var(--wa-btn-glyph) !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' shape-rendering='crispEdges'%3E%3Crect x='1' y='5' width='3' height='4' fill='%23000'/%3E%3Crect x='4' y='4' width='2' height='6' fill='%23000'/%3E%3Crect x='6' y='3' width='2' height='8' fill='%23000'/%3E%3Crect x='9' y='6' width='1' height='2' fill='%23000'/%3E%3Crect x='11' y='4' width='1' height='6' fill='%23000'/%3E%3Crect x='13' y='2' width='1' height='10' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 14px 14px !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' shape-rendering='crispEdges'%3E%3Crect x='1' y='5' width='3' height='4' fill='%23000'/%3E%3Crect x='4' y='4' width='2' height='6' fill='%23000'/%3E%3Crect x='6' y='3' width='2' height='8' fill='%23000'/%3E%3Crect x='9' y='6' width='1' height='2' fill='%23000'/%3E%3Crect x='11' y='4' width='1' height='6' fill='%23000'/%3E%3Crect x='13' y='2' width='1' height='10' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 14px 14px !important;
+}
+
+/* Repeat: Angular retro loop (1:1 14x14 grid) */
+html.winamp-ytm-on ytmusic-player-bar .repeat yt-icon,
+html.winamp-ytm-on ytmusic-player-bar [data-wa-icon="repeat"] yt-icon {
+  width: 14px !important;
+  height: 14px !important;
+  display: inline-block !important;
+  background-color: var(--wa-btn-glyph) !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' shape-rendering='crispEdges'%3E%3Crect x='2' y='3' width='9' height='2' fill='%23000'/%3E%3Crect x='11' y='3' width='2' height='5' fill='%23000'/%3E%3Crect x='3' y='9' width='9' height='2' fill='%23000'/%3E%3Crect x='1' y='6' width='2' height='5' fill='%23000'/%3E%3Crect x='9' y='1' width='2' height='2' fill='%23000'/%3E%3Crect x='3' y='11' width='2' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 14px 14px !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' shape-rendering='crispEdges'%3E%3Crect x='2' y='3' width='9' height='2' fill='%23000'/%3E%3Crect x='11' y='3' width='2' height='5' fill='%23000'/%3E%3Crect x='3' y='9' width='9' height='2' fill='%23000'/%3E%3Crect x='1' y='6' width='2' height='5' fill='%23000'/%3E%3Crect x='9' y='1' width='2' height='2' fill='%23000'/%3E%3Crect x='3' y='11' width='2' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 14px 14px !important;
+}
+
+/* Shuffle: Crossed retro pixel arrows (1:1 14x14 grid) */
+html.winamp-ytm-on ytmusic-player-bar .shuffle yt-icon,
+html.winamp-ytm-on ytmusic-player-bar [data-wa-icon="shuffle"] yt-icon {
+  width: 14px !important;
+  height: 14px !important;
+  display: inline-block !important;
+  background-color: var(--wa-btn-glyph) !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' shape-rendering='crispEdges'%3E%3Crect x='1' y='3' width='3' height='2' fill='%23000'/%3E%3Crect x='4' y='4' width='2' height='2' fill='%23000'/%3E%3Crect x='6' y='6' width='2' height='2' fill='%23000'/%3E%3Crect x='8' y='8' width='2' height='2' fill='%23000'/%3E%3Crect x='10' y='9' width='3' height='2' fill='%23000'/%3E%3Crect x='1' y='9' width='3' height='2' fill='%23000'/%3E%3Crect x='4' y='8' width='2' height='2' fill='%23000'/%3E%3Crect x='8' y='4' width='2' height='2' fill='%23000'/%3E%3Crect x='10' y='3' width='3' height='2' fill='%23000'/%3E%3Crect x='11' y='1' width='2' height='2' fill='%23000'/%3E%3Crect x='11' y='11' width='2' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 14px 14px !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' shape-rendering='crispEdges'%3E%3Crect x='1' y='3' width='3' height='2' fill='%23000'/%3E%3Crect x='4' y='4' width='2' height='2' fill='%23000'/%3E%3Crect x='6' y='6' width='2' height='2' fill='%23000'/%3E%3Crect x='8' y='8' width='2' height='2' fill='%23000'/%3E%3Crect x='10' y='9' width='3' height='2' fill='%23000'/%3E%3Crect x='1' y='9' width='3' height='2' fill='%23000'/%3E%3Crect x='4' y='8' width='2' height='2' fill='%23000'/%3E%3Crect x='8' y='4' width='2' height='2' fill='%23000'/%3E%3Crect x='10' y='3' width='3' height='2' fill='%23000'/%3E%3Crect x='11' y='1' width='2' height='2' fill='%23000'/%3E%3Crect x='11' y='11' width='2' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 14px 14px !important;
+}
+
+/* Floppy Disk Glyph on Save Button (1:1 14x14 pixel grid) */
+html.winamp-ytm-on [data-wa-btn="save"] yt-icon,
+html.winamp-ytm-on ytmusic-queue-header-renderer ytmusic-chip-cloud-chip-renderer yt-icon {
+  width: 14px !important;
+  height: 14px !important;
+  background-color: var(--wa-btn-glyph, #1a1a1a) !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' shape-rendering='crispEdges'%3E%3Crect x='1' y='1' width='10' height='1' fill='%23000'/%3E%3Crect x='1' y='2' width='2' height='4' fill='%23000'/%3E%3Crect x='9' y='2' width='4' height='4' fill='%23000'/%3E%3Crect x='4' y='2' width='2' height='3' fill='%23000'/%3E%3Crect x='1' y='6' width='12' height='2' fill='%23000'/%3E%3Crect x='1' y='8' width='2' height='5' fill='%23000'/%3E%3Crect x='11' y='8' width='2' height='5' fill='%23000'/%3E%3Crect x='4' y='9' width='6' height='1' fill='%23000'/%3E%3Crect x='4' y='11' width='6' height='1' fill='%23000'/%3E%3Crect x='1' y='12' width='12' height='1' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 14px 14px !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' shape-rendering='crispEdges'%3E%3Crect x='1' y='1' width='10' height='1' fill='%23000'/%3E%3Crect x='1' y='2' width='2' height='4' fill='%23000'/%3E%3Crect x='9' y='2' width='4' height='4' fill='%23000'/%3E%3Crect x='4' y='2' width='2' height='3' fill='%23000'/%3E%3Crect x='1' y='6' width='12' height='2' fill='%23000'/%3E%3Crect x='1' y='8' width='2' height='5' fill='%23000'/%3E%3Crect x='11' y='8' width='2' height='5' fill='%23000'/%3E%3Crect x='4' y='9' width='6' height='1' fill='%23000'/%3E%3Crect x='4' y='11' width='6' height='1' fill='%23000'/%3E%3Crect x='1' y='12' width='12' height='1' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 14px 14px !important;
+  display: inline-block !important;
+  margin-right: 4px !important;
+  vertical-align: middle !important;
+}
+
+/* Hide redundant horizontal scrollbar under queue filter chips */
+html.winamp-ytm-on ytmusic-chip-cloud-renderer #chips,
+html.winamp-ytm-on ytmusic-chip-cloud-renderer .iron-selected {
+  scrollbar-width: none !important;
+}
+html.winamp-ytm-on ytmusic-chip-cloud-renderer #chips::-webkit-scrollbar {
+  display: none !important;
+  height: 0 !important;
+}
+
+/* ============================================================================
+   Account Menu & Dialog Popups (Winamp Chassis + Black LCD Profile)
+   ============================================================================ */
+
+/* Outer Dropdown Frame: Beveled Chassis */
+html.winamp-ytm-on ytd-multi-page-menu-renderer,
+html.winamp-ytm-on ytmusic-menu-popup-renderer,
+html.winamp-ytm-on tp-yt-iron-dropdown,
+html.winamp-ytm-on tp-yt-paper-listbox {
+  background: var(--wa-chassis, #222436) !important;
+  border: 1px solid #101018 !important;
+  box-shadow: inset 1px 1px 0 var(--wa-chassis-bevel-lt, #4c4f6f), inset -1px -1px 0 #0a0a12, 0 8px 24px rgba(0, 0, 0, 0.8) !important;
+  border-radius: 0 !important;
+  color: #d6d6e0 !important;
+}
+
+html.winamp-ytm-on ytd-multi-page-menu-renderer #header.ytd-multi-page-menu-renderer,
+html.winamp-ytm-on ytd-multi-page-menu-renderer #container.ytd-multi-page-menu-renderer,
+html.winamp-ytm-on ytd-multi-page-menu-renderer #sections.ytd-multi-page-menu-renderer {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* User Account Header: Black LCD Screen */
+html.winamp-ytm-on ytd-active-account-header-renderer {
+  background: var(--wa-screen-bg, #000000) !important;
+  border: 1px solid #101018 !important;
+  box-shadow: inset 1px 1px 0 #000000, inset -1px -1px 0 #2a2c3a !important;
+  margin: 4px !important;
+  padding: 8px 10px !important;
+  border-radius: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Account Avatar: Pixelated square border */
+html.winamp-ytm-on ytd-active-account-header-renderer #avatar,
+html.winamp-ytm-on ytd-active-account-header-renderer yt-img-shadow {
+  border-radius: 0 !important;
+  border: 1px solid #101018 !important;
+  box-shadow: inset 1px 1px 0 #0a0a12, inset -1px -1px 0 var(--wa-chassis-bevel-lt, #4c4f6f) !important;
+  overflow: hidden !important;
+}
+html.winamp-ytm-on ytd-active-account-header-renderer #avatar img {
+  border-radius: 0 !important;
+}
+
+/* Account Channel Name: Bold pixel white text */
+html.winamp-ytm-on ytd-active-account-header-renderer #channel-name,
+html.winamp-ytm-on ytd-active-account-header-renderer #name {
+  color: #ffffff !important;
+  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+}
+
+/* Account Email / Handle: Winamp LED green readout */
+html.winamp-ytm-on ytd-active-account-header-renderer #email,
+html.winamp-ytm-on ytd-active-account-header-renderer #handle {
+  color: var(--wa-led-green, #00e000) !important;
+  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+}
+
+/* Manage Google Account Link */
+html.winamp-ytm-on ytd-active-account-header-renderer a,
+html.winamp-ytm-on ytd-active-account-header-renderer #manage-account {
+  color: #8a8e9e !important;
+  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-size: 9px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  text-decoration: underline !important;
+}
+
+/* Menu Items: Compact Winamp playlist style rows */
+html.winamp-ytm-on ytd-compact-link-renderer,
+html.winamp-ytm-on ytd-menu-service-item-renderer,
+html.winamp-ytm-on ytmusic-menu-navigation-item-renderer,
+html.winamp-ytm-on ytmusic-menu-service-item-renderer {
+  min-height: 26px !important;
+  height: 26px !important;
+  box-sizing: border-box !important;
+}
+
+html.winamp-ytm-on ytd-compact-link-renderer tp-yt-paper-item,
+html.winamp-ytm-on ytd-menu-service-item-renderer tp-yt-paper-item,
+html.winamp-ytm-on ytmusic-menu-navigation-item-renderer tp-yt-paper-item,
+html.winamp-ytm-on ytmusic-menu-service-item-renderer tp-yt-paper-item {
+  min-height: 26px !important;
+  height: 26px !important;
+  padding: 0 10px !important;
+  background: transparent !important;
+  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+  color: #d6d6e0 !important;
+  text-transform: uppercase !important;
+  border-radius: 0 !important;
+  cursor: pointer !important;
+}
+
+/* Menu Item Hover: Signature Winamp blue highlight bar */
+html.winamp-ytm-on ytd-compact-link-renderer:hover tp-yt-paper-item,
+html.winamp-ytm-on ytd-menu-service-item-renderer:hover tp-yt-paper-item,
+html.winamp-ytm-on ytmusic-menu-navigation-item-renderer:hover tp-yt-paper-item,
+html.winamp-ytm-on ytmusic-menu-service-item-renderer:hover tp-yt-paper-item {
+  background: var(--wa-playlist-selected, #0000c6) !important;
+  color: #ffffff !important;
+}
+
+html.winamp-ytm-on ytd-compact-link-renderer:hover yt-formatted-string,
+html.winamp-ytm-on ytmusic-menu-navigation-item-renderer:hover yt-formatted-string,
+html.winamp-ytm-on ytmusic-menu-service-item-renderer:hover yt-formatted-string {
+  color: #ffffff !important;
+}
+
+/* Menu Item Icons */
+html.winamp-ytm-on ytd-compact-link-renderer yt-icon,
+html.winamp-ytm-on ytmusic-menu-navigation-item-renderer yt-icon,
+html.winamp-ytm-on ytmusic-menu-service-item-renderer yt-icon {
+  width: 14px !important;
+  height: 14px !important;
+  margin-right: 8px !important;
+  fill: currentColor !important;
+}
+
+/* Dividers */
+html.winamp-ytm-on ytd-multi-page-menu-renderer yt-divider-renderer,
+html.winamp-ytm-on ytd-multi-page-menu-renderer #divider,
+html.winamp-ytm-on ytmusic-menu-popup-renderer yt-divider-renderer {
+  border-top: 1px solid var(--wa-chassis-dark, #141520) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  margin: 3px 0 !important;
+}
+
+/* ============================================================================
+   Playlist Multi-Select, Checkboxes & Floating Action Bar (Winamp Reskin)
+   ============================================================================ */
+
+/* 1. Retro Checkboxes (Paper Checkbox & Generic Checkbox) */
+html.winamp-ytm-on tp-yt-paper-checkbox,
+html.winamp-ytm-on yt-checkbox-renderer {
+  cursor: pointer !important;
+}
+
+html.winamp-ytm-on tp-yt-paper-checkbox paper-ripple,
+html.winamp-ytm-on yt-checkbox-renderer paper-ripple {
+  display: none !important;
+}
+
+html.winamp-ytm-on tp-yt-paper-checkbox #checkbox {
+  width: 14px !important;
+  height: 14px !important;
+  min-width: 14px !important;
+  min-height: 14px !important;
+  border-radius: 0 !important;
+  background: #000000 !important;
+  border: 1px solid var(--wa-btn-outline, #101018) !important;
+  box-shadow: inset 1px 1px 0 #000000, inset -1px -1px 0 rgba(255, 255, 255, 0.15) !important;
+  box-sizing: border-box !important;
+}
+
+html.winamp-ytm-on tp-yt-paper-checkbox:hover #checkbox {
+  border-color: #333344 !important;
+  box-shadow: inset 1px 1px 0 #000000, inset -1px -1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+html.winamp-ytm-on tp-yt-paper-checkbox[checked] #checkbox {
+  background: #001400 !important;
+  border-color: #0b220e !important;
+  box-shadow: inset 1px 1px 0 #000000, inset 0 0 3px rgba(0, 255, 0, 0.3) !important;
+}
+
+html.winamp-ytm-on tp-yt-paper-checkbox #checkmark {
+  display: none !important;
+}
+
+html.winamp-ytm-on tp-yt-paper-checkbox[checked] #checkmark {
+  display: block !important;
+  width: 10px !important;
+  height: 10px !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  border: none !important;
+  background-color: #00ff00 !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' shape-rendering='crispEdges'%3E%3Crect x='7' y='1' width='2' height='2' fill='%23000'/%3E%3Crect x='6' y='3' width='2' height='2' fill='%23000'/%3E%3Crect x='5' y='5' width='2' height='2' fill='%23000'/%3E%3Crect x='1' y='4' width='2' height='2' fill='%23000'/%3E%3Crect x='3' y='6' width='3' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 10px 10px !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' shape-rendering='crispEdges'%3E%3Crect x='7' y='1' width='2' height='2' fill='%23000'/%3E%3Crect x='6' y='3' width='2' height='2' fill='%23000'/%3E%3Crect x='5' y='5' width='2' height='2' fill='%23000'/%3E%3Crect x='1' y='4' width='2' height='2' fill='%23000'/%3E%3Crect x='3' y='6' width='3' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 10px 10px !important;
+  box-shadow: 0 0 4px #00ff00 !important;
+}
+
+/* yt-checkbox-renderer (modern YouTube Music web component variant) */
+html.winamp-ytm-on yt-checkbox-renderer yt-icon {
+  width: 14px !important;
+  height: 14px !important;
+  min-width: 14px !important;
+  min-height: 14px !important;
+  border-radius: 0 !important;
+  background: #000000 !important;
+  border: 1px solid var(--wa-btn-outline, #101018) !important;
+  box-shadow: inset 1px 1px 0 #000000, inset -1px -1px 0 rgba(255, 255, 255, 0.15) !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+}
+
+html.winamp-ytm-on yt-checkbox-renderer yt-icon svg {
+  display: none !important;
+}
+
+html.winamp-ytm-on yt-checkbox-renderer[aria-checked="true"] yt-icon,
+html.winamp-ytm-on yt-checkbox-renderer[checked] yt-icon {
+  background: #001400 !important;
+  border-color: #0b220e !important;
+  box-shadow: inset 1px 1px 0 #000000, inset 0 0 3px rgba(0, 255, 0, 0.3) !important;
+}
+
+html.winamp-ytm-on yt-checkbox-renderer[aria-checked="true"] yt-icon::after,
+html.winamp-ytm-on yt-checkbox-renderer[checked] yt-icon::after {
+  content: "" !important;
+  display: block !important;
+  width: 10px !important;
+  height: 10px !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  background-color: #00ff00 !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' shape-rendering='crispEdges'%3E%3Crect x='7' y='1' width='2' height='2' fill='%23000'/%3E%3Crect x='6' y='3' width='2' height='2' fill='%23000'/%3E%3Crect x='5' y='5' width='2' height='2' fill='%23000'/%3E%3Crect x='1' y='4' width='2' height='2' fill='%23000'/%3E%3Crect x='3' y='6' width='3' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 10px 10px !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' shape-rendering='crispEdges'%3E%3Crect x='7' y='1' width='2' height='2' fill='%23000'/%3E%3Crect x='6' y='3' width='2' height='2' fill='%23000'/%3E%3Crect x='5' y='5' width='2' height='2' fill='%23000'/%3E%3Crect x='1' y='4' width='2' height='2' fill='%23000'/%3E%3Crect x='3' y='6' width='3' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 10px 10px !important;
+  box-shadow: 0 0 4px #00ff00 !important;
+}
+
+/* 2. Playlist / List Item Selected State (Winamp Royal Blue Bar) */
+html.winamp-ytm-on ytmusic-responsive-list-item-renderer[is-checked],
+html.winamp-ytm-on ytmusic-responsive-list-item-renderer[is-multi-select-mode][is-checked],
+html.winamp-ytm-on ytmusic-responsive-list-item-renderer.selected {
+  background: var(--wa-playlist-selected, #0000a0) !important;
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+html.winamp-ytm-on ytmusic-responsive-list-item-renderer[is-checked] yt-formatted-string,
+html.winamp-ytm-on ytmusic-responsive-list-item-renderer[is-checked] .title,
+html.winamp-ytm-on ytmusic-responsive-list-item-renderer[is-checked] .byline,
+html.winamp-ytm-on ytmusic-responsive-list-item-renderer[is-checked] a,
+html.winamp-ytm-on ytmusic-responsive-list-item-renderer[is-multi-select-mode][is-checked] yt-formatted-string,
+html.winamp-ytm-on ytmusic-responsive-list-item-renderer[is-multi-select-mode][is-checked] .title,
+html.winamp-ytm-on ytmusic-responsive-list-item-renderer[is-multi-select-mode][is-checked] .byline,
+html.winamp-ytm-on ytmusic-responsive-list-item-renderer[is-multi-select-mode][is-checked] a {
+  color: #ffffff !important;
+}
+
+/* 3. Floating Multi-Select Action Bar */
+html.winamp-ytm-on ytmusic-multi-select-menu-bar {
+  background: var(--wa-chassis, #222436) !important;
+  border: 1px solid var(--wa-btn-outline, #101018) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-chassis-bevel-lt, #4c4f6f), inset -1px -1px 0 #0a0a12, 0 8px 24px rgba(0, 0, 0, 0.8) !important;
+  border-radius: 0 !important;
+  padding: 6px 12px !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Dismiss / Close "✕" Button on Left */
+html.winamp-ytm-on ytmusic-multi-select-menu-bar .menu-bar-icon,
+html.winamp-ytm-on ytmusic-multi-select-menu-bar yt-icon-button#dismiss-button,
+html.winamp-ytm-on ytmusic-multi-select-menu-bar yt-icon-button.menu-bar-icon {
+  background: var(--wa-btn-face, #b4b8c4) !important;
+  border: 1px solid var(--wa-btn-outline, #101018) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight, #ffffff), inset -1px -1px 0 var(--wa-btn-shadow, #5a5a66) !important;
+  border-radius: 0 !important;
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  min-height: 20px !important;
+  padding: 0 !important;
+  margin: 0 10px 0 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+}
+
+html.winamp-ytm-on ytmusic-multi-select-menu-bar .menu-bar-icon:active,
+html.winamp-ytm-on ytmusic-multi-select-menu-bar yt-icon-button#dismiss-button:active,
+html.winamp-ytm-on ytmusic-multi-select-menu-bar yt-icon-button.menu-bar-icon:active {
+  box-shadow: inset 1px 1px 0 #000000, inset -1px -1px 0 rgba(255, 255, 255, 0.2) !important;
+  background: var(--wa-btn-shadow, #888896) !important;
+}
+
+html.winamp-ytm-on ytmusic-multi-select-menu-bar .menu-bar-icon yt-icon,
+html.winamp-ytm-on ytmusic-multi-select-menu-bar yt-icon-button#dismiss-button yt-icon,
+html.winamp-ytm-on ytmusic-multi-select-menu-bar yt-icon-button.menu-bar-icon yt-icon {
+  width: 8px !important;
+  height: 8px !important;
+  display: inline-block !important;
+  background-color: var(--wa-btn-glyph, #101018) !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Crect x='1' y='1' width='2' height='1' fill='%23000'/%3E%3Crect x='5' y='1' width='2' height='1' fill='%23000'/%3E%3Crect x='2' y='2' width='1' height='1' fill='%23000'/%3E%3Crect x='5' y='2' width='1' height='1' fill='%23000'/%3E%3Crect x='3' y='3' width='2' height='2' fill='%23000'/%3E%3Crect x='2' y='5' width='1' height='1' fill='%23000'/%3E%3Crect x='5' y='5' width='1' height='1' fill='%23000'/%3E%3Crect x='1' y='6' width='2' height='1' fill='%23000'/%3E%3Crect x='5' y='6' width='2' height='1' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 8px 8px !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Crect x='1' y='1' width='2' height='1' fill='%23000'/%3E%3Crect x='5' y='1' width='2' height='1' fill='%23000'/%3E%3Crect x='2' y='2' width='1' height='1' fill='%23000'/%3E%3Crect x='5' y='2' width='1' height='1' fill='%23000'/%3E%3Crect x='3' y='3' width='2' height='2' fill='%23000'/%3E%3Crect x='2' y='5' width='1' height='1' fill='%23000'/%3E%3Crect x='5' y='5' width='1' height='1' fill='%23000'/%3E%3Crect x='1' y='6' width='2' height='1' fill='%23000'/%3E%3Crect x='5' y='6' width='2' height='1' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 8px 8px !important;
+}
+
+html.winamp-ytm-on ytmusic-multi-select-menu-bar .menu-bar-icon svg,
+html.winamp-ytm-on ytmusic-multi-select-menu-bar yt-icon-button#dismiss-button svg,
+html.winamp-ytm-on ytmusic-multi-select-menu-bar yt-icon-button.menu-bar-icon svg {
+  display: none !important;
+}
+
+/* "X selected" text counter: Retro Monospace / LCD Glow */
+html.winamp-ytm-on ytmusic-multi-select-menu-bar .text,
+html.winamp-ytm-on ytmusic-multi-select-menu-bar .text yt-formatted-string {
+  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  color: #00ff00 !important;
+  text-shadow: 0 0 3px rgba(0, 255, 0, 0.4) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  white-space: nowrap !important;
+  margin: 0 20px 0 0 !important;
+}
+
+/* Action Buttons inside the Multi-Select Bar */
+html.winamp-ytm-on ytmusic-multi-select-menu-bar #multiSelectMenu {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+html.winamp-ytm-on ytmusic-multi-select-menu-bar #multiSelectMenu yt-icon-button,
+html.winamp-ytm-on ytmusic-multi-select-menu-bar #multiSelectMenu tp-yt-paper-icon-button,
+html.winamp-ytm-on ytmusic-multi-select-menu-bar #multiSelectMenu button {
+  background: var(--wa-btn-face, #b4b8c4) !important;
+  border: 1px solid var(--wa-btn-outline, #101018) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight, #ffffff), inset -1px -1px 0 var(--wa-btn-shadow, #5a5a66) !important;
+  border-radius: 0 !important;
+  width: 24px !important;
+  height: 22px !important;
+  min-width: 24px !important;
+  min-height: 22px !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+}
+
+html.winamp-ytm-on ytmusic-multi-select-menu-bar #multiSelectMenu yt-icon-button:active,
+html.winamp-ytm-on ytmusic-multi-select-menu-bar #multiSelectMenu tp-yt-paper-icon-button:active,
+html.winamp-ytm-on ytmusic-multi-select-menu-bar #multiSelectMenu button:active {
+  box-shadow: inset 1px 1px 0 #000000, inset -1px -1px 0 rgba(255, 255, 255, 0.2) !important;
+  background: var(--wa-btn-shadow, #888896) !important;
+}
+
+html.winamp-ytm-on ytmusic-multi-select-menu-bar #multiSelectMenu yt-icon {
+  width: 14px !important;
+  height: 14px !important;
+  color: var(--wa-btn-glyph, #101018) !important;
+  fill: var(--wa-btn-glyph, #101018) !important;
+}
+
+/* 4. Sort & Filter Button */
+html.winamp-ytm-on ytmusic-sort-filter-button-renderer button,
+html.winamp-ytm-on button.ytmusic-sort-filter-button-renderer,
+html.winamp-ytm-on yt-sort-filter-sub-menu-renderer button,
+html.winamp-ytm-on yt-sort-filter-sub-menu-renderer yt-icon-button {
+  background: var(--wa-btn-face, #b4b8c4) !important;
+  border: 1px solid var(--wa-btn-outline, #101018) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight, #ffffff), inset -1px -1px 0 var(--wa-btn-shadow, #5a5a66) !important;
+  border-radius: 0 !important;
+  color: var(--wa-btn-glyph, #101018) !important;
+  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+  padding: 2px 8px !important;
+  height: 22px !important;
+  max-width: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+}
+
+html.winamp-ytm-on ytmusic-sort-filter-button-renderer button:active,
+html.winamp-ytm-on button.ytmusic-sort-filter-button-renderer:active {
+  box-shadow: inset 1px 1px 0 #000000, inset -1px -1px 0 rgba(255, 255, 255, 0.2) !important;
+  background: var(--wa-btn-shadow, #888896) !important;
+}
+
+html.winamp-ytm-on ytmusic-sort-filter-button-renderer yt-icon,
+html.winamp-ytm-on button.ytmusic-sort-filter-button-renderer yt-icon {
+  width: 12px !important;
+  height: 12px !important;
+  margin: 0 !important;
+  color: var(--wa-btn-glyph, #101018) !important;
+  fill: var(--wa-btn-glyph, #101018) !important;
+}
+

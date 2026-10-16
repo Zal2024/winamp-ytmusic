@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "Winamp YouTube Music",
+  "version": "1.0.0",
+  "description": "Skins YouTube Music like classic Winamp 2.x and forces audio-only (removes the video player). It really whips the llama's ass.",
+  "content_scripts": [
+    {
+      "matches": ["https://music.youtube.com/*"],
+      "css": ["winamp.css"],
+      "js": ["content.js"],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": ["https://music.youtube.com/*"],
+      "js": ["bridge.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    }
+  ],
+  "background": { "service_worker": "background.js" },
+  "action": {
+    "default_title": "Winamp YTM",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "commands": {
+    "toggle-theme": {
+      "suggested_key": { "default": "Alt+W" },
+      "description": "Toggle the Winamp theme on/off"
+    }
+  },
+  "permissions": ["storage"]
+}

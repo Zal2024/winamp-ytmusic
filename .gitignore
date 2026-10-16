@@ -1,0 +1,14 @@
+# Screenshots & debug logs
+screenshot_*.png
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor & IDE configs
+.vscode/
+.idea/
+*.swp
+*.swo

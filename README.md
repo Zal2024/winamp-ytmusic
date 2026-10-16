@@ -1,11 +1,16 @@
 # Winamp YouTube Music
 
-A browser extension that skins **music.youtube.com** like classic **Winamp 2.x**
-(dark brushed metal, green LCD readouts, blocky beveled buttons, fake spectrum
-analyzer) and forces **audio-only** playback by hiding the video and switching
-the player to "Song" mode.
+A browser extension that skins **music.youtube.com** like classic **Winamp 2.x** (dark brushed metal, green LCD readouts, blocky beveled buttons, and real-time audio spectrum analyzer) and forces **audio-only** playback by hiding the video and switching the player to "Song" mode.
 
-Built and tested against the live YTM DOM (June 2026).
+![Winamp YouTube Music Preview](preview.png)
+
+## Features
+
+- 🎛️ **Classic Winamp 2.x Aesthetic**: Brushed dark metal panels, green phosphor LCD readouts, and beveled buttons.
+- 📊 **Real-time Audio Visualizer**: Web Audio API DSP analyzer with relative dynamic range scaling, 16 non-overlapping frequency bands, peak decay, and configurable smoothing.
+- ⚡ **Audio-Only Mode**: Hides video feeds and automatically forces the audio stream to save bandwidth and system resources.
+- 🎚️ **Customizable Popup**: Adjust visualizer smoothing (0–100% with Fast, Auto, and Silky presets) and toggle skin or audio-only modes.
+- ⌨️ **Quick Shortcut**: Press `Alt + W` to quickly toggle the skin on and off.
 
 ## Install (Opera GX / Chrome / Edge — all Chromium)
 

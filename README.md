@@ -22,9 +22,6 @@ A browser extension that skins **music.youtube.com** like classic **Winamp 2.x**
    `C:\Users\User1\winamp-ytmusic`
 4. Open <https://music.youtube.com> and play a song.
 
-> Opera GX note: the extension itself runs fine here. (The only thing that
-> doesn't work in Opera GX is Claude's *automation* of tabs — unrelated to this.)
-
 ## Using it
 
 - **Popup** (toolbar icon):

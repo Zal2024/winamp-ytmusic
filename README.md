@@ -1,4 +1,4 @@
-# Winamp YouTube Music Extention
+# Winamp YouTube Music Extension
 
 A browser extension that skins **music.youtube.com** like classic **Winamp 2.x** (dark brushed metal, green LCD readouts, blocky beveled buttons, and real-time audio spectrum analyzer) and forces **audio-only** playback by hiding the video and switching the player to "Song" mode.
 

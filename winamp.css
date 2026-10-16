@@ -2611,22 +2611,23 @@ html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="rep"]::after
 
 /* 3. SHUFFLE BUTTON */
 html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"] {
-  width: 47px !important;
-  min-width: 47px !important;
+  width: 54px !important;
+  min-width: 54px !important;
 }
 html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"]::after {
   content: "SHUFFLE" !important;
   font-family: var(--wa-font) !important;
   font-size: 8px !important;
   font-weight: 700 !important;
-  letter-spacing: 0.2px !important;
+  letter-spacing: 0.1px !important;
   color: #2f374d !important;
   text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7) !important;
   display: flex !important;
   align-items: center !important;
-  justify-content: center !important;
+  justify-content: flex-end !important;
   height: 100% !important;
-  margin-left: 8px !important;
+  padding-right: 5px !important;
+  margin-left: 0 !important;
   pointer-events: none !important;
 }
 

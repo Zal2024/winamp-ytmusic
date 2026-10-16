@@ -967,6 +967,7 @@
     schedule();
     const mo = new MutationObserver(schedule);
     mo.observe(document.documentElement, { childList: true, subtree: true });
+    setInterval(schedule, 500);
     window.addEventListener("yt-navigate-finish", schedule, true);
     document.addEventListener("yt-player-updated", schedule, true);
     document.addEventListener("play", () => {

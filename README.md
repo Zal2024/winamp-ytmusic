@@ -6,11 +6,13 @@ A browser extension that skins **music.youtube.com** like classic **Winamp 2.x**
 
 ## Features
 
--  **Classic Winamp 2.x Aesthetic**: Brushed dark metal panels, green phosphor LCD readouts, and beveled buttons.
--  **Real-time Audio Visualizer**: Web Audio API DSP analyzer with relative dynamic range scaling, 16 non-overlapping frequency bands, peak decay, and configurable smoothing.
--  **Audio-Only Mode**: Hides video feeds and automatically forces the audio stream to save bandwidth and system resources.
--  **Customizable Popup**: Adjust visualizer smoothing (0–100% with Fast, Auto, and Silky presets) and toggle skin or audio-only modes.
--  **Quick Shortcut**: Press `Alt + W` to quickly toggle the skin on and off.
+- 🎛️ **Classic Winamp 2.x Aesthetic**: Brushed dark metal panels, green phosphor LCD readouts, authentic 2-tier 3D beveled buttons, and authentic 3D silver diamond emblem.
+- ⏹️ **Authentic Transport Controls**: Includes classic Previous, Play, Pause, dedicated Stop button, Next, and recessed LED toggle indicators for Shuffle, Repeat, and Playlist (`[■ SHUFFLE]`, `[■ 🔁]`, `[■ PL]`).
+- 📻 **Audio Stats LCD Readout**: Classic sunken bit-rate and sampling-frequency display (`192 kbps 48 kHz mono stereo`).
+- 📊 **Real-time Audio Visualizer**: Web Audio API DSP analyzer with relative dynamic range scaling, 16 non-overlapping frequency bands, peak decay, and configurable smoothing.
+- ⚡ **Audio-Only Mode**: Hides video feeds and automatically forces the audio stream to save bandwidth and system resources.
+- 🎚️ **Customizable Popup**: Adjust visualizer smoothing (0–100% with Fast, Auto, and Silky presets) and toggle skin or audio-only modes.
+- ⌨️ **Quick Shortcut**: Press `Alt + W` to quickly toggle the skin on and off.
 
 ## Install (Opera GX / Chrome / Edge — all Chromium)
 
@@ -60,3 +62,9 @@ likely to drift:
 
 Re-grab the live markup (DevTools → Console) and update those selectors. The
 gating classes (`.winamp-ytm-on`, `.winamp-ytm-audio`) won't change.
+
+## Credits & Acknowledgments
+
+- Inspired by the timeless design of Nullsoft Winamp 2.x by Justin Frankel & Dmitry Boldyrev ("It Really Whips The Llama's Ass!").
+- Pixel-accurate sprite and UI reference inspired by [mcftira/ytm-winamp](https://github.com/mcftira/ytm-winamp).
+

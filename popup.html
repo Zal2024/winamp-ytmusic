@@ -143,29 +143,34 @@
       .wa-lightning-bolt {
         display: inline-block;
         width: 11px;
-        height: 13px;
+        height: 9px;
         margin-right: 4px;
         flex-shrink: 0;
-        background-color: #f0c030;
-        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Cpolygon points='9,1 3,9 8,9 6,15 13,6 8,6' fill='%23000'/%3E%3C/svg%3E")
-          no-repeat center / 11px 13px;
-        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Cpolygon points='9,1 3,9 8,9 6,15 13,6 8,6' fill='%23000'/%3E%3C/svg%3E")
-          no-repeat center / 11px 13px;
+        background: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2011%209'%20shape-rendering='crispEdges'%3E%3Crect%20x='3'%20y='1'%20width='1'%20height='1'%20fill='%23a08134'/%3E%3Crect%20x='2'%20y='2'%20width='1'%20height='1'%20fill='%23b69c54'/%3E%3Crect%20x='3'%20y='2'%20width='1'%20height='1'%20fill='%232c231f'/%3E%3Crect%20x='4'%20y='2'%20width='1'%20height='1'%20fill='%23a08134'/%3E%3Crect%20x='1'%20y='3'%20width='1'%20height='1'%20fill='%23b69c54'/%3E%3Crect%20x='2'%20y='3'%20width='1'%20height='1'%20fill='%232c231f'/%3E%3Crect%20x='3'%20y='3'%20width='1'%20height='1'%20fill='%231f1f22'/%3E%3Crect%20x='4'%20y='3'%20width='1'%20height='1'%20fill='%23a08134'/%3E%3Crect%20x='1'%20y='4'%20width='1'%20height='1'%20fill='%23b69c54'/%3E%3Crect%20x='2'%20y='4'%20width='2'%20height='1'%20fill='%235d5029'/%3E%3Crect%20x='4'%20y='4'%20width='2'%20height='1'%20fill='%23a08134'/%3E%3Crect%20x='6'%20y='4'%20width='3'%20height='1'%20fill='%23685935'/%3E%3Crect%20x='9'%20y='4'%20width='1'%20height='1'%20fill='%23a08134'/%3E%3Crect%20x='5'%20y='5'%20width='1'%20height='1'%20fill='%23a08134'/%3E%3Crect%20x='6'%20y='5'%20width='1'%20height='1'%20fill='%231f1f22'/%3E%3Crect%20x='7'%20y='5'%20width='1'%20height='1'%20fill='%232c231f'/%3E%3Crect%20x='8'%20y='5'%20width='1'%20height='1'%20fill='%23a08134'/%3E%3Crect%20x='5'%20y='6'%20width='1'%20height='1'%20fill='%23a08134'/%3E%3Crect%20x='6'%20y='6'%20width='1'%20height='1'%20fill='%231f1f22'/%3E%3Crect%20x='7'%20y='6'%20width='2'%20height='1'%20fill='%23a08134'/%3E%3Crect%20x='6'%20y='7'%20width='1'%20height='1'%20fill='%23a08134'/%3E%3C/svg%3E") no-repeat center / 11px 9px;
+        image-rendering: pixelated;
       }
 
       .wa-tb-grip {
         flex: 1 1 auto;
         height: 7px;
         margin: 0 5px;
-        background: repeating-linear-gradient(
+        background: linear-gradient(
           to bottom,
-          var(--wa-titlebar-btn) 0px,
-          var(--wa-titlebar-btn) 1px,
-          var(--wa-chassis-dark) 1px,
-          var(--wa-chassis-dark) 2px
+          #141520 0px,
+          #141520 1px,
+          #9e8c5a 1px,
+          #9e8c5a 2px,
+          #b4b4b8 2px,
+          #b4b4b8 3px,
+          #383424 3px,
+          #383424 4px,
+          #786c48 4px,
+          #786c48 5px,
+          #141520 5px,
+          #141520 7px
         );
-        border-top: 1px solid #101018;
-        border-bottom: 1px solid #3e3b2a;
+        border-top: 1px solid #141520;
+        border-bottom: 1px solid #383424;
       }
 
       .wa-tb-title-text {
@@ -472,12 +477,14 @@
       }
 
       .preset-btn {
-        background: var(--wa-btn-face);
-        color: var(--wa-btn-glyph);
-        border: 1px solid var(--wa-btn-outline);
+        background: #bdced6;
+        color: #101018;
+        border: 1px solid #202034;
         box-shadow:
-          inset 1px 1px 0 var(--wa-btn-highlight),
-          inset -1px -1px 0 var(--wa-btn-shadow);
+          inset 1px 1px 0 #efffff,
+          inset -1px -1px 0 #4a5a6b,
+          inset 2px 2px 0 #adb5c6,
+          inset -2px -2px 0 #7b8494;
         font-family: "Lucida Console", "Courier New", "Consolas", monospace;
         font-size: 9px;
         font-weight: bold;
@@ -488,10 +495,13 @@
 
       .preset-btn:active,
       .preset-btn.is-active {
-        background: var(--wa-btn-face-pressed);
+        background: #97a8b9;
         box-shadow:
-          inset 1px 1px 0 var(--wa-btn-shadow),
-          inset -1px -1px 0 var(--wa-btn-highlight);
+          inset 1px 1px 0 #202034,
+          inset -1px -1px 0 #efffff,
+          inset 2px 2px 0 #4a5a6b,
+          inset -2px -2px 0 #adb5c6;
+        color: #000000;
       }
 
       /* Recessed LCD Status Info Box at Bottom */
@@ -525,6 +535,30 @@
           inset -1px -1px 0 var(--wa-btn-shadow);
         font-weight: bold;
         font-size: 9px;
+      }
+
+      .wa-popup-footer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        margin-top: 8px;
+        padding-top: 6px;
+        border-top: 1px solid #1c1e2e;
+        box-shadow: inset 0 1px 0 #090a10;
+      }
+
+      .wa-footer-diamond {
+        width: 14px;
+        height: 14px;
+        image-rendering: pixelated;
+      }
+
+      .wa-footer-tagline {
+        font-size: 8px;
+        color: #7a8296;
+        letter-spacing: 0.8px;
+        font-weight: bold;
       }
     </style>
   </head>
@@ -604,6 +638,11 @@
       <div class="status-well">
         TOGGLE SHORTCUT: <span class="keycap">ALT+W</span><br />
         <b>AUDIO ONLY</b> HIDES VIDEO &amp; FORCES SONG MODE.
+      </div>
+
+      <div class="wa-popup-footer">
+        <img src="icons/winamp-diamond.png" class="wa-footer-diamond" alt="Winamp" />
+        <span class="wa-footer-tagline">WINAMP 2.X FOR YT MUSIC</span>
       </div>
     </div>
 

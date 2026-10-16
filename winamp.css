@@ -386,16 +386,21 @@ html.winamp-ytm-on ytmusic-nav-bar #menu-button {
   box-shadow: none !important;
 }
 
-/* Classic Gold Lightning Bolt badge (for window titlebars & popups) */
+/* Classic Gold Sine-Wave emblem (for window titlebars & popups) */
 html.winamp-ytm-on .wa-lightning-bolt {
   display: inline-block !important;
-  width: 12px !important;
-  height: 14px !important;
+  width: 11px !important;
+  height: 9px !important;
+  min-width: 11px !important;
   margin-right: 6px !important;
   vertical-align: middle !important;
-  background-color: #f0c030 !important;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Cpolygon points='9,1 3,9 8,9 6,15 13,6 8,6' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 12px 14px !important;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Cpolygon points='9,1 3,9 8,9 6,15 13,6 8,6' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 12px 14px !important;
+  background-color: transparent !important;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2011%209'%20shape-rendering='crispEdges'%3E%3Crect%20x='3'%20y='1'%20width='1'%20height='1'%20fill='%23a08134'/%3E%3Crect%20x='2'%20y='2'%20width='1'%20height='1'%20fill='%23b69c54'/%3E%3Crect%20x='3'%20y='2'%20width='1'%20height='1'%20fill='%232c231f'/%3E%3Crect%20x='4'%20y='2'%20width='1'%20height='1'%20fill='%23a08134'/%3E%3Crect%20x='1'%20y='3'%20width='1'%20height='1'%20fill='%23b69c54'/%3E%3Crect%20x='2'%20y='3'%20width='1'%20height='1'%20fill='%232c231f'/%3E%3Crect%20x='3'%20y='3'%20width='1'%20height='1'%20fill='%231f1f22'/%3E%3Crect%20x='4'%20y='3'%20width='1'%20height='1'%20fill='%23a08134'/%3E%3Crect%20x='1'%20y='4'%20width='1'%20height='1'%20fill='%23b69c54'/%3E%3Crect%20x='2'%20y='4'%20width='2'%20height='1'%20fill='%235d5029'/%3E%3Crect%20x='4'%20y='4'%20width='2'%20height='1'%20fill='%23a08134'/%3E%3Crect%20x='6'%20y='4'%20width='3'%20height='1'%20fill='%23685935'/%3E%3Crect%20x='9'%20y='4'%20width='1'%20height='1'%20fill='%23a08134'/%3E%3Crect%20x='5'%20y='5'%20width='1'%20height='1'%20fill='%23a08134'/%3E%3Crect%20x='6'%20y='5'%20width='1'%20height='1'%20fill='%231f1f22'/%3E%3Crect%20x='7'%20y='5'%20width='1'%20height='1'%20fill='%232c231f'/%3E%3Crect%20x='8'%20y='5'%20width='1'%20height='1'%20fill='%23a08134'/%3E%3Crect%20x='5'%20y='6'%20width='1'%20height='1'%20fill='%23a08134'/%3E%3Crect%20x='6'%20y='6'%20width='1'%20height='1'%20fill='%231f1f22'/%3E%3Crect%20x='7'%20y='6'%20width='2'%20height='1'%20fill='%23a08134'/%3E%3Crect%20x='6'%20y='7'%20width='1'%20height='1'%20fill='%23a08134'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-size: 11px 9px !important;
+  image-rendering: pixelated !important;
+  -webkit-mask: none !important;
+  mask: none !important;
 }
 
 /* Window Title Bar Buttons (for window titlebars) */
@@ -834,13 +839,23 @@ html.winamp-ytm-on ytmusic-carousel {
 }
 
 /* Ribbed olive/khaki grip bars (Only inside floating windows) */
+/* 2-Ridge Bronze/Gold Grip Bar (authentic Winamp 2.x titlebar) */
+html.winamp-ytm-on .wa-tb-grip,
 .wa-tb-grip {
   flex: 1 1 auto !important;
-  height: 8px !important;
+  height: 7px !important;
   margin: 0 6px !important;
-  background: repeating-linear-gradient(to bottom, #6b6648 0px, #6b6648 1px, #141520 1px, #141520 2px) !important;
-  border-top: 1px solid #101018 !important;
-  border-bottom: 1px solid #3e3b2a !important;
+  background: linear-gradient(to bottom,
+    #141520 0px, #141520 1px,
+    #9e8c5a 1px, #9e8c5a 2px,
+    #b4b4b8 2px, #b4b4b8 3px,
+    #383424 3px, #383424 4px,
+    #786c48 4px, #786c48 5px,
+    #9e8c5a 5px, #9e8c5a 6px,
+    #141520 6px, #141520 7px
+  ) !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 /* Clean Hi-Fi Shelf Header: Compact Winamp window framing */
@@ -1684,7 +1699,7 @@ html.winamp-ytm-on ytmusic-player-bar .wa-sponsored-badge {
   font-weight: 700 !important;
 }
 
-/* Transport Buttons: tight row, exactly 23x18px (Requirement 6) */
+/* Transport Buttons: authentic 2-tier 3D Winamp bevels */
 html.winamp-ytm-on ytmusic-player-bar #left-controls,
 html.winamp-ytm-on ytmusic-player-bar .left-controls,
 html.winamp-ytm-on ytmusic-player-bar .left-controls-buttons {
@@ -1694,7 +1709,8 @@ html.winamp-ytm-on ytmusic-player-bar .left-controls-buttons {
   overflow: visible !important;
 }
 html.winamp-ytm-on ytmusic-player-bar .left-controls-buttons yt-icon-button,
-html.winamp-ytm-on ytmusic-player-bar #play-pause-button {
+html.winamp-ytm-on ytmusic-player-bar #play-pause-button,
+html.winamp-ytm-on ytmusic-player-bar .wa-stop-btn {
   width: 23px !important;
   height: 18px !important;
   min-width: 23px !important;
@@ -1704,11 +1720,14 @@ html.winamp-ytm-on ytmusic-player-bar #play-pause-button {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  background: var(--wa-btn-face) !important;
-  border: 1px solid var(--wa-btn-outline) !important;
-  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight),
-    inset -1px -1px 0 var(--wa-btn-shadow) !important;
+  background: #bdced6 !important;
+  border: 1px solid #202034 !important;
+  box-shadow: inset 1px 1px 0 #efffff,
+              inset -1px -1px 0 #4a5a6b,
+              inset 2px 2px 0 #adb5c6,
+              inset -2px -2px 0 #7b8494 !important;
   box-sizing: border-box !important;
+  cursor: pointer !important;
 }
 html.winamp-ytm-on ytmusic-player-bar .left-controls-buttons yt-icon-button > #button,
 html.winamp-ytm-on ytmusic-player-bar #play-pause-button > #button {
@@ -1725,20 +1744,19 @@ html.winamp-ytm-on ytmusic-player-bar #play-pause-button > #button {
 }
 /* Active / pressed state */
 html.winamp-ytm-on ytmusic-player-bar .left-controls-buttons yt-icon-button:active,
-html.winamp-ytm-on ytmusic-player-bar #play-pause-button:active {
-  background: var(--wa-btn-face-pressed) !important;
-  box-shadow: inset 1px 1px 0 var(--wa-btn-shadow),
-    inset -1px -1px 0 var(--wa-btn-highlight) !important;
-}
-/* Play/Pause active pressed state (Requirement 6) */
+html.winamp-ytm-on ytmusic-player-bar #play-pause-button:active,
+html.winamp-ytm-on ytmusic-player-bar .wa-stop-btn:active,
 html.winamp-ytm-on ytmusic-player-bar[is-playing] #play-pause-button,
 html.winamp-ytm-on ytmusic-player-bar #play-pause-button.is-playing,
 html.winamp-ytm-on ytmusic-player-bar #play-pause-button[data-wa-playstate="playing"],
 html.winamp-ytm-on ytmusic-player-bar:has(.winamp-viz.is-playing) #play-pause-button,
 html.winamp-ytm-on ytmusic-player-bar #play-pause-button[aria-label*="Pause"],
 html.winamp-ytm-on ytmusic-player-bar #play-pause-button[title*="Pause"] {
-  background: var(--wa-btn-face-pressed) !important;
-  box-shadow: inset 1px 1px 0 var(--wa-btn-shadow), inset -1px -1px 0 var(--wa-btn-highlight) !important;
+  background: #a4b2be !important;
+  box-shadow: inset 1px 1px 0 #4a5a6b,
+              inset -1px -1px 0 #efffff,
+              inset 2px 2px 0 #7b8494,
+              inset -2px -2px 0 #adb5c6 !important;
 }
 
 /* Hide YouTube native SVG shapes inside left buttons */
@@ -1749,52 +1767,55 @@ html.winamp-ytm-on ytmusic-player-bar #play-pause-button yt-icon .yt-icon-shape 
   display: none !important;
 }
 
-/* Pixel-art Winamp 2.x transport glyphs */
+/* Pixel-art Winamp 2.x transport glyphs: 3-tone recessed metallic style */
 html.winamp-ytm-on ytmusic-player-bar .left-controls-buttons yt-icon,
-html.winamp-ytm-on ytmusic-player-bar #play-pause-button yt-icon {
+html.winamp-ytm-on ytmusic-player-bar #play-pause-button yt-icon,
+html.winamp-ytm-on ytmusic-player-bar .wa-stop-btn .wa-stop-icon {
   width: 14px !important;
-  height: 12px !important;
+  height: 10px !important;
   display: inline-block !important;
-  background-color: var(--wa-btn-glyph) !important;
+  background-color: transparent !important;
+  -webkit-mask: none !important;
+  mask: none !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 14px 10px !important;
+  image-rendering: pixelated !important;
 }
-/* 1. Previous: |◀◀ */
+/* 1. Previous: |◀ */
 html.winamp-ytm-on ytmusic-player-bar .previous-button yt-icon {
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='2' y='2' width='2' height='8' fill='%23000'/%3E%3Crect x='4' y='5' width='1' height='2' fill='%23000'/%3E%3Crect x='5' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='6' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='7' y='2' width='1' height='8' fill='%23000'/%3E%3Crect x='8' y='5' width='1' height='2' fill='%23000'/%3E%3Crect x='9' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='10' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='11' y='2' width='1' height='8' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='2' y='2' width='2' height='8' fill='%23000'/%3E%3Crect x='4' y='5' width='1' height='2' fill='%23000'/%3E%3Crect x='5' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='6' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='7' y='2' width='1' height='8' fill='%23000'/%3E%3Crect x='8' y='5' width='1' height='2' fill='%23000'/%3E%3Crect x='9' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='10' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='11' y='2' width='1' height='8' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2014%2010'%20shape-rendering='crispEdges'%3E%3Crect%20x='2'%20y='0'%20width='3'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='0'%20width='2'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='1'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='1'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='1'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='9'%20y='1'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='1'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='1'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='2'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='2'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='2'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='8'%20y='2'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='2'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='2'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='3'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='3'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='3'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='7'%20y='3'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='8'%20y='3'%20width='3'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='3'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='4'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='4'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='4'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='6'%20y='4'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='7'%20y='4'%20width='4'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='4'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='5'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='5'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='5'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='6'%20y='5'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='7'%20y='5'%20width='4'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='5'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='6'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='6'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='6'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='7'%20y='6'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='8'%20y='6'%20width='3'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='6'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='7'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='7'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='7'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='8'%20y='7'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='9'%20y='7'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='7'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='8'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='8'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='8'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='9'%20y='8'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='10'%20y='8'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='8'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='9'%20width='3'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='10'%20y='9'%20width='2'%20height='1'%20fill='%23efffff'/%3E%3C/svg%3E") !important;
 }
-/* 2. Rewind 10s: ◀◀ */
+/* 2. Rewind 10s */
 html.winamp-ytm-on ytmusic-player-bar .rewind-button yt-icon {
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='2' y='5' width='1' height='2' fill='%23000'/%3E%3Crect x='3' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='4' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='5' y='2' width='1' height='8' fill='%23000'/%3E%3Crect x='7' y='5' width='1' height='2' fill='%23000'/%3E%3Crect x='8' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='9' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='10' y='2' width='1' height='8' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='2' y='5' width='1' height='2' fill='%23000'/%3E%3Crect x='3' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='4' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='5' y='2' width='1' height='8' fill='%23000'/%3E%3Crect x='7' y='5' width='1' height='2' fill='%23000'/%3E%3Crect x='8' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='9' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='10' y='2' width='1' height='8' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2014%2010'%20shape-rendering='crispEdges'%3E%3Crect%20x='2'%20y='0'%20width='3'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='0'%20width='2'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='1'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='1'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='1'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='9'%20y='1'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='1'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='1'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='2'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='2'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='2'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='8'%20y='2'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='2'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='2'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='3'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='3'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='3'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='7'%20y='3'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='8'%20y='3'%20width='3'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='3'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='4'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='4'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='4'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='6'%20y='4'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='7'%20y='4'%20width='4'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='4'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='5'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='5'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='5'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='6'%20y='5'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='7'%20y='5'%20width='4'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='5'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='6'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='6'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='6'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='7'%20y='6'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='8'%20y='6'%20width='3'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='6'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='7'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='7'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='7'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='8'%20y='7'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='9'%20y='7'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='7'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='8'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='8'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='8'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='9'%20y='8'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='10'%20y='8'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='8'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='9'%20width='3'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='10'%20y='9'%20width='2'%20height='1'%20fill='%23efffff'/%3E%3C/svg%3E") !important;
 }
-/* 3. Play / Pause button */
-/* Paused: Play ▶ */
+/* 3. Play / Pause */
 html.winamp-ytm-on ytmusic-player-bar #play-pause-button yt-icon,
 html.winamp-ytm-on ytmusic-player-bar[is-paused] #play-pause-button yt-icon,
 html.winamp-ytm-on ytmusic-player-bar #play-pause-button.is-paused yt-icon,
 html.winamp-ytm-on ytmusic-player-bar #play-pause-button[data-wa-playstate="paused"] yt-icon {
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='3' y='1' width='2' height='10' fill='%23000'/%3E%3Crect x='5' y='2' width='2' height='8' fill='%23000'/%3E%3Crect x='7' y='3' width='2' height='6' fill='%23000'/%3E%3Crect x='9' y='4' width='2' height='4' fill='%23000'/%3E%3Crect x='11' y='5' width='1' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='3' y='1' width='2' height='10' fill='%23000'/%3E%3Crect x='5' y='2' width='2' height='8' fill='%23000'/%3E%3Crect x='7' y='3' width='2' height='6' fill='%23000'/%3E%3Crect x='9' y='4' width='2' height='4' fill='%23000'/%3E%3Crect x='11' y='5' width='1' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2014%2010'%20shape-rendering='crispEdges'%3E%3Crect%20x='2'%20y='0'%20width='2'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='1'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='1'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='1'%20width='2'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='2'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='2'%20width='3'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='6'%20y='2'%20width='2'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='3'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='3'%20width='5'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='8'%20y='3'%20width='2'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='4'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='4'%20width='7'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='10'%20y='4'%20width='2'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='5'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='5'%20width='7'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='10'%20y='5'%20width='2'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='6'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='6'%20width='5'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='8'%20y='6'%20width='2'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='7'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='7'%20width='3'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='6'%20y='7'%20width='2'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='8'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='8'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='8'%20width='2'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='9'%20width='2'%20height='1'%20fill='%23efffff'/%3E%3C/svg%3E") !important;
 }
-/* Playing: Pause ❚❚ */
 html.winamp-ytm-on ytmusic-player-bar[is-playing] #play-pause-button yt-icon,
 html.winamp-ytm-on ytmusic-player-bar #play-pause-button.is-playing yt-icon,
 html.winamp-ytm-on ytmusic-player-bar #play-pause-button[data-wa-playstate="playing"] yt-icon,
 html.winamp-ytm-on ytmusic-player-bar:has(.winamp-viz.is-playing) #play-pause-button yt-icon,
 html.winamp-ytm-on ytmusic-player-bar #play-pause-button[aria-label*="Pause"] yt-icon,
 html.winamp-ytm-on ytmusic-player-bar #play-pause-button[title*="Pause"] yt-icon {
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='3' y='1' width='3' height='10' fill='%23000'/%3E%3Crect x='8' y='1' width='3' height='10' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='3' y='1' width='3' height='10' fill='%23000'/%3E%3Crect x='8' y='1' width='3' height='10' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2014%2010'%20shape-rendering='crispEdges'%3E%3Crect%20x='1'%20y='0'%20width='4'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='8'%20y='0'%20width='4'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='1'%20y='1'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='1'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='1'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='8'%20y='1'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='1'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='1'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='1'%20y='2'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='2'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='2'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='8'%20y='2'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='2'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='2'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='1'%20y='3'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='3'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='3'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='8'%20y='3'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='3'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='3'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='1'%20y='4'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='4'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='4'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='8'%20y='4'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='4'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='4'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='1'%20y='5'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='5'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='5'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='8'%20y='5'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='5'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='5'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='1'%20y='6'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='6'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='6'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='8'%20y='6'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='6'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='6'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='1'%20y='7'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='7'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='7'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='8'%20y='7'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='7'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='7'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='1'%20y='8'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='8'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='8'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='8'%20y='8'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='8'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='8'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='1'%20y='9'%20width='4'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='8'%20y='9'%20width='4'%20height='1'%20fill='%23efffff'/%3E%3C/svg%3E") !important;
 }
-/* 4. Fast forward 30s: ▶▶ */
+/* 4. Stop: ■ */
+html.winamp-ytm-on ytmusic-player-bar .wa-stop-btn .wa-stop-icon {
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2014%2010'%20shape-rendering='crispEdges'%3E%3Crect%20x='2'%20y='0'%20width='10'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='1'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='1'%20width='8'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='1'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='2'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='2'%20width='8'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='2'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='3'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='3'%20width='8'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='3'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='4'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='4'%20width='8'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='4'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='5'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='5'%20width='8'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='5'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='6'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='6'%20width='8'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='6'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='7'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='7'%20width='8'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='7'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='8'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='8'%20width='8'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='8'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='9'%20width='10'%20height='1'%20fill='%23efffff'/%3E%3C/svg%3E") !important;
+}
+/* 5. Fast forward 30s */
 html.winamp-ytm-on ytmusic-player-bar .fast-forward-button yt-icon {
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='3' y='2' width='1' height='8' fill='%23000'/%3E%3Crect x='4' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='5' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='6' y='5' width='1' height='2' fill='%23000'/%3E%3Crect x='8' y='2' width='1' height='8' fill='%23000'/%3E%3Crect x='9' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='10' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='11' y='5' width='1' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='3' y='2' width='1' height='8' fill='%23000'/%3E%3Crect x='4' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='5' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='6' y='5' width='1' height='2' fill='%23000'/%3E%3Crect x='8' y='2' width='1' height='8' fill='%23000'/%3E%3Crect x='9' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='10' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='11' y='5' width='1' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2014%2010'%20shape-rendering='crispEdges'%3E%3Crect%20x='2'%20y='0'%20width='2'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='0'%20width='3'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='1'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='1'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='1'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='1'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='1'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='1'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='2'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='2'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='5'%20y='2'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='2'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='2'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='2'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='3'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='3'%20width='3'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='6'%20y='3'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='3'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='3'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='3'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='4'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='4'%20width='4'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='7'%20y='4'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='4'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='4'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='4'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='5'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='5'%20width='4'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='7'%20y='5'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='9'%20y='5'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='5'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='5'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='6'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='6'%20width='3'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='6'%20y='6'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='9'%20y='6'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='6'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='6'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='7'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='7'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='5'%20y='7'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='9'%20y='7'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='7'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='7'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='8'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='8'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='8'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='9'%20y='8'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='8'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='8'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='9'%20width='2'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='9'%20y='9'%20width='3'%20height='1'%20fill='%23efffff'/%3E%3C/svg%3E") !important;
 }
-/* 5. Next: ▶▶| */
+/* 6. Next: ▶| */
 html.winamp-ytm-on ytmusic-player-bar .next-button yt-icon {
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='2' y='2' width='1' height='8' fill='%23000'/%3E%3Crect x='3' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='4' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='5' y='5' width='1' height='2' fill='%23000'/%3E%3Crect x='6' y='2' width='1' height='8' fill='%23000'/%3E%3Crect x='7' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='8' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='9' y='5' width='1' height='2' fill='%23000'/%3E%3Crect x='11' y='2' width='2' height='8' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='2' y='2' width='1' height='8' fill='%23000'/%3E%3Crect x='3' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='4' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='5' y='5' width='1' height='2' fill='%23000'/%3E%3Crect x='6' y='2' width='1' height='8' fill='%23000'/%3E%3Crect x='7' y='3' width='1' height='6' fill='%23000'/%3E%3Crect x='8' y='4' width='1' height='4' fill='%23000'/%3E%3Crect x='9' y='5' width='1' height='2' fill='%23000'/%3E%3Crect x='11' y='2' width='2' height='8' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2014%2010'%20shape-rendering='crispEdges'%3E%3Crect%20x='2'%20y='0'%20width='2'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='0'%20width='3'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='1'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='1'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='1'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='1'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='1'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='1'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='2'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='2'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='5'%20y='2'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='2'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='2'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='2'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='3'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='3'%20width='3'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='6'%20y='3'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='3'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='3'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='3'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='4'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='4'%20width='4'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='7'%20y='4'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='4'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='4'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='4'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='5'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='5'%20width='4'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='7'%20y='5'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='9'%20y='5'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='5'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='5'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='6'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='6'%20width='3'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='6'%20y='6'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='9'%20y='6'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='6'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='6'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='7'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='7'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='5'%20y='7'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='9'%20y='7'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='7'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='7'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='8'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='8'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='8'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='9'%20y='8'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='8'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='8'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='9'%20width='2'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='9'%20y='9'%20width='3'%20height='1'%20fill='%23efffff'/%3E%3C/svg%3E") !important;
 }
 
 /* Song thumbnail in player bar: inset beveled frame, centered with clearance below seek bar */
@@ -1876,8 +1897,8 @@ html.winamp-ytm-on .winamp-viz {
   margin: 5px 4px 2px 4px !important;
   padding: 2px 3px !important;
   background-color: var(--wa-screen-bg, #000000) !important;
-  background-image: radial-gradient(rgba(0, 255, 0, 0.12) 1px, transparent 1px) !important;
-  background-size: 3px 3px !important;
+  background-image: radial-gradient(#202838 1px, transparent 1px) !important;
+  background-size: 2px 2px !important;
   border: 1px solid var(--wa-btn-outline, #101018) !important;
   box-shadow: inset 1px 1px 0 #000000, inset -1px -1px 0 var(--wa-chassis-bevel-lt, #3e4056) !important;
   border-radius: 0 !important;
@@ -1905,7 +1926,7 @@ html.winamp-ytm-on .wa-lcd-clutterbar span {
   font-family: "Lucida Console", "Consolas", monospace !important;
   font-size: 6px !important;
   font-weight: 700 !important;
-  color: #4a5568 !important;
+  color: #647288 !important;
   line-height: 1 !important;
   text-align: center !important;
   display: block !important;
@@ -2038,8 +2059,8 @@ html.winamp-ytm-on .wa-spectrum-axis {
   right: 0 !important;
   bottom: 0 !important;
   top: 0 !important;
-  border-left: 1px dotted rgba(255, 255, 255, 0.3) !important;
-  border-bottom: 1px dotted rgba(255, 255, 255, 0.3) !important;
+  border-left: 1px dotted #3890e8 !important;
+  border-bottom: 1px dotted #3890e8 !important;
   pointer-events: none !important;
 }
 
@@ -2292,37 +2313,56 @@ html.winamp-ytm-on tp-yt-paper-slider#progress-bar .slider-knob-inner::after {
   pointer-events: none !important;
 }
 
-/* Audio Stats Readout: 256 KBPS | 44.1 KHZ | STEREO (Requirement 10) */
+/* Audio Stats Readout: 192 kbps | 48 kHz | mono stereo (authentic Winamp 2.x) */
 html.winamp-ytm-on .wa-audio-stats {
   display: inline-flex !important;
   align-items: center !important;
   gap: 3px !important;
   height: 22px !important;
-  padding: 2px 4px !important;
-  background: #000000 !important;
-  border: 1px solid var(--wa-btn-outline) !important;
-  box-shadow: inset 1px 1px 0 #000, inset -1px -1px 0 var(--wa-chassis-bevel-lt) !important;
-  margin: 0 3px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  margin: 0 4px !important;
   font-family: "Lucida Console", "Consolas", monospace !important;
-  font-size: 9px !important;
-  font-weight: 700 !important;
   box-sizing: border-box !important;
 }
 html.winamp-ytm-on .wa-audio-stats .val {
-  color: var(--wa-led-green) !important;
+  background: #000000 !important;
+  border-top: 1px solid #101018 !important;
+  border-left: 1px solid #101018 !important;
+  border-right: 1px solid #686c80 !important;
+  border-bottom: 1px solid #686c80 !important;
+  padding: 1px 4px !important;
+  color: #00ff00 !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  letter-spacing: 0.5px !important;
+  box-sizing: border-box !important;
 }
 html.winamp-ytm-on .wa-audio-stats .lbl {
-  color: #6b6648 !important; /* olive scale label */
-  font-size: 8px !important;
-  margin-right: 2px !important;
+  color: #ffffff !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  text-transform: none !important;
+  margin-right: 3px !important;
+  letter-spacing: 0.2px !important;
 }
-html.winamp-ytm-on .wa-audio-stats .mode {
-  color: #2a3a1a !important;
-  font-size: 8px !important;
-  margin-left: 2px !important;
+html.winamp-ytm-on .wa-audio-stats .mode.is-mono {
+  color: #8890a0 !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  text-transform: lowercase !important;
+  margin-left: 3px !important;
 }
 html.winamp-ytm-on .wa-audio-stats .mode.is-stereo {
-  color: var(--wa-led-green) !important;
+  color: #00ff00 !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  text-transform: lowercase !important;
+  text-shadow: 0 0 4px #00cc00, 0 0 8px rgba(0, 224, 0, 0.75) !important;
+  margin-left: 2px !important;
 }
 
 /* Volume Slider: Inset groove + classic orange gradient fill centered on fill tip */
@@ -2373,7 +2413,7 @@ html.winamp-ytm-on tp-yt-paper-slider#volume-slider #sliderBar {
   height: 6px !important;
 }
 html.winamp-ytm-on tp-yt-paper-slider#volume-slider #primaryProgress {
-  background: linear-gradient(to right, #ff2200, #ffaa00) !important;
+  background: linear-gradient(to bottom, #68b820 0%, #88e030 50%, #58a818 100%) !important;
   height: 100% !important;
 }
 html.winamp-ytm-on tp-yt-paper-slider#volume-slider #sliderBar #progressContainer {
@@ -2411,28 +2451,33 @@ html.winamp-ytm-on tp-yt-paper-slider#volume-slider #sliderKnob {
   justify-content: center !important;
   pointer-events: auto !important;
 }
-html.winamp-ytm-on tp-yt-paper-slider#volume-slider .slider-knob-inner {
+html.winamp-ytm-on tp-yt-paper-slider#volume-slider .slider-knob-inner,
+html.winamp-ytm-on tp-yt-paper-slider#progress-bar .slider-knob-inner {
   position: absolute !important;
   left: 50% !important;
   top: 50% !important;
   transform: translate(-50%, -50%) !important;
   margin: 0 !important;
-  background: var(--wa-btn-face) !important;
-  border: 1px solid var(--wa-btn-outline) !important;
-  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight),
-    inset -1px -1px 0 var(--wa-btn-shadow) !important;
+  background: #adbcc4 !important;
+  border: 1px solid #0b0f16 !important;
+  box-shadow: inset 1px 1px 0 #dae7ea, inset -1px -1px 0 #4a5a6b, inset -2px -2px 0 #7b8494 !important;
   border-radius: 0 !important;
   width: 14px !important;
-  height: 12px !important;
+  height: 11px !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
-html.winamp-ytm-on tp-yt-paper-slider#volume-slider .slider-knob-inner::after {
+html.winamp-ytm-on tp-yt-paper-slider#volume-slider .slider-knob-inner::after,
+html.winamp-ytm-on tp-yt-paper-slider#progress-bar .slider-knob-inner::after {
   content: "" !important;
   position: absolute !important;
   top: 2px !important;
-  left: 2px !important;
-  right: 2px !important;
   bottom: 2px !important;
-  background: repeating-linear-gradient(to right, #5a5a66 0px, #5a5a66 1px, #ffffff 1px, #ffffff 2px) !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 6px !important;
+  background: repeating-linear-gradient(to right, #0b0f16 0px, #0b0f16 1px, transparent 1px, transparent 2px) !important;
   pointer-events: none !important;
 }
 
@@ -2442,9 +2487,9 @@ html.winamp-ytm-on ytmusic-player-bar #right-controls tp-yt-paper-icon-button {
   position: relative !important;
   height: 18px !important;
   min-height: 18px !important;
-  background: var(--wa-btn-face) !important;
-  border: 1px solid var(--wa-btn-outline) !important;
-  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight), inset -1px -1px 0 var(--wa-btn-shadow) !important;
+  background: #bdced6 !important;
+  border: 1px solid #202034 !important;
+  box-shadow: inset 1px 1px 0 #efffff, inset -1px -1px 0 #4a5a6b, inset 2px 2px 0 #adb5c6, inset -2px -2px 0 #7b8494 !important;
   margin: 0 1px !important;
   padding: 0 !important;
   display: inline-flex !important;
@@ -2478,8 +2523,8 @@ html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn].is-on,
 html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn]:active,
 html.winamp-ytm-on ytmusic-player-bar[data-wa-shuffle="on"] #right-controls [data-wa-btn="shuf"],
 html.winamp-ytm-on ytmusic-player-bar[data-wa-repeat="on"] #right-controls [data-wa-btn="rep"] {
-  background: var(--wa-btn-face-pressed) !important;
-  box-shadow: inset 1px 1px 0 var(--wa-btn-shadow), inset -1px -1px 0 var(--wa-btn-highlight) !important;
+  background: #a4b2be !important;
+  box-shadow: inset 1px 1px 0 #4a5a6b, inset -1px -1px 0 #efffff, inset 2px 2px 0 #7b8494, inset -2px -2px 0 #adb5c6 !important;
 }
 
 /* Hide native SVGs in right controls buttons */
@@ -2490,18 +2535,21 @@ html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn] yt-interacti
   display: none !important;
 }
 
-/* Common LED indicator for REP, SHUF */
+/* 3D recessed LED indicator for REP, SHUF, PL */
 html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="rep"]::before,
-html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"]::before {
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"]::before,
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="pl"]::before {
   content: "" !important;
   position: absolute !important;
-  top: 6px !important;
+  top: 5px !important;
   left: 4px !important;
-  width: 4px !important;
-  height: 4px !important;
-  background: #243618 !important;
-  border: 1px solid #10180c !important;
-  box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.5) !important;
+  width: 6px !important;
+  height: 5px !important;
+  background: #105a00 !important;
+  border-top: 1px solid #4a5a6b !important;
+  border-left: 1px solid #4a5a6b !important;
+  border-right: 1px solid #d5def2 !important;
+  border-bottom: 1px solid #d5def2 !important;
   box-sizing: border-box !important;
   z-index: 2 !important;
   pointer-events: none !important;
@@ -2509,38 +2557,11 @@ html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"]::befo
 
 html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="rep"].is-on::before,
 html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"].is-on::before,
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="pl"].is-on::before,
 html.winamp-ytm-on ytmusic-player-bar[data-wa-shuffle="on"] #right-controls [data-wa-btn="shuf"]::before,
 html.winamp-ytm-on ytmusic-player-bar[data-wa-repeat="on"] #right-controls [data-wa-btn="rep"]::before {
   background: #00ff00 !important;
-  border: 1px solid #005500 !important;
   box-shadow: 0 0 3px #00ff00 !important;
-}
-
-/* Common text typography for REP, SHUF */
-html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="rep"]::after,
-html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"]::after {
-  font-family: var(--wa-font) !important;
-  font-size: 10px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.5px !important;
-  color: var(--wa-btn-glyph) !important;
-  text-shadow: var(--wa-btn-glyph-shadow) !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  height: 100% !important;
-  margin-left: 6px !important;
-  z-index: 1 !important;
-  pointer-events: none !important;
-  user-select: none !important;
-}
-
-html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="rep"].is-on::after,
-html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"].is-on::after,
-html.winamp-ytm-on ytmusic-player-bar[data-wa-shuffle="on"] #right-controls [data-wa-btn="shuf"]::after,
-html.winamp-ytm-on ytmusic-player-bar[data-wa-repeat="on"] #right-controls [data-wa-btn="rep"]::after {
-  color: #000000 !important;
-  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7) !important;
 }
 
 /* 1. VOLUME / MUTE BUTTON (Centered pixel horn) */
@@ -2567,51 +2588,79 @@ html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="vol"]::after
   z-index: 1 !important;
 }
 
-/* 2. REPEAT BUTTON */
+/* 2. REPEAT BUTTON with authentic Winamp loop arrow */
 html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="rep"] {
-  width: 36px !important;
-  min-width: 36px !important;
+  width: 28px !important;
+  min-width: 28px !important;
 }
 html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="rep"]::after {
-  content: "REP" !important;
-}
-
-/* 3. SHUFFLE BUTTON */
-html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"] {
-  width: 44px !important;
-  min-width: 44px !important;
-}
-html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"]::after {
-  content: "SHUF" !important;
-}
-
-/* 4. PLAYER PAGE / QUEUE TOGGLE BUTTON (Expand/Collapse Arrow) */
-html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="pl"],
-html.winamp-ytm-on ytmusic-player-bar #right-controls .toggle-player-page-button {
-  width: 22px !important;
-  min-width: 22px !important;
-}
-html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="pl"]::before,
-html.winamp-ytm-on ytmusic-player-bar #right-controls .toggle-player-page-button::before {
-  display: none !important;
-}
-html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="pl"]::after,
-html.winamp-ytm-on ytmusic-player-bar #right-controls .toggle-player-page-button::after {
   content: "" !important;
   position: absolute !important;
   top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  width: 8px !important;
-  height: 5px !important;
-  background-color: var(--wa-btn-glyph) !important;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 5' shape-rendering='crispEdges'%3E%3Cpolygon points='0,0 8,0 4,5' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 5' shape-rendering='crispEdges'%3E%3Cpolygon points='0,0 8,0 4,5' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+  left: 12px !important;
+  transform: translateY(-50%) !important;
+  width: 11px !important;
+  height: 8px !important;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2013%208'%20shape-rendering='crispEdges'%3E%3Crect%20x='1'%20y='1'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='1'%20width='6'%20height='1'%20fill='%232f374d'/%3E%3Crect%20x='0'%20y='2'%20width='1'%20height='1'%20fill='%238494a5'/%3E%3Crect%20x='8'%20y='2'%20width='1'%20height='1'%20fill='%232f374d'/%3E%3Crect%20x='0'%20y='3'%20width='3'%20height='1'%20fill='%232f374d'/%3E%3Crect%20x='8'%20y='3'%20width='1'%20height='1'%20fill='%232f374d'/%3E%3Crect%20x='0'%20y='4'%20width='2'%20height='1'%20fill='%232f374d'/%3E%3Crect%20x='8'%20y='4'%20width='1'%20height='1'%20fill='%232f374d'/%3E%3Crect%20x='0'%20y='5'%20width='1'%20height='1'%20fill='%232f374d'/%3E%3Crect%20x='2'%20y='5'%20width='6'%20height='1'%20fill='%232f374d'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-size: 11px 8px !important;
+  image-rendering: pixelated !important;
   pointer-events: none !important;
   z-index: 1 !important;
 }
 
-/* 5. FULLSCREEN / EXPAND BUTTON (Winamp Maximize Window Icon) */
+/* 3. SHUFFLE BUTTON */
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"] {
+  width: 47px !important;
+  min-width: 47px !important;
+}
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"]::after {
+  content: "SHUFFLE" !important;
+  font-family: var(--wa-font) !important;
+  font-size: 8px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.2px !important;
+  color: #2f374d !important;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 100% !important;
+  margin-left: 8px !important;
+  pointer-events: none !important;
+}
+
+/* 4. PLAYER PAGE / QUEUE TOGGLE BUTTON [■ PL] */
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="pl"],
+html.winamp-ytm-on ytmusic-player-bar #right-controls .toggle-player-page-button {
+  width: 26px !important;
+  min-width: 26px !important;
+}
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="pl"]::before,
+html.winamp-ytm-on ytmusic-player-bar #right-controls .toggle-player-page-button::before {
+  display: block !important;
+}
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="pl"]::after,
+html.winamp-ytm-on ytmusic-player-bar #right-controls .toggle-player-page-button::after {
+  content: "PL" !important;
+  position: static !important;
+  transform: none !important;
+  background: transparent !important;
+  -webkit-mask: none !important;
+  mask: none !important;
+  width: auto !important;
+  height: auto !important;
+  font-family: var(--wa-font) !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  color: #2f374d !important;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7) !important;
+  margin-left: 8px !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+/* 5. FULLSCREEN / EXPAND BUTTON */
 html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="fs"] {
   width: 22px !important;
   min-width: 22px !important;
@@ -2632,6 +2681,22 @@ html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="fs"]::after 
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 9' shape-rendering='crispEdges'%3E%3Crect x='0' y='0' width='10' height='2' fill='%23000'/%3E%3Crect x='0' y='2' width='1' height='7' fill='%23000'/%3E%3Crect x='9' y='2' width='1' height='7' fill='%23000'/%3E%3Crect x='0' y='8' width='10' height='1' fill='%23000'/%3E%3Crect x='2' y='0' width='6' height='1' fill='%23fff'/%3E%3C/svg%3E") no-repeat center !important;
   pointer-events: none !important;
   z-index: 1 !important;
+}
+
+/* 5b. Winamp Gold Lightning Diamond emblem on right end of player bar */
+html.winamp-ytm-on .wa-diamond-badge {
+  width: 21px !important;
+  height: 20px !important;
+  min-width: 21px !important;
+  margin-left: 5px !important;
+  margin-right: 4px !important;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2021%2020'%20shape-rendering='crispEdges'%3E%3Crect%20x='9'%20y='1'%20width='2'%20height='1'%20fill='%2314141b'/%3E%3Crect%20x='8'%20y='2'%20width='1'%20height='1'%20fill='%2313141d'/%3E%3Crect%20x='9'%20y='2'%20width='2'%20height='1'%20fill='%23484848'/%3E%3Crect%20x='11'%20y='2'%20width='1'%20height='1'%20fill='%2314141b'/%3E%3Crect%20x='15'%20y='2'%20width='1'%20height='1'%20fill='%23171722'/%3E%3Crect%20x='16'%20y='2'%20width='1'%20height='1'%20fill='%231a1a27'/%3E%3Crect%20x='7'%20y='3'%20width='1'%20height='1'%20fill='%2313141d'/%3E%3Crect%20x='8'%20y='3'%20width='1'%20height='1'%20fill='%23484848'/%3E%3Crect%20x='9'%20y='3'%20width='2'%20height='1'%20fill='%23adafb5'/%3E%3Crect%20x='11'%20y='3'%20width='1'%20height='1'%20fill='%23484848'/%3E%3Crect%20x='12'%20y='3'%20width='1'%20height='1'%20fill='%2314141b'/%3E%3Crect%20x='13'%20y='3'%20width='1'%20height='1'%20fill='%231a1a27'/%3E%3Crect%20x='14'%20y='3'%20width='1'%20height='1'%20fill='%23362d11'/%3E%3Crect%20x='15'%20y='3'%20width='1'%20height='1'%20fill='%2387774d'/%3E%3Crect%20x='16'%20y='3'%20width='1'%20height='1'%20fill='%23362d11'/%3E%3Crect%20x='6'%20y='4'%20width='1'%20height='1'%20fill='%2313141d'/%3E%3Crect%20x='7'%20y='4'%20width='1'%20height='1'%20fill='%23484848'/%3E%3Crect%20x='8'%20y='4'%20width='3'%20height='1'%20fill='%23adafb5'/%3E%3Crect%20x='11'%20y='4'%20width='1'%20height='1'%20fill='%237a8789'/%3E%3Crect%20x='12'%20y='4'%20width='1'%20height='1'%20fill='%23362d11'/%3E%3Crect%20x='13'%20y='4'%20width='1'%20height='1'%20fill='%2359431c'/%3E%3Crect%20x='14'%20y='4'%20width='1'%20height='1'%20fill='%23a78e56'/%3E%3Crect%20x='15'%20y='4'%20width='1'%20height='1'%20fill='%23a7641f'/%3E%3Crect%20x='16'%20y='4'%20width='1'%20height='1'%20fill='%23362d11'/%3E%3Crect%20x='5'%20y='5'%20width='1'%20height='1'%20fill='%2313141d'/%3E%3Crect%20x='6'%20y='5'%20width='1'%20height='1'%20fill='%23484848'/%3E%3Crect%20x='7'%20y='5'%20width='2'%20height='1'%20fill='%23adafb5'/%3E%3Crect%20x='9'%20y='5'%20width='1'%20height='1'%20fill='%238f9092'/%3E%3Crect%20x='10'%20y='5'%20width='1'%20height='1'%20fill='%23484848'/%3E%3Crect%20x='11'%20y='5'%20width='1'%20height='1'%20fill='%2359431c'/%3E%3Crect%20x='12'%20y='5'%20width='1'%20height='1'%20fill='%23a68531'/%3E%3Crect%20x='13'%20y='5'%20width='1'%20height='1'%20fill='%23a78e56'/%3E%3Crect%20x='14'%20y='5'%20width='1'%20height='1'%20fill='%23a7641f'/%3E%3Crect%20x='15'%20y='5'%20width='1'%20height='1'%20fill='%23362d11'/%3E%3Crect%20x='4'%20y='6'%20width='1'%20height='1'%20fill='%2313141d'/%3E%3Crect%20x='5'%20y='6'%20width='1'%20height='1'%20fill='%23484848'/%3E%3Crect%20x='6'%20y='6'%20width='1'%20height='1'%20fill='%23adafb5'/%3E%3Crect%20x='7'%20y='6'%20width='1'%20height='1'%20fill='%23a1a0ad'/%3E%3Crect%20x='8'%20y='6'%20width='1'%20height='1'%20fill='%235c5c63'/%3E%3Crect%20x='9'%20y='6'%20width='1'%20height='1'%20fill='%2359431c'/%3E%3Crect%20x='10'%20y='6'%20width='1'%20height='1'%20fill='%23a7641f'/%3E%3Crect%20x='11'%20y='6'%20width='1'%20height='1'%20fill='%23a68531'/%3E%3Crect%20x='12'%20y='6'%20width='1'%20height='1'%20fill='%23a78e56'/%3E%3Crect%20x='13'%20y='6'%20width='1'%20height='1'%20fill='%23a7641f'/%3E%3Crect%20x='14'%20y='6'%20width='1'%20height='1'%20fill='%23362d11'/%3E%3Crect%20x='15'%20y='6'%20width='1'%20height='1'%20fill='%2314141b'/%3E%3Crect%20x='3'%20y='7'%20width='1'%20height='1'%20fill='%2313141d'/%3E%3Crect%20x='4'%20y='7'%20width='1'%20height='1'%20fill='%23484848'/%3E%3Crect%20x='5'%20y='7'%20width='1'%20height='1'%20fill='%23adafb5'/%3E%3Crect%20x='6'%20y='7'%20width='1'%20height='1'%20fill='%23777777'/%3E%3Crect%20x='7'%20y='7'%20width='1'%20height='1'%20fill='%2359431c'/%3E%3Crect%20x='8'%20y='7'%20width='1'%20height='1'%20fill='%23a7641f'/%3E%3Crect%20x='9'%20y='7'%20width='3'%20height='1'%20fill='%23a68531'/%3E%3Crect%20x='12'%20y='7'%20width='1'%20height='1'%20fill='%23a7641f'/%3E%3Crect%20x='13'%20y='7'%20width='1'%20height='1'%20fill='%23362d11'/%3E%3Crect%20x='14'%20y='7'%20width='1'%20height='1'%20fill='%23777777'/%3E%3Crect%20x='15'%20y='7'%20width='1'%20height='1'%20fill='%23484848'/%3E%3Crect%20x='16'%20y='7'%20width='1'%20height='1'%20fill='%2314141b'/%3E%3Crect%20x='2'%20y='8'%20width='1'%20height='1'%20fill='%2313141d'/%3E%3Crect%20x='3'%20y='8'%20width='1'%20height='1'%20fill='%23484848'/%3E%3Crect%20x='4'%20y='8'%20width='1'%20height='1'%20fill='%23adafb5'/%3E%3Crect%20x='5'%20y='8'%20width='1'%20height='1'%20fill='%23424138'/%3E%3Crect%20x='6'%20y='8'%20width='1'%20height='1'%20fill='%23655b42'/%3E%3Crect%20x='7'%20y='8'%20width='3'%20height='1'%20fill='%23a68531'/%3E%3Crect%20x='10'%20y='8'%20width='1'%20height='1'%20fill='%23a78e56'/%3E%3Crect%20x='11'%20y='8'%20width='2'%20height='1'%20fill='%23a68531'/%3E%3Crect%20x='13'%20y='8'%20width='1'%20height='1'%20fill='%23a7641f'/%3E%3Crect%20x='14'%20y='8'%20width='1'%20height='1'%20fill='%23424138'/%3E%3Crect%20x='15'%20y='8'%20width='1'%20height='1'%20fill='%23adafb5'/%3E%3Crect%20x='16'%20y='8'%20width='1'%20height='1'%20fill='%23484848'/%3E%3Crect%20x='17'%20y='8'%20width='1'%20height='1'%20fill='%2314141b'/%3E%3Crect%20x='1'%20y='9'%20width='1'%20height='1'%20fill='%2313141d'/%3E%3Crect%20x='2'%20y='9'%20width='1'%20height='1'%20fill='%23484848'/%3E%3Crect%20x='3'%20y='9'%20width='2'%20height='1'%20fill='%23adafb5'/%3E%3Crect%20x='5'%20y='9'%20width='1'%20height='1'%20fill='%2359431c'/%3E%3Crect%20x='6'%20y='9'%20width='3'%20height='1'%20fill='%23a68531'/%3E%3Crect%20x='9'%20y='9'%20width='1'%20height='1'%20fill='%23a3946b'/%3E%3Crect%20x='10'%20y='9'%20width='1'%20height='1'%20fill='%23a78e56'/%3E%3Crect%20x='11'%20y='9'%20width='1'%20height='1'%20fill='%23a68531'/%3E%3Crect%20x='12'%20y='9'%20width='2'%20height='1'%20fill='%23a7641f'/%3E%3Crect%20x='14'%20y='9'%20width='1'%20height='1'%20fill='%23655b42'/%3E%3Crect%20x='15'%20y='9'%20width='2'%20height='1'%20fill='%23adafb5'/%3E%3Crect%20x='17'%20y='9'%20width='1'%20height='1'%20fill='%23484848'/%3E%3Crect%20x='18'%20y='9'%20width='1'%20height='1'%20fill='%2314141b'/%3E%3Crect%20x='1'%20y='10'%20width='1'%20height='1'%20fill='%2313141d'/%3E%3Crect%20x='2'%20y='10'%20width='1'%20height='1'%20fill='%23484848'/%3E%3Crect%20x='3'%20y='10'%20width='2'%20height='1'%20fill='%23adafb5'/%3E%3Crect%20x='5'%20y='10'%20width='1'%20height='1'%20fill='%2359431c'/%3E%3Crect%20x='6'%20y='10'%20width='1'%20height='1'%20fill='%23a7641f'/%3E%3Crect%20x='7'%20y='10'%20width='1'%20height='1'%20fill='%23a68531'/%3E%3Crect%20x='8'%20y='10'%20width='1'%20height='1'%20fill='%23a3946b'/%3E%3Crect%20x='9'%20y='10'%20width='1'%20height='1'%20fill='%23a78e56'/%3E%3Crect%20x='10'%20y='10'%20width='4'%20height='1'%20fill='%23a7641f'/%3E%3Crect%20x='14'%20y='10'%20width='1'%20height='1'%20fill='%234e463d'/%3E%3Crect%20x='15'%20y='10'%20width='2'%20height='1'%20fill='%23adafb5'/%3E%3Crect%20x='17'%20y='10'%20width='1'%20height='1'%20fill='%23484848'/%3E%3Crect%20x='18'%20y='10'%20width='1'%20height='1'%20fill='%2314141b'/%3E%3Crect%20x='2'%20y='11'%20width='1'%20height='1'%20fill='%2313141d'/%3E%3Crect%20x='3'%20y='11'%20width='1'%20height='1'%20fill='%23484848'/%3E%3Crect%20x='4'%20y='11'%20width='1'%20height='1'%20fill='%23adafb5'/%3E%3Crect%20x='5'%20y='11'%20width='1'%20height='1'%20fill='%23424138'/%3E%3Crect%20x='6'%20y='11'%20width='1'%20height='1'%20fill='%2359431c'/%3E%3Crect%20x='7'%20y='11'%20width='1'%20height='1'%20fill='%23a3946b'/%3E%3Crect%20x='8'%20y='11'%20width='1'%20height='1'%20fill='%23a68531'/%3E%3Crect%20x='9'%20y='11'%20width='1'%20height='1'%20fill='%23a7641f'/%3E%3Crect%20x='10'%20y='11'%20width='1'%20height='1'%20fill='%23a68531'/%3E%3Crect%20x='11'%20y='11'%20width='1'%20height='1'%20fill='%23a7641f'/%3E%3Crect%20x='12'%20y='11'%20width='1'%20height='1'%20fill='%2359431c'/%3E%3Crect%20x='13'%20y='11'%20width='1'%20height='1'%20fill='%23424138'/%3E%3Crect%20x='14'%20y='11'%20width='1'%20height='1'%20fill='%238f9092'/%3E%3Crect%20x='15'%20y='11'%20width='1'%20height='1'%20fill='%23adafb5'/%3E%3Crect%20x='16'%20y='11'%20width='1'%20height='1'%20fill='%23484848'/%3E%3Crect%20x='17'%20y='11'%20width='1'%20height='1'%20fill='%2314141b'/%3E%3Crect%20x='3'%20y='12'%20width='1'%20height='1'%20fill='%2313141d'/%3E%3Crect%20x='4'%20y='12'%20width='1'%20height='1'%20fill='%23484848'/%3E%3Crect%20x='5'%20y='12'%20width='1'%20height='1'%20fill='%234e463d'/%3E%3Crect%20x='6'%20y='12'%20width='1'%20height='1'%20fill='%23a3946b'/%3E%3Crect%20x='7'%20y='12'%20width='4'%20height='1'%20fill='%23a7641f'/%3E%3Crect%20x='11'%20y='12'%20width='1'%20height='1'%20fill='%23362d11'/%3E%3Crect%20x='12'%20y='12'%20width='1'%20height='1'%20fill='%2362626d'/%3E%3Crect%20x='13'%20y='12'%20width='2'%20height='1'%20fill='%23adafb5'/%3E%3Crect%20x='15'%20y='12'%20width='1'%20height='1'%20fill='%23484848'/%3E%3Crect%20x='16'%20y='12'%20width='1'%20height='1'%20fill='%2314141b'/%3E%3Crect%20x='4'%20y='13'%20width='1'%20height='1'%20fill='%232f3025'/%3E%3Crect%20x='5'%20y='13'%20width='1'%20height='1'%20fill='%23a78e56'/%3E%3Crect%20x='6'%20y='13'%20width='1'%20height='1'%20fill='%23a7641f'/%3E%3Crect%20x='7'%20y='13'%20width='1'%20height='1'%20fill='%23a68531'/%3E%3Crect%20x='8'%20y='13'%20width='1'%20height='1'%20fill='%23a7641f'/%3E%3Crect%20x='9'%20y='13'%20width='1'%20height='1'%20fill='%2359431c'/%3E%3Crect%20x='10'%20y='13'%20width='1'%20height='1'%20fill='%23424138'/%3E%3Crect%20x='11'%20y='13'%20width='1'%20height='1'%20fill='%238f9092'/%3E%3Crect%20x='12'%20y='13'%20width='2'%20height='1'%20fill='%23adafb5'/%3E%3Crect%20x='14'%20y='13'%20width='1'%20height='1'%20fill='%23484848'/%3E%3Crect%20x='15'%20y='13'%20width='1'%20height='1'%20fill='%2314141b'/%3E%3Crect%20x='3'%20y='14'%20width='1'%20height='1'%20fill='%232f3025'/%3E%3Crect%20x='4'%20y='14'%20width='1'%20height='1'%20fill='%23a78e56'/%3E%3Crect%20x='5'%20y='14'%20width='3'%20height='1'%20fill='%23a7641f'/%3E%3Crect%20x='8'%20y='14'%20width='1'%20height='1'%20fill='%23362d11'/%3E%3Crect%20x='9'%20y='14'%20width='1'%20height='1'%20fill='%23777777'/%3E%3Crect%20x='10'%20y='14'%20width='3'%20height='1'%20fill='%23adafb5'/%3E%3Crect%20x='13'%20y='14'%20width='1'%20height='1'%20fill='%23484848'/%3E%3Crect%20x='14'%20y='14'%20width='1'%20height='1'%20fill='%2314141b'/%3E%3Crect%20x='2'%20y='15'%20width='1'%20height='1'%20fill='%23171722'/%3E%3Crect%20x='3'%20y='15'%20width='1'%20height='1'%20fill='%23a78e56'/%3E%3Crect%20x='4'%20y='15'%20width='1'%20height='1'%20fill='%23a68531'/%3E%3Crect%20x='5'%20y='15'%20width='1'%20height='1'%20fill='%23a7641f'/%3E%3Crect%20x='6'%20y='15'%20width='1'%20height='1'%20fill='%2359431c'/%3E%3Crect%20x='7'%20y='15'%20width='1'%20height='1'%20fill='%23141414'/%3E%3Crect%20x='8'%20y='15'%20width='1'%20height='1'%20fill='%23a1a0ad'/%3E%3Crect%20x='9'%20y='15'%20width='3'%20height='1'%20fill='%23adafb5'/%3E%3Crect%20x='12'%20y='15'%20width='1'%20height='1'%20fill='%23484848'/%3E%3Crect%20x='13'%20y='15'%20width='1'%20height='1'%20fill='%2314141b'/%3E%3Crect%20x='2'%20y='16'%20width='1'%20height='1'%20fill='%23171722'/%3E%3Crect%20x='3'%20y='16'%20width='2'%20height='1'%20fill='%23a7641f'/%3E%3Crect%20x='5'%20y='16'%20width='1'%20height='1'%20fill='%23251c0a'/%3E%3Crect%20x='6'%20y='16'%20width='1'%20height='1'%20fill='%231c1c2b'/%3E%3Crect%20x='7'%20y='16'%20width='1'%20height='1'%20fill='%2314141b'/%3E%3Crect%20x='8'%20y='16'%20width='1'%20height='1'%20fill='%23484848'/%3E%3Crect%20x='9'%20y='16'%20width='2'%20height='1'%20fill='%23adafb5'/%3E%3Crect%20x='11'%20y='16'%20width='1'%20height='1'%20fill='%23484848'/%3E%3Crect%20x='12'%20y='16'%20width='1'%20height='1'%20fill='%2314141b'/%3E%3Crect%20x='2'%20y='17'%20width='1'%20height='1'%20fill='%23171722'/%3E%3Crect%20x='3'%20y='17'%20width='1'%20height='1'%20fill='%23362d11'/%3E%3Crect%20x='4'%20y='17'%20width='1'%20height='1'%20fill='%23171722'/%3E%3Crect%20x='8'%20y='17'%20width='1'%20height='1'%20fill='%2314141b'/%3E%3Crect%20x='9'%20y='17'%20width='2'%20height='1'%20fill='%23484848'/%3E%3Crect%20x='11'%20y='17'%20width='1'%20height='1'%20fill='%2314141b'/%3E%3Crect%20x='9'%20y='18'%20width='2'%20height='1'%20fill='%2314141b'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-size: 21px 20px !important;
+  image-rendering: pixelated !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+  flex-shrink: 0 !important;
 }
 
 /* 6. CC BUTTON (Captions) */

@@ -183,8 +183,38 @@
         host.insertAdjacentElement("afterend", viz);
       }
 
-      if (!host.parentElement.querySelector(".wa-audio-stats")) {
-        const stats = document.createElement("div");
+      // 3. Winamp Stop Button (|◀, ▶, ||, ■, ▶|)
+      const playPauseBtn = host.querySelector("#play-pause-button");
+      if (playPauseBtn && !host.querySelector(".wa-stop-btn")) {
+        const stopBtn = document.createElement("button");
+        stopBtn.className = "wa-stop-btn";
+        stopBtn.setAttribute("type", "button");
+        stopBtn.setAttribute("title", "Stop");
+        stopBtn.setAttribute("aria-label", "Stop");
+        const stopIcon = document.createElement("span");
+        stopIcon.className = "wa-stop-icon";
+        stopBtn.appendChild(stopIcon);
+        stopBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const v = document.querySelector("video");
+          if (v) {
+            v.pause();
+            v.currentTime = 0;
+            updatePlayState();
+          }
+        });
+        playPauseBtn.insertAdjacentElement("afterend", stopBtn);
+      }
+
+      // 4. Winamp Audio Stats (192 kbps 48 kHz mono stereo)
+      let stats = host.parentElement.querySelector(".wa-audio-stats");
+      if (stats && !stats.querySelector(".is-mono")) {
+        stats.remove();
+        stats = null;
+      }
+      if (!stats) {
+        stats = document.createElement("div");
         stats.className = "wa-audio-stats";
         const addSpan = (cls, txt) => {
           const s = document.createElement("span");
@@ -192,11 +222,12 @@
           s.textContent = txt;
           stats.appendChild(s);
         };
-        addSpan("val", "256");
-        addSpan("lbl", "KBPS");
-        addSpan("val", "44");
-        addSpan("lbl", "KHZ");
-        addSpan("mode is-stereo", "STEREO");
+        addSpan("val", "192");
+        addSpan("lbl", "kbps");
+        addSpan("val", "48");
+        addSpan("lbl", "kHz");
+        addSpan("mode is-mono", "mono");
+        addSpan("mode is-stereo", "stereo");
         viz.insertAdjacentElement("afterend", stats);
       }
       updatePlayState();
@@ -206,6 +237,8 @@
       if (existing) existing.remove();
       const stats = host.parentElement.querySelector(".wa-audio-stats");
       if (stats) stats.remove();
+      const stopBtn = host.querySelector(".wa-stop-btn");
+      if (stopBtn) stopBtn.remove();
       stopVisualizerLoop();
     }
   }
@@ -844,6 +877,15 @@
       }
     });
 
+    // Ensure Winamp Gold Lightning Diamond emblem on right edge of player bar
+    const rightControls = document.querySelector('ytmusic-player-bar #right-controls');
+    if (rightControls && !rightControls.querySelector('.wa-diamond-badge')) {
+      const diamond = document.createElement('div');
+      diamond.className = 'wa-diamond-badge';
+      diamond.setAttribute('title', "Winamp 2.x — It really whips the llama's ass!");
+      rightControls.appendChild(diamond);
+    }
+
     // Tag ad popup dialog (Requirement 7)
     const promo = document.querySelector('ytmusic-mealbar-promo-renderer, yt-mealbar-promo-renderer');
     if (promo && !promo.querySelector('.wa-promo-titlebar')) {
@@ -885,7 +927,7 @@
     if (oldBolt) oldBolt.remove();
 
     if (!state.themeOn) {
-      document.querySelectorAll('.wa-lightning-bolt, .wa-title-buttons, .wa-pl-footer, .wa-window-titlebar').forEach(el => el.remove());
+      document.querySelectorAll('.wa-lightning-bolt, .wa-title-buttons, .wa-pl-footer, .wa-window-titlebar, .wa-stop-btn, .wa-diamond-badge').forEach(el => el.remove());
     }
   }
 

@@ -39,5 +39,16 @@
       "description": "Toggle the Winamp theme on/off"
     }
   },
-  "permissions": ["storage"]
+  "permissions": ["storage"],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "icons/winamp-diamond.png",
+        "icons/icon16.png",
+        "icons/icon48.png",
+        "icons/icon128.png"
+      ],
+      "matches": ["https://music.youtube.com/*"]
+    }
+  ]
 }

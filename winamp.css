@@ -2621,10 +2621,11 @@ html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"]::afte
   right: 5px !important;
   transform: translateY(-50%) !important;
   width: 29px !important;
-  height: 5px !important;
+  height: 6px !important;
   background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2029%205%27%20shape-rendering%3D%27crispEdges%27%3E%3Cpath%20d%3D%27M0%2C0h1v1h-1zM1%2C0h1v1h-1zM2%2C0h1v1h-1zM4%2C0h1v1h-1zM7%2C0h1v1h-1zM9%2C0h1v1h-1zM12%2C0h1v1h-1zM14%2C0h1v1h-1zM15%2C0h1v1h-1zM16%2C0h1v1h-1zM18%2C0h1v1h-1zM19%2C0h1v1h-1zM20%2C0h1v1h-1zM22%2C0h1v1h-1zM26%2C0h1v1h-1zM27%2C0h1v1h-1zM28%2C0h1v1h-1zM0%2C1h1v1h-1zM4%2C1h1v1h-1zM7%2C1h1v1h-1zM9%2C1h1v1h-1zM12%2C1h1v1h-1zM14%2C1h1v1h-1zM18%2C1h1v1h-1zM22%2C1h1v1h-1zM26%2C1h1v1h-1zM0%2C2h1v1h-1zM1%2C2h1v1h-1zM2%2C2h1v1h-1zM4%2C2h1v1h-1zM5%2C2h1v1h-1zM6%2C2h1v1h-1zM7%2C2h1v1h-1zM9%2C2h1v1h-1zM12%2C2h1v1h-1zM14%2C2h1v1h-1zM15%2C2h1v1h-1zM16%2C2h1v1h-1zM18%2C2h1v1h-1zM19%2C2h1v1h-1zM20%2C2h1v1h-1zM22%2C2h1v1h-1zM26%2C2h1v1h-1zM27%2C2h1v1h-1zM28%2C2h1v1h-1zM2%2C3h1v1h-1zM4%2C3h1v1h-1zM7%2C3h1v1h-1zM9%2C3h1v1h-1zM12%2C3h1v1h-1zM14%2C3h1v1h-1zM18%2C3h1v1h-1zM22%2C3h1v1h-1zM26%2C3h1v1h-1zM0%2C4h1v1h-1zM1%2C4h1v1h-1zM2%2C4h1v1h-1zM4%2C4h1v1h-1zM7%2C4h1v1h-1zM10%2C4h1v1h-1zM11%2C4h1v1h-1zM14%2C4h1v1h-1zM18%2C4h1v1h-1zM22%2C4h1v1h-1zM23%2C4h1v1h-1zM24%2C4h1v1h-1zM26%2C4h1v1h-1zM27%2C4h1v1h-1zM28%2C4h1v1h-1z%27%20fill%3D%27rgb%2847%2C55%2C77%29%27/%3E%3C/svg%3E") !important;
   background-repeat: no-repeat !important;
   background-size: 29px 5px !important;
+  background-position: 0 0 !important;
   image-rendering: pixelated !important;
   pointer-events: none !important;
 }

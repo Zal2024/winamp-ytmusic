@@ -1861,6 +1861,23 @@ html.winamp-ytm-on ytmusic-player-bar .content-info-wrapper .title {
   font-weight: 700 !important;
   letter-spacing: 0.5px !important;
 }
+html.winamp-ytm-on ytmusic-player-bar .content-info-wrapper {
+  min-width: 0 !important;
+  max-width: 252px !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+html.winamp-ytm-on ytmusic-player-bar .content-info-wrapper .title,
+html.winamp-ytm-on ytmusic-player-bar .content-info-wrapper .subtitle {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  text-overflow: clip !important;
+  white-space: nowrap !important;
+}
+
 html.winamp-ytm-on ytmusic-player-bar .content-info-wrapper .subtitle,
 html.winamp-ytm-on ytmusic-player-bar .content-info-wrapper .subtitle a {
   color: #00aa00 !important;

@@ -962,6 +962,28 @@
     debounceTimer = setTimeout(() => requestAnimationFrame(tick), 80);
   }
 
+  // ---- Winamp-style title marquee: pixel-stepped scroll for long titles ----
+  const marqueeState = new WeakMap();
+  function marqueeTick() {
+    document
+      .querySelectorAll('ytmusic-player-bar .content-info-wrapper .title, ytmusic-player-bar .content-info-wrapper .subtitle')
+      .forEach((el) => {
+        const max = el.scrollWidth - el.clientWidth;
+        let st = marqueeState.get(el);
+        if (!st) { st = { dir: 1, wait: 12, text: '' }; marqueeState.set(el, st); }
+        const txt = el.textContent;
+        if (txt !== st.text) { st.text = txt; st.dir = 1; st.wait = 12; el.scrollLeft = 0; }
+        if (max <= 1) { el.classList.remove('wa-marquee'); el.scrollLeft = 0; return; }
+        el.classList.add('wa-marquee');
+        if (st.wait > 0) { st.wait--; return; }
+        const next = el.scrollLeft + st.dir;
+        el.scrollLeft = next;
+        if (st.dir > 0 && el.scrollLeft >= max - 1) { st.dir = -1; st.wait = 12; }
+        else if (st.dir < 0 && el.scrollLeft <= 0) { st.dir = 1; st.wait = 12; }
+      });
+  }
+  setInterval(marqueeTick, 80);
+
   function start() {
     applyClasses();
     schedule();

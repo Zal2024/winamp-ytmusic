@@ -2069,6 +2069,21 @@ html.winamp-ytm-on .wa-lcd-spectrum {
   box-sizing: border-box !important;
 }
 
+/* Authentic Winamp 2.x analyzer: one pixel-exact canvas (see drawSpectrum in content.js) */
+html.winamp-ytm-on .wa-spec-canvas {
+  position: absolute !important;
+  left: 0 !important;
+  bottom: 1px !important;
+  width: 100% !important;
+  height: 16px !important;
+  display: block !important;
+  image-rendering: pixelated !important;
+  pointer-events: none !important;
+}
+html.winamp-ytm-on .wa-spectrum-axis {
+  display: none !important;
+}
+
 /* Dotted Axis */
 html.winamp-ytm-on .wa-spectrum-axis {
   position: absolute !important;

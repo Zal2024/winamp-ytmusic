@@ -88,7 +88,7 @@
     if (state.themeOn) {
       let viz = existing;
       // Recreate if it's the old version without the authentic LCD subcomponents
-      if (viz && !viz.querySelector(".wa-lcd-main")) {
+      if (viz && (!viz.querySelector(".wa-lcd-main") || !viz.querySelector(".wa-spec-canvas"))) {
         viz.remove();
         viz = null;
       }
@@ -160,22 +160,11 @@
         axis.className = "wa-spectrum-axis";
         spec.appendChild(axis);
 
-        const barsContainer = document.createElement("div");
-        barsContainer.className = "wa-spectrum-bars";
-
-        // 16 spectrum columns with peak dashes
-        for (let i = 0; i < 16; i++) {
-          const col = document.createElement("div");
-          col.className = `wa-spec-col wa-col-${i}`;
-          const peak = document.createElement("span");
-          peak.className = "wa-spec-peak";
-          const bar = document.createElement("span");
-          bar.className = "wa-spec-bar";
-          col.appendChild(peak);
-          col.appendChild(bar);
-          barsContainer.appendChild(col);
-        }
-        spec.appendChild(barsContainer);
+        // Single canvas: authentic Winamp 2.x analyzer (pixel rows, vis palette, 1px peaks)
+        const specCanvas = document.createElement("canvas");
+        specCanvas.className = "wa-spec-canvas";
+        specCanvas.height = 16;
+        spec.appendChild(specCanvas);
 
         main.appendChild(spec);
         viz.appendChild(main);
@@ -336,6 +325,62 @@
     }
   }
 
+  // ---- Classic Winamp 2.x spectrum analyzer (viscolor.txt default palette) ----
+  const VIS_COLORS = [
+    [0, 0, 0], [24, 33, 41], [239, 49, 16], [206, 41, 16], [214, 90, 0],
+    [214, 102, 0], [214, 115, 0], [198, 123, 8], [222, 165, 24], [214, 181, 33],
+    [189, 222, 41], [148, 222, 33], [41, 206, 16], [50, 190, 16], [57, 181, 16],
+    [49, 156, 8], [41, 148, 0], [24, 132, 8], [255, 255, 255], [214, 214, 222],
+    [181, 189, 189], [160, 170, 175], [148, 156, 165], [150, 150, 150],
+  ];
+  // Row 0 = bottom (green) ... row 15 = top (red), like Winamp's bar gradient
+  const SPEC_ROW_CSS = [];
+  for (let r = 0; r < 16; r++) {
+    const c = VIS_COLORS[17 - r];
+    SPEC_ROW_CSS.push(`rgb(${c[0]},${c[1]},${c[2]})`);
+  }
+  const SPEC_PEAK_CSS = "rgb(150,150,150)";
+  const specBarRows = new Array(16).fill(0);
+  const specPeakRows = new Array(16).fill(0);
+  const frameTargets = new Array(16).fill(0);
+  let lastSpecSig = "";
+  let lastFrameT = 0;
+
+  function drawSpectrum(canvas, force) {
+    const W = canvas.clientWidth || 111;
+    let sized = false;
+    if (canvas.width !== W || canvas.height !== 16) {
+      canvas.width = W;
+      canvas.height = 16;
+      sized = true;
+    }
+    let sig = W + ":";
+    for (let i = 0; i < 16; i++) {
+      specBarRows[i] = Math.max(0, Math.min(16, Math.round(smoothBars[i] / 100 * 16)));
+      specPeakRows[i] = peakHeights[i] > 3
+        ? Math.max(0, Math.min(16, Math.round(peakHeights[i] / 100 * 16)))
+        : 0;
+      sig += specBarRows[i] + "," + specPeakRows[i] + ";";
+    }
+    if (!sized && !force && sig === lastSpecSig) return;
+    lastSpecSig = sig;
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, W, 16);
+    const pitch = Math.max(2, Math.floor((W + 1) / 16));
+    const bw = pitch - 1;
+    const x0 = Math.max(0, Math.floor((W - (pitch * 16 - 1)) / 2));
+    for (let r = 0; r < 16; r++) {
+      ctx.fillStyle = SPEC_ROW_CSS[r];
+      for (let i = 0; i < 16; i++) {
+        if (specBarRows[i] > r) ctx.fillRect(x0 + i * pitch, 15 - r, bw, 1);
+      }
+    }
+    ctx.fillStyle = SPEC_PEAK_CSS;
+    for (let i = 0; i < 16; i++) {
+      if (specPeakRows[i] > 0) ctx.fillRect(x0 + i * pitch, 16 - specPeakRows[i], bw, 1);
+    }
+  }
+
   function startVisualizerLoop() {
     if (visualizerAnimId) return;
 
@@ -346,9 +391,14 @@
         return;
       }
 
-      const bars = viz.querySelectorAll(".wa-spec-bar");
-      const peaks = viz.querySelectorAll(".wa-spec-peak");
-      if (bars.length < 16 || peaks.length < 16) {
+      const nowT = performance.now();
+      if (document.hidden || nowT - lastFrameT < 33) {
+        visualizerAnimId = requestAnimationFrame(renderFrame);
+        return;
+      }
+      lastFrameT = nowT;
+      const canvas = viz.querySelector(".wa-spec-canvas");
+      if (!canvas) {
         visualizerAnimId = requestAnimationFrame(renderFrame);
         return;
       }
@@ -359,27 +409,9 @@
       if (isPaused) {
         for (let i = 0; i < 16; i++) {
           smoothBars[i] = Math.max(0, smoothBars[i] * 0.85 - 1.5);
-          bars[i].style.setProperty(
-            "height",
-            Math.round(smoothBars[i]) + "%",
-            "important"
-          );
-          if (peakHeights[i] > 0) {
-            peakHeights[i] = Math.max(0, peakHeights[i] - 2.5);
-            peaks[i].style.setProperty(
-              "bottom",
-              Math.round(peakHeights[i]) + "%",
-              "important"
-            );
-            peaks[i].style.setProperty(
-              "opacity",
-              peakHeights[i] > 1 ? "1" : "0",
-              "important"
-            );
-          } else {
-            peaks[i].style.setProperty("opacity", "0", "important");
-          }
+          peakHeights[i] = Math.max(0, peakHeights[i] - 2.5);
         }
+        drawSpectrum(canvas);
         visualizerAnimId = requestAnimationFrame(renderFrame);
         return;
       }
@@ -547,7 +579,7 @@
 
       // 3. Measure frame-to-frame turbulence across all 16 bands to automatically damp hectic sections
       let frameDeltaSum = 0;
-      const targets = new Array(16).fill(0);
+      const targets = frameTargets;
       const spatialWeight = 0.62 - userSmooth * 0.38;
       for (let i = 0; i < 16; i++) {
         const left = i > 0 ? rawBars[i - 1] : rawBars[i];
@@ -605,18 +637,8 @@
           }
         }
 
-        bars[i].style.setProperty("height", barPct + "%", "important");
-        peaks[i].style.setProperty(
-          "bottom",
-          Math.min(100, Math.round(peakHeights[i])) + "%",
-          "important"
-        );
-        peaks[i].style.setProperty(
-          "opacity",
-          peakHeights[i] > 2 ? "1" : "0",
-          "important"
-        );
       }
+      drawSpectrum(canvas);
 
       visualizerAnimId = requestAnimationFrame(renderFrame);
     }
@@ -654,7 +676,8 @@
     const curTime = video ? Math.floor(video.currentTime) : 0;
     const mins = String(Math.floor(curTime / 60)).padStart(2, "0");
     const secs = String(curTime % 60).padStart(2, "0");
-    digits.textContent = `${mins}:${secs}`;
+    const txt = `${mins}:${secs}`;
+    if (digits.textContent !== txt) digits.textContent = txt;
   }
 
   function updatePlayState() {
@@ -955,41 +978,66 @@
 
   let scheduled = false;
   let debounceTimer = null;
+  let lastTickT = 0;
   function schedule() {
     if (scheduled) return;
     scheduled = true;
     if (debounceTimer) clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => requestAnimationFrame(tick), 80);
+    // At most ~4 full passes per second, however busy YouTube Music's DOM is
+    const wait = Math.max(80, 250 - (performance.now() - lastTickT));
+    debounceTimer = setTimeout(() => requestAnimationFrame(() => {
+      lastTickT = performance.now();
+      tick();
+    }), wait);
+  }
+  const NOISE_SEL = "[data-winamp-viz], .wa-audio-stats, .time-info, .wa-pl-footer, .wa-stop-btn";
+  function onMutations(records) {
+    for (const r of records) {
+      const t = r.target.nodeType === 1 ? r.target : r.target.parentElement;
+      if (!t || !t.closest || !t.closest(NOISE_SEL)) { schedule(); return; }
+    }
   }
 
   // ---- Winamp-style title marquee: pixel-stepped scroll for long titles ----
   const marqueeState = new WeakMap();
+  let marqueeEls = [];
+  let marqueeScan = 0;
   function marqueeTick() {
-    document
-      .querySelectorAll('ytmusic-player-bar .content-info-wrapper .title, ytmusic-player-bar .content-info-wrapper .subtitle')
-      .forEach((el) => {
-        const max = el.scrollWidth - el.clientWidth;
-        let st = marqueeState.get(el);
-        if (!st) { st = { dir: 1, wait: 12, text: '' }; marqueeState.set(el, st); }
+    if (document.hidden) return;
+    if (marqueeScan-- <= 0) {
+      marqueeScan = 12;
+      marqueeEls = Array.from(document.querySelectorAll(
+        'ytmusic-player-bar .content-info-wrapper .title, ytmusic-player-bar .content-info-wrapper .subtitle'));
+    }
+    for (const el of marqueeEls) {
+      let st = marqueeState.get(el);
+      if (!st) { st = { dir: 1, wait: 12, text: null, max: 0, measure: 0 }; marqueeState.set(el, st); }
+      if (st.measure-- <= 0 || st.text === null) {
         const txt = el.textContent;
         if (txt !== st.text) { st.text = txt; st.dir = 1; st.wait = 12; el.scrollLeft = 0; }
-        if (max <= 1) { el.classList.remove('wa-marquee'); el.scrollLeft = 0; return; }
-        el.classList.add('wa-marquee');
-        if (st.wait > 0) { st.wait--; return; }
-        const next = el.scrollLeft + st.dir;
-        el.scrollLeft = next;
-        if (st.dir > 0 && el.scrollLeft >= max - 1) { st.dir = -1; st.wait = 12; }
-        else if (st.dir < 0 && el.scrollLeft <= 0) { st.dir = 1; st.wait = 12; }
-      });
+        st.max = el.scrollWidth - el.clientWidth;
+        st.measure = 12;
+      }
+      if (st.max <= 1) {
+        if (el.classList.contains('wa-marquee')) { el.classList.remove('wa-marquee'); el.scrollLeft = 0; }
+        continue;
+      }
+      if (!el.classList.contains('wa-marquee')) el.classList.add('wa-marquee');
+      if (st.wait > 0) { st.wait--; continue; }
+      el.scrollLeft += st.dir;
+      if (st.dir > 0 && el.scrollLeft >= st.max - 1) { st.dir = -1; st.wait = 12; }
+      else if (st.dir < 0 && el.scrollLeft <= 0) { st.dir = 1; st.wait = 12; }
+    }
   }
-  setInterval(marqueeTick, 80);
+  setInterval(marqueeTick, 100);
+  setInterval(() => { try { updateLcdTime(); } catch (e) {} }, 250);
 
   function start() {
     applyClasses();
     schedule();
-    const mo = new MutationObserver(schedule);
+    const mo = new MutationObserver(onMutations);
     mo.observe(document.documentElement, { childList: true, subtree: true });
-    setInterval(schedule, 500);
+    setInterval(schedule, 1000);
     window.addEventListener("yt-navigate-finish", schedule, true);
     document.addEventListener("yt-player-updated", schedule, true);
     document.addEventListener("play", () => {

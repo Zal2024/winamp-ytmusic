@@ -2567,10 +2567,9 @@ html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn] yt-interacti
   display: none !important;
 }
 
-/* 3D recessed LED indicator for REP, SHUF, PL */
+/* 3D recessed LED indicator for REP and SHUF */
 html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="rep"]::before,
-html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"]::before,
-html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="pl"]::before {
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"]::before {
   content: "" !important;
   position: absolute !important;
   top: 5px !important;
@@ -2589,7 +2588,6 @@ html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="pl"]::before
 
 html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="rep"].is-on::before,
 html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"].is-on::before,
-html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="pl"].is-on::before,
 html.winamp-ytm-on ytmusic-player-bar[data-wa-shuffle="on"] #right-controls [data-wa-btn="shuf"]::before,
 html.winamp-ytm-on ytmusic-player-bar[data-wa-repeat="on"] #right-controls [data-wa-btn="rep"]::before {
   background: #00ff00 !important;
@@ -2667,34 +2665,34 @@ html.winamp-ytm-on ytmusic-player-bar[data-wa-shuffle="on"] #right-controls [dat
   transform: translate(1px, calc(-50% + 1px)) !important;
 }
 
-/* 4. PLAYER PAGE / QUEUE TOGGLE BUTTON [■ PL] */
+/* 4. PLAYER PAGE / QUEUE TOGGLE BUTTON (Up Triangle, No LED) */
 html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="pl"],
 html.winamp-ytm-on ytmusic-player-bar #right-controls .toggle-player-page-button {
-  width: 26px !important;
-  min-width: 26px !important;
+  width: 22px !important;
+  min-width: 22px !important;
 }
 html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="pl"]::before,
 html.winamp-ytm-on ytmusic-player-bar #right-controls .toggle-player-page-button::before {
-  display: block !important;
+  display: none !important;
 }
 html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="pl"]::after,
 html.winamp-ytm-on ytmusic-player-bar #right-controls .toggle-player-page-button::after {
-  content: "PL" !important;
-  position: static !important;
-  transform: none !important;
-  background: transparent !important;
-  -webkit-mask: none !important;
-  mask: none !important;
-  width: auto !important;
-  height: auto !important;
-  font-family: var(--wa-font) !important;
-  font-size: 9px !important;
-  font-weight: 700 !important;
-  color: #2f374d !important;
-  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7) !important;
-  margin-left: 8px !important;
+  content: "" !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 9px !important;
+  height: 6px !important;
+  background-color: var(--wa-btn-glyph, #101018) !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 6' shape-rendering='crispEdges'%3E%3Crect x='4' y='0' width='1' height='1' fill='%23000'/%3E%3Crect x='3' y='1' width='3' height='1' fill='%23000'/%3E%3Crect x='2' y='2' width='5' height='1' fill='%23000'/%3E%3Crect x='1' y='3' width='7' height='1' fill='%23000'/%3E%3Crect x='0' y='4' width='9' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 6' shape-rendering='crispEdges'%3E%3Crect x='4' y='0' width='1' height='1' fill='%23000'/%3E%3Crect x='3' y='1' width='3' height='1' fill='%23000'/%3E%3Crect x='2' y='2' width='5' height='1' fill='%23000'/%3E%3Crect x='1' y='3' width='7' height='1' fill='%23000'/%3E%3Crect x='0' y='4' width='9' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
   pointer-events: none !important;
   z-index: 1 !important;
+}
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="pl"]:active::after,
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="pl"].is-on::after {
+  transform: translate(calc(-50% + 1px), calc(-50% + 1px)) !important;
 }
 
 /* 5. FULLSCREEN / EXPAND BUTTON */
@@ -3072,14 +3070,29 @@ html.winamp-ytm-on ytmusic-player-page tp-yt-paper-tabs #selectionBar {
   display: none !important;
 }
 
-/* Playing from info strip */
+/* Playing from info strip - Centered LCD display strip */
 html.winamp-ytm-on ytmusic-player-page ytmusic-queue-header-renderer,
 html.winamp-ytm-on ytmusic-player-page .queue-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
   background: #000000 !important;
   border: 1px solid #1a1a1a !important;
   box-shadow: inset 1px 1px 0 #000, inset -1px -1px 0 #3e4056 !important;
-  padding: 2px 6px !important;
-  margin-bottom: 4px !important;
+  padding: 4px 8px !important;
+  margin: 6px 0 !important;
+  box-sizing: border-box !important;
+}
+html.winamp-ytm-on ytmusic-player-page ytmusic-queue-header-renderer .container-name {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+html.winamp-ytm-on ytmusic-player-page ytmusic-queue-header-renderer ytmusic-chip-cloud-chip-renderer {
+  margin: 0 !important;
+  align-self: center !important;
 }
 html.winamp-ytm-on ytmusic-player-page ytmusic-queue-header-renderer yt-formatted-string {
   color: #00e000 !important;
@@ -3903,9 +3916,7 @@ html.winamp-ytm-on ytmusic-player-bar #play-pause-button[title*="Pause"] yt-icon
 /* Toggle glyphs active translation */
 html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="rep"]:active::after,
 html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="rep"].is-on::after,
-html.winamp-ytm-on ytmusic-player-bar[data-wa-repeat="on"] #right-controls [data-wa-btn="rep"]::after,
-html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="pl"]:active::after,
-html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="pl"].is-on::after {
+html.winamp-ytm-on ytmusic-player-bar[data-wa-repeat="on"] #right-controls [data-wa-btn="rep"]::after {
   transform: translate(1px, calc(-50% + 1px)) !important;
 }
 

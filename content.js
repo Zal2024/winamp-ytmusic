@@ -750,23 +750,19 @@
 
     if (!state.themeOn) return;
 
-    // Ensure title bar on player page side panel (Playlist Editor)
+    // Ensure title bar on player page side panel (Playlist Editor - no X close button per Winamp spec)
     const sidePanel = document.querySelector('ytmusic-player-page #side-panel');
-    if (sidePanel && !sidePanel.querySelector('.wa-pl-titlebar')) {
-      const tb = document.createElement('div');
-      tb.className = 'wa-window-titlebar wa-pl-titlebar';
-      const bolt = document.createElement('span'); bolt.className = 'wa-lightning-bolt'; tb.appendChild(bolt);
-      const grip1 = document.createElement('div'); grip1.className = 'wa-tb-grip'; tb.appendChild(grip1);
-      const title = document.createElement('span'); title.className = 'wa-tb-title-text'; title.textContent = 'WINAMP PLAYLIST'; tb.appendChild(title);
-      const grip2 = document.createElement('div'); grip2.className = 'wa-tb-grip'; tb.appendChild(grip2);
-      const btns = document.createElement('div'); btns.className = 'wa-tb-btns';
-      const closeBtn = document.createElement('span'); closeBtn.className = 'wa-tb-btn wa-close'; closeBtn.textContent = '✕'; btns.appendChild(closeBtn);
-      tb.appendChild(btns);
-      closeBtn.onclick = () => {
-        const plBtn = document.querySelector('ytmusic-player-bar [data-wa-btn="pl"], ytmusic-player-bar .toggle-player-page-button');
-        if (plBtn) plBtn.click();
-      };
-      sidePanel.prepend(tb);
+    if (sidePanel) {
+      sidePanel.querySelectorAll('.wa-tb-btns, .wa-close').forEach(el => el.remove());
+      if (!sidePanel.querySelector('.wa-pl-titlebar')) {
+        const tb = document.createElement('div');
+        tb.className = 'wa-window-titlebar wa-pl-titlebar';
+        const bolt = document.createElement('span'); bolt.className = 'wa-lightning-bolt'; tb.appendChild(bolt);
+        const grip1 = document.createElement('div'); grip1.className = 'wa-tb-grip'; tb.appendChild(grip1);
+        const title = document.createElement('span'); title.className = 'wa-tb-title-text'; title.textContent = 'WINAMP PLAYLIST'; tb.appendChild(title);
+        const grip2 = document.createElement('div'); grip2.className = 'wa-tb-grip'; tb.appendChild(grip2);
+        sidePanel.prepend(tb);
+      }
     }
 
     // Ensure title bar on search results container

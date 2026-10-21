@@ -26,6 +26,7 @@
   let lastBoundSrc = "";
   let lastBoundTrackId = "";
   let zeroEnergyFrames = 0;
+  let lastEngineAttemptT = 0;
   const peakHeights = new Array(16).fill(0);
   const peakHolds = new Array(16).fill(0);
   const smoothBars = new Array(16).fill(0);
@@ -249,8 +250,8 @@
     }
     if (!analyserNode) {
       analyserNode = audioCtx.createAnalyser();
-      analyserNode.fftSize = 4096;
-      analyserNode.smoothingTimeConstant = 0.62;
+      analyserNode.fftSize = 1024;
+      analyserNode.smoothingTimeConstant = 0.20;
       floatFreqArray = new Float32Array(analyserNode.frequencyBinCount);
     }
     return true;
@@ -325,59 +326,66 @@
     }
   }
 
-  // ---- Classic Winamp 2.x spectrum analyzer (viscolor.txt default palette) ----
-  const VIS_COLORS = [
-    [0, 0, 0], [24, 33, 41], [239, 49, 16], [206, 41, 16], [214, 90, 0],
-    [214, 102, 0], [214, 115, 0], [198, 123, 8], [222, 165, 24], [214, 181, 33],
-    [189, 222, 41], [148, 222, 33], [41, 206, 16], [50, 190, 16], [57, 181, 16],
-    [49, 156, 8], [41, 148, 0], [24, 132, 8], [255, 255, 255], [214, 214, 222],
-    [181, 189, 189], [160, 170, 175], [148, 156, 165], [150, 150, 150],
+  // ---- Authentic Winamp 2.x spectrum analyzer (16 levels, alternating scanlines, glowing white peaks) ----
+  const SPEC_PALETTE = [
+    // [Bright LED, Scanline (darkened for authentic CRT/LED grid)]
+    ['rgb(0,224,0)',   'rgb(0,110,0)'],   // Level 0 (bottom)
+    ['rgb(0,224,0)',   'rgb(0,110,0)'],   // Level 1
+    ['rgb(30,230,0)',  'rgb(15,115,0)'],  // Level 2
+    ['rgb(70,235,0)',  'rgb(35,120,0)'],  // Level 3
+    ['rgb(130,240,0)', 'rgb(65,125,0)'],  // Level 4
+    ['rgb(190,245,0)', 'rgb(95,130,0)'],  // Level 5
+    ['rgb(240,245,0)', 'rgb(125,135,0)'], // Level 6
+    ['rgb(255,235,0)', 'rgb(145,130,0)'], // Level 7
+    ['rgb(255,200,0)', 'rgb(150,110,0)'], // Level 8
+    ['rgb(255,160,0)', 'rgb(150,85,0)'],  // Level 9
+    ['rgb(255,120,0)', 'rgb(150,65,0)'],  // Level 10
+    ['rgb(255,70,0)',  'rgb(150,35,0)'],  // Level 11
+    ['rgb(255,30,0)',  'rgb(150,15,0)'],  // Level 12
+    ['rgb(255,0,0)',   'rgb(150,0,0)'],   // Level 13
+    ['rgb(255,0,0)',   'rgb(150,0,0)'],   // Level 14
+    ['rgb(255,0,0)',   'rgb(150,0,0)']    // Level 15 (top)
   ];
-  // Row 0 = bottom (green) ... row 15 = top (red), like Winamp's bar gradient
-  const SPEC_ROW_CSS = [];
-  for (let r = 0; r < 16; r++) {
-    const c = VIS_COLORS[17 - r];
-    SPEC_ROW_CSS.push(`rgb(${c[0]},${c[1]},${c[2]})`);
-  }
-  const SPEC_PEAK_CSS = "rgb(150,150,150)";
-  const specBarRows = new Array(16).fill(0);
-  const specPeakRows = new Array(16).fill(0);
+  const SPEC_PEAK_COLOR = '#ffffff';
   const frameTargets = new Array(16).fill(0);
-  let lastSpecSig = "";
-  let lastFrameT = 0;
 
-  function drawSpectrum(canvas, force) {
+  function drawSpectrum(canvas) {
     const W = canvas.clientWidth || 111;
-    let sized = false;
     if (canvas.width !== W || canvas.height !== 16) {
       canvas.width = W;
       canvas.height = 16;
-      sized = true;
     }
-    let sig = W + ":";
-    for (let i = 0; i < 16; i++) {
-      specBarRows[i] = Math.max(0, Math.min(16, Math.round(smoothBars[i] / 100 * 16)));
-      specPeakRows[i] = peakHeights[i] > 3
-        ? Math.max(0, Math.min(16, Math.round(peakHeights[i] / 100 * 16)))
-        : 0;
-      sig += specBarRows[i] + "," + specPeakRows[i] + ";";
-    }
-    if (!sized && !force && sig === lastSpecSig) return;
-    lastSpecSig = sig;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, W, 16);
-    const pitch = Math.max(2, Math.floor((W + 1) / 16));
-    const bw = pitch - 1;
-    const x0 = Math.max(0, Math.floor((W - (pitch * 16 - 1)) / 2));
-    for (let r = 0; r < 16; r++) {
-      ctx.fillStyle = SPEC_ROW_CSS[r];
-      for (let i = 0; i < 16; i++) {
-        if (specBarRows[i] > r) ctx.fillRect(x0 + i * pitch, 15 - r, bw, 1);
+
+    const bw = 5;
+    const pitch = 6;
+    const xOffset = Math.max(0, Math.floor((W - 95) / 2));
+
+    // Authentic Winamp LCD dotted baseline along bottom (y = 15)
+    ctx.fillStyle = 'rgb(0, 90, 0)';
+    for (let i = 0; i < 16; i++) {
+      const x0 = xOffset + i * pitch;
+      for (let dx = 0; dx < bw; dx += 2) {
+        ctx.fillRect(x0 + dx, 15, 1, 1);
       }
     }
-    ctx.fillStyle = SPEC_PEAK_CSS;
+
     for (let i = 0; i < 16; i++) {
-      if (specPeakRows[i] > 0) ctx.fillRect(x0 + i * pitch, 16 - specPeakRows[i], bw, 1);
+      const x0 = xOffset + i * pitch;
+      const numRows = Math.max(0, Math.min(16, Math.round(smoothBars[i] / 100 * 16)));
+      for (let r = 0; r < numRows; r++) {
+        const y = 15 - r;
+        ctx.fillStyle = (y % 2 === 1) ? SPEC_PALETTE[r][1] : SPEC_PALETTE[r][0];
+        ctx.fillRect(x0, y, bw, 1);
+      }
+      // Floating pure white peak dash
+      if (peakHeights[i] > 2) {
+        const pkRow = Math.max(0, Math.min(15, Math.round(peakHeights[i] / 100 * 16)));
+        const y_pk = 15 - pkRow;
+        ctx.fillStyle = SPEC_PEAK_COLOR;
+        ctx.fillRect(x0, y_pk, bw, 1);
+      }
     }
   }
 
@@ -391,12 +399,10 @@
         return;
       }
 
-      const nowT = performance.now();
-      if (document.hidden || nowT - lastFrameT < 33) {
+      if (document.hidden) {
         visualizerAnimId = requestAnimationFrame(renderFrame);
         return;
       }
-      lastFrameT = nowT;
       const canvas = viz.querySelector(".wa-spec-canvas");
       if (!canvas) {
         visualizerAnimId = requestAnimationFrame(renderFrame);
@@ -419,7 +425,9 @@
       // Detect if video source changed or stream isn't bound yet
       if (video) {
         const curSrc = video.currentSrc || video.src || "";
-        if ((curSrc && curSrc !== lastBoundSrc) || !audioSourceNode) {
+        const nowMs = performance.now();
+        if ((curSrc && curSrc !== lastBoundSrc) || (!audioSourceNode && nowMs - lastEngineAttemptT > 1000)) {
+          lastEngineAttemptT = nowMs;
           initAudioEngine(video, true);
         }
         if (audioCtx && audioCtx.state === "suspended") {
@@ -466,7 +474,7 @@
       const userSmooth =
         Math.max(0, Math.min(100, Number(state.vizSmooth ?? 65))) / 100;
       if (analyserNode) {
-        const targetFftSmooth = 0.12 + userSmooth * 0.72;
+        const targetFftSmooth = 0.05 + userSmooth * 0.20;
         if (Math.abs(analyserNode.smoothingTimeConstant - targetFftSmooth) > 0.01) {
           analyserNode.smoothingTimeConstant = targetFftSmooth;
         }
@@ -483,8 +491,8 @@
       const useProceduralFallback =
         !hasLiveSignal && zeroEnergyFrames > 120;
 
-      const envAttack = 0.88 - userSmooth * 0.56;
-      const envRelease = 0.72 - userSmooth * 0.56;
+      const envAttack = 0.95;
+      const envRelease = 0.78;
 
       if (!useProceduralFallback && floatFreqArray) {
         let prevEnd = 1;
@@ -582,15 +590,7 @@
       const targets = frameTargets;
       const spatialWeight = 0.62 - userSmooth * 0.38;
       for (let i = 0; i < 16; i++) {
-        const left = i > 0 ? rawBars[i - 1] : rawBars[i];
-        const right = i < 15 ? rawBars[i + 1] : rawBars[i];
-        const neighborAvg = (left + right) * 0.5;
-        const spatialDiff = rawBars[i] - neighborAvg;
-        const contrasted = Math.max(
-          0,
-          Math.min(0.95, rawBars[i] + spatialDiff * spatialWeight)
-        );
-        const targetPct = contrasted * 100;
+        const targetPct = Math.min(100, Math.max(0, rawBars[i] * 100));
         targets[i] = targetPct;
         frameDeltaSum += Math.abs(targetPct - prevTargetBars[i]);
         prevTargetBars[i] = targetPct;
@@ -616,27 +616,25 @@
         const targetPct = targets[i];
 
         if (targetPct >= smoothBars[i]) {
-          smoothBars[i] =
-            smoothBars[i] * (1 - attackAlpha) + targetPct * attackAlpha;
+          // Instant energetic punch: snaps to beat on the current frame
+          smoothBars[i] = targetPct;
         } else {
-          const expDecay =
-            smoothBars[i] * (1 - releaseAlpha) + targetPct * releaseAlpha;
-          const gravityFloor = smoothBars[i] - maxFallPerFrame;
-          smoothBars[i] = Math.max(targetPct, Math.max(expDecay, gravityFloor));
+          // Smooth, organic gravity decay matching Winamp 2.x needle physics
+          smoothBars[i] = Math.max(targetPct, smoothBars[i] * 0.88 - 0.6);
         }
-        const barPct = Math.min(100, Math.max(0, Math.round(smoothBars[i])));
+        const barPct = Math.min(100, Math.max(0, smoothBars[i]));
 
+        // Peak physics: hold for ~160ms, then drop smoothly
         if (barPct >= peakHeights[i]) {
           peakHeights[i] = barPct;
-          peakHolds[i] = peakHoldFrames;
+          peakHolds[i] = 10;
         } else {
           if (peakHolds[i] > 0) {
             peakHolds[i]--;
           } else {
-            peakHeights[i] = Math.max(barPct, peakHeights[i] - peakFallSpeed);
+            peakHeights[i] = Math.max(barPct, peakHeights[i] - 1.1);
           }
         }
-
       }
       drawSpectrum(canvas);
 

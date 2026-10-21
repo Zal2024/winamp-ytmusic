@@ -3242,6 +3242,205 @@ html.winamp-ytm-on ytmusic-mealbar-promo-renderer yt-button-renderer:last-child 
   outline: 1px solid #1a1a1a !important;
 }
 
+/* ============================================================================
+   Notification Toasts & Snackbars (Winamp Hardware Chassis + Black LCD Profile)
+   ============================================================================ */
+
+/* Outer Toast Window */
+html.winamp-ytm-on tp-yt-paper-toast,
+html.winamp-ytm-on tp-yt-paper-toast.yt-notification-action-renderer,
+html.winamp-ytm-on yt-notification-action-renderer tp-yt-paper-toast,
+html.winamp-ytm-on ytmusic-notification-action-renderer tp-yt-paper-toast,
+html.winamp-ytm-on ytmusic-video-download-toast-renderer tp-yt-paper-toast {
+  background: var(--wa-chassis, #222436) !important;
+  border: 1px solid #10111a !important;
+  box-shadow: inset 1px 1px 0 var(--wa-chassis-bevel-lt, #4c4f6f),
+              inset -1px -1px 0 #0a0a12,
+              0 6px 20px rgba(0, 0, 0, 0.85) !important;
+  border-radius: 0 !important;
+  padding: 4px 6px !important;
+  min-height: 32px !important;
+  height: auto !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 6px !important;
+  box-sizing: border-box !important;
+  color: #d6d6e0 !important;
+  position: fixed !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: 80px !important;
+  left: 24px !important;
+  max-height: none !important;
+  z-index: 1000000 !important;
+  transform: translateY(15px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.15s ease-out, opacity 0.15s ease-out !important;
+}
+
+html.winamp-ytm-on tp-yt-paper-toast.paper-toast-open {
+  transform: translateY(0) !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* Toast Message Container: Black LCD Screen Inset */
+html.winamp-ytm-on tp-yt-paper-toast #text-container,
+html.winamp-ytm-on yt-notification-action-renderer #text-container,
+html.winamp-ytm-on ytmusic-notification-action-renderer #text-container {
+  background: var(--wa-screen-bg, #000000) !important;
+  border: 1px solid #101018 !important;
+  box-shadow: inset 1px 1px 0 #000000, inset -1px -1px 0 #2a2c3a !important;
+  padding: 4px 8px !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  flex: 1 1 auto !important;
+  min-height: 22px !important;
+  box-sizing: border-box !important;
+}
+
+/* Toast Text Readout: Winamp LED Green */
+html.winamp-ytm-on tp-yt-paper-toast #text,
+html.winamp-ytm-on tp-yt-paper-toast #sub-text,
+html.winamp-ytm-on yt-notification-action-renderer #text,
+html.winamp-ytm-on yt-notification-action-renderer #sub-text,
+html.winamp-ytm-on ytmusic-notification-action-renderer #text,
+html.winamp-ytm-on ytmusic-notification-action-renderer #sub-text,
+html.winamp-ytm-on tp-yt-paper-toast yt-formatted-string,
+html.winamp-ytm-on tp-yt-paper-toast span#label {
+  color: var(--wa-led-green, #00e000) !important;
+  font-family: var(--wa-font, "Lucida Console", "Courier New", Consolas, monospace) !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+  line-height: 1.2 !important;
+}
+
+/* Toast Action Button (e.g. CHANGE): Winamp Silver 3D Bevel Button */
+html.winamp-ytm-on yt-notification-action-renderer #action-button,
+html.winamp-ytm-on ytmusic-notification-action-renderer #action-button,
+html.winamp-ytm-on tp-yt-paper-toast yt-button-renderer {
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+html.winamp-ytm-on yt-notification-action-renderer #action-button button,
+html.winamp-ytm-on ytmusic-notification-action-renderer #action-button button,
+html.winamp-ytm-on tp-yt-paper-toast yt-button-renderer button,
+html.winamp-ytm-on tp-yt-paper-toast tp-yt-paper-button {
+  background: var(--wa-btn-face, #b4b8c4) !important;
+  border: 1px solid var(--wa-btn-outline, #101018) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight, #ffffff),
+              inset -1px -1px 0 var(--wa-btn-shadow, #4c4f6f) !important;
+  color: var(--wa-btn-glyph, #000000) !important;
+  font-family: var(--wa-font, "Lucida Console", "Courier New", Consolas, monospace) !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+  height: 22px !important;
+  min-height: 22px !important;
+  padding: 0 10px !important;
+  border-radius: 0 !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: none !important;
+}
+
+html.winamp-ytm-on yt-notification-action-renderer #action-button button:hover,
+html.winamp-ytm-on ytmusic-notification-action-renderer #action-button button:hover,
+html.winamp-ytm-on tp-yt-paper-toast yt-button-renderer button:hover,
+html.winamp-ytm-on tp-yt-paper-toast tp-yt-paper-button:hover {
+  background: var(--wa-playlist-selected, #0000c6) !important;
+  color: #ffffff !important;
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.35),
+              inset -1px -1px 0 rgba(0, 0, 0, 0.5) !important;
+}
+
+html.winamp-ytm-on yt-notification-action-renderer #action-button button:active,
+html.winamp-ytm-on ytmusic-notification-action-renderer #action-button button:active,
+html.winamp-ytm-on tp-yt-paper-toast yt-button-renderer button:active,
+html.winamp-ytm-on tp-yt-paper-toast tp-yt-paper-button:active {
+  box-shadow: inset 1px 1px 0 var(--wa-btn-shadow, #4c4f6f),
+              inset -1px -1px 0 var(--wa-btn-highlight, #ffffff) !important;
+}
+
+/* Toast Close Button (X): Square Winamp Silver Button */
+html.winamp-ytm-on yt-notification-action-renderer #close-button,
+html.winamp-ytm-on ytmusic-notification-action-renderer #close-button,
+html.winamp-ytm-on tp-yt-paper-toast yt-icon-button#close-button {
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  min-height: 20px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+html.winamp-ytm-on yt-notification-action-renderer #close-button button,
+html.winamp-ytm-on ytmusic-notification-action-renderer #close-button button,
+html.winamp-ytm-on tp-yt-paper-toast yt-icon-button#close-button button {
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  min-height: 20px !important;
+  background: var(--wa-btn-face, #b4b8c4) !important;
+  border: 1px solid var(--wa-btn-outline, #101018) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight, #ffffff),
+              inset -1px -1px 0 var(--wa-btn-shadow, #4c4f6f) !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--wa-btn-glyph, #000000) !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+  transition: none !important;
+}
+
+html.winamp-ytm-on yt-notification-action-renderer #close-button button:hover,
+html.winamp-ytm-on ytmusic-notification-action-renderer #close-button button:hover,
+html.winamp-ytm-on tp-yt-paper-toast yt-icon-button#close-button button:hover {
+  background: #cc0000 !important;
+  color: #ffffff !important;
+  border-color: #550000 !important;
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.4),
+              inset -1px -1px 0 rgba(0, 0, 0, 0.5) !important;
+}
+
+html.winamp-ytm-on yt-notification-action-renderer #close-button button:active,
+html.winamp-ytm-on ytmusic-notification-action-renderer #close-button button:active,
+html.winamp-ytm-on tp-yt-paper-toast yt-icon-button#close-button button:active {
+  box-shadow: inset 1px 1px 0 var(--wa-btn-shadow, #4c4f6f),
+              inset -1px -1px 0 var(--wa-btn-highlight, #ffffff) !important;
+}
+
+html.winamp-ytm-on yt-notification-action-renderer #close-button yt-icon,
+html.winamp-ytm-on ytmusic-notification-action-renderer #close-button yt-icon,
+html.winamp-ytm-on tp-yt-paper-toast yt-icon-button#close-button yt-icon {
+  width: 10px !important;
+  height: 10px !important;
+  min-width: 10px !important;
+  min-height: 10px !important;
+  fill: currentColor !important;
+  color: inherit !important;
+  display: block !important;
+}
+
 /* ====================  10. RETRO PIXEL-ART GLYPH MASKS  =================== */
 /* Hide modern vector SVGs */
 html.winamp-ytm-on ytmusic-guide-entry-renderer .guide-icon svg,

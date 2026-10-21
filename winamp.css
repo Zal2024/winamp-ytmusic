@@ -3493,19 +3493,44 @@ html.winamp-ytm-on ytmusic-chip-cloud-renderer #chips::-webkit-scrollbar {
 }
 
 /* ============================================================================
-   Account Menu & Dialog Popups (Winamp Chassis + Black LCD Profile)
+   Account Menu & Dialog Popups (Winamp Hardware Chassis + 3D Etched Bevels)
    ============================================================================ */
 
-/* Outer Dropdown Frame: Beveled Chassis */
-html.winamp-ytm-on ytd-multi-page-menu-renderer,
-html.winamp-ytm-on ytmusic-menu-popup-renderer,
+/* Outer Dropdown Frame: Authentic Winamp 2.x Chassis Bevel */
 html.winamp-ytm-on tp-yt-iron-dropdown,
-html.winamp-ytm-on tp-yt-paper-listbox {
+html.winamp-ytm-on ytd-multi-page-menu-renderer {
   background: var(--wa-chassis, #222436) !important;
-  border: 1px solid #101018 !important;
-  box-shadow: inset 1px 1px 0 var(--wa-chassis-bevel-lt, #4c4f6f), inset -1px -1px 0 #0a0a12, 0 8px 24px rgba(0, 0, 0, 0.8) !important;
+  border: 1px solid #10111a !important;
+  box-shadow: inset 1px 1px 0 var(--wa-chassis-bevel-lt, #4c4f6f),
+              inset -1px -1px 0 #0a0a12,
+              0 8px 24px rgba(0, 0, 0, 0.85) !important;
   border-radius: 0 !important;
+  padding: 3px !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
   color: #d6d6e0 !important;
+}
+
+/* Eliminate nested frames inside popup */
+html.winamp-ytm-on ytmusic-menu-popup-renderer {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  color: #d6d6e0 !important;
+  overflow: auto !important;
+}
+
+html.winamp-ytm-on ytmusic-menu-popup-renderer tp-yt-paper-listbox,
+html.winamp-ytm-on tp-yt-paper-listbox#items {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 2px 0 !important;
+  margin: 0 !important;
 }
 
 html.winamp-ytm-on ytd-multi-page-menu-renderer #header.ytd-multi-page-menu-renderer,
@@ -3542,7 +3567,7 @@ html.winamp-ytm-on ytd-active-account-header-renderer #avatar img {
 html.winamp-ytm-on ytd-active-account-header-renderer #channel-name,
 html.winamp-ytm-on ytd-active-account-header-renderer #name {
   color: #ffffff !important;
-  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-family: var(--wa-font, "Lucida Console", "Courier New", Consolas, monospace) !important;
   font-size: 11px !important;
   font-weight: 700 !important;
   letter-spacing: 0.5px !important;
@@ -3553,7 +3578,7 @@ html.winamp-ytm-on ytd-active-account-header-renderer #name {
 html.winamp-ytm-on ytd-active-account-header-renderer #email,
 html.winamp-ytm-on ytd-active-account-header-renderer #handle {
   color: var(--wa-led-green, #00e000) !important;
-  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-family: var(--wa-font, "Lucida Console", "Courier New", Consolas, monospace) !important;
   font-size: 10px !important;
   font-weight: 700 !important;
   letter-spacing: 0.5px !important;
@@ -3563,73 +3588,152 @@ html.winamp-ytm-on ytd-active-account-header-renderer #handle {
 html.winamp-ytm-on ytd-active-account-header-renderer a,
 html.winamp-ytm-on ytd-active-account-header-renderer #manage-account {
   color: #8a8e9e !important;
-  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-family: var(--wa-font, "Lucida Console", "Courier New", Consolas, monospace) !important;
   font-size: 9px !important;
   text-transform: uppercase !important;
   letter-spacing: 0.5px !important;
   text-decoration: underline !important;
 }
 
-/* Menu Items: Compact Winamp playlist style rows */
-html.winamp-ytm-on ytd-compact-link-renderer,
-html.winamp-ytm-on ytd-menu-service-item-renderer,
-html.winamp-ytm-on ytmusic-menu-navigation-item-renderer,
-html.winamp-ytm-on ytmusic-menu-service-item-renderer {
-  min-height: 26px !important;
-  height: 26px !important;
+/* Universal Menu Item Rows: Compact Winamp Playlist/Menu Profile */
+html.winamp-ytm-on tp-yt-paper-listbox > ytmusic-menu-navigation-item-renderer,
+html.winamp-ytm-on tp-yt-paper-listbox > ytmusic-menu-service-item-renderer,
+html.winamp-ytm-on tp-yt-paper-listbox > ytmusic-toggle-menu-service-item-renderer,
+html.winamp-ytm-on tp-yt-paper-listbox > ytmusic-menu-service-item-download-renderer,
+html.winamp-ytm-on tp-yt-paper-listbox > ytd-compact-link-renderer,
+html.winamp-ytm-on tp-yt-paper-listbox > ytd-menu-service-item-renderer,
+html.winamp-ytm-on ytmusic-menu-popup-renderer tp-yt-paper-item,
+html.winamp-ytm-on tp-yt-paper-listbox > [role="menuitem"] {
+  display: flex !important;
+  align-items: center !important;
+  height: 24px !important;
+  min-height: 24px !important;
+  max-height: 24px !important;
+  margin: 1px 2px !important;
+  padding: 0 8px !important;
   box-sizing: border-box !important;
-}
-
-html.winamp-ytm-on ytd-compact-link-renderer tp-yt-paper-item,
-html.winamp-ytm-on ytd-menu-service-item-renderer tp-yt-paper-item,
-html.winamp-ytm-on ytmusic-menu-navigation-item-renderer tp-yt-paper-item,
-html.winamp-ytm-on ytmusic-menu-service-item-renderer tp-yt-paper-item {
-  min-height: 26px !important;
-  height: 26px !important;
-  padding: 0 10px !important;
+  cursor: pointer !important;
+  border-radius: 0 !important;
   background: transparent !important;
-  font-family: "Lucida Console", "Consolas", monospace !important;
+  color: #d6d6e0 !important;
+  font-family: var(--wa-font, "Lucida Console", "Courier New", Consolas, monospace) !important;
   font-size: 10px !important;
   font-weight: 700 !important;
-  letter-spacing: 0.5px !important;
-  color: #d6d6e0 !important;
   text-transform: uppercase !important;
-  border-radius: 0 !important;
-  cursor: pointer !important;
+  letter-spacing: 0.5px !important;
+  user-select: none !important;
+  transition: none !important;
 }
 
-/* Menu Item Hover: Signature Winamp blue highlight bar */
-html.winamp-ytm-on ytd-compact-link-renderer:hover tp-yt-paper-item,
-html.winamp-ytm-on ytd-menu-service-item-renderer:hover tp-yt-paper-item,
-html.winamp-ytm-on ytmusic-menu-navigation-item-renderer:hover tp-yt-paper-item,
-html.winamp-ytm-on ytmusic-menu-service-item-renderer:hover tp-yt-paper-item {
+/* Inner elements: links, paper-items inside renderers */
+html.winamp-ytm-on ytmusic-menu-navigation-item-renderer a#navigation-endpoint,
+html.winamp-ytm-on ytmusic-menu-navigation-item-renderer a.yt-simple-endpoint,
+html.winamp-ytm-on ytmusic-menu-service-item-download-renderer tp-yt-paper-item,
+html.winamp-ytm-on ytd-compact-link-renderer tp-yt-paper-item,
+html.winamp-ytm-on ytd-menu-service-item-renderer tp-yt-paper-item {
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  height: 24px !important;
+  min-height: 24px !important;
+  max-height: 24px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  color: inherit !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  letter-spacing: inherit !important;
+  text-transform: inherit !important;
+  border-radius: 0 !important;
+  box-sizing: border-box !important;
+  text-decoration: none !important;
+}
+
+/* Hide secondary entry inside download renderer if empty */
+html.winamp-ytm-on ytmusic-menu-service-item-download-renderer #secondary-entry:empty {
+  display: none !important;
+}
+
+/* Menu Item Hover / Active / Focus: Signature Winamp Royal Blue Selection Bar */
+html.winamp-ytm-on tp-yt-paper-listbox > ytmusic-menu-navigation-item-renderer:hover,
+html.winamp-ytm-on tp-yt-paper-listbox > ytmusic-menu-service-item-renderer:hover,
+html.winamp-ytm-on tp-yt-paper-listbox > ytmusic-toggle-menu-service-item-renderer:hover,
+html.winamp-ytm-on tp-yt-paper-listbox > ytmusic-menu-service-item-download-renderer:hover,
+html.winamp-ytm-on tp-yt-paper-listbox > ytd-compact-link-renderer:hover,
+html.winamp-ytm-on tp-yt-paper-listbox > ytd-menu-service-item-renderer:hover,
+html.winamp-ytm-on ytmusic-menu-popup-renderer tp-yt-paper-item:hover,
+html.winamp-ytm-on tp-yt-paper-listbox > [role="menuitem"]:hover,
+html.winamp-ytm-on tp-yt-paper-listbox > *:hover {
   background: var(--wa-playlist-selected, #0000c6) !important;
+  color: #ffffff !important;
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.35),
+              inset -1px -1px 0 rgba(0, 0, 0, 0.5) !important;
+}
+
+html.winamp-ytm-on tp-yt-paper-listbox > *:hover yt-icon,
+html.winamp-ytm-on ytmusic-menu-popup-renderer tp-yt-paper-item:hover yt-icon {
+  fill: #ffffff !important;
   color: #ffffff !important;
 }
 
-html.winamp-ytm-on ytd-compact-link-renderer:hover yt-formatted-string,
-html.winamp-ytm-on ytmusic-menu-navigation-item-renderer:hover yt-formatted-string,
-html.winamp-ytm-on ytmusic-menu-service-item-renderer:hover yt-formatted-string {
+html.winamp-ytm-on tp-yt-paper-listbox > *:hover yt-formatted-string,
+html.winamp-ytm-on tp-yt-paper-listbox > *:hover span,
+html.winamp-ytm-on ytmusic-menu-popup-renderer tp-yt-paper-item:hover yt-formatted-string,
+html.winamp-ytm-on ytmusic-menu-popup-renderer tp-yt-paper-item:hover span {
   color: #ffffff !important;
 }
 
 /* Menu Item Icons */
-html.winamp-ytm-on ytd-compact-link-renderer yt-icon,
-html.winamp-ytm-on ytmusic-menu-navigation-item-renderer yt-icon,
-html.winamp-ytm-on ytmusic-menu-service-item-renderer yt-icon {
+html.winamp-ytm-on ytmusic-menu-popup-renderer yt-icon,
+html.winamp-ytm-on tp-yt-paper-listbox yt-icon {
   width: 14px !important;
   height: 14px !important;
-  margin-right: 8px !important;
-  fill: currentColor !important;
+  min-width: 14px !important;
+  min-height: 14px !important;
+  margin: 0 8px 0 0 !important;
+  fill: #8e95a8 !important;
+  color: #8e95a8 !important;
+  flex-shrink: 0 !important;
 }
 
-/* Dividers */
+/* Menu Item Text */
+html.winamp-ytm-on ytmusic-menu-popup-renderer yt-formatted-string,
+html.winamp-ytm-on tp-yt-paper-listbox yt-formatted-string,
+html.winamp-ytm-on ytmusic-menu-popup-renderer span.text {
+  font-family: var(--wa-font, "Lucida Console", "Courier New", Consolas, monospace) !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+  color: inherit !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* Download / Premium Badge */
+html.winamp-ytm-on ytmusic-menu-service-item-download-renderer yt-icon.primary-entry-badge-icon {
+  margin: 0 0 0 auto !important;
+  width: 14px !important;
+  height: 14px !important;
+  min-width: 14px !important;
+  min-height: 14px !important;
+  border-radius: 2px !important;
+}
+
+/* 3D Etched Groove Dividers */
+html.winamp-ytm-on ytmusic-menu-popup-renderer yt-divider-renderer,
+html.winamp-ytm-on ytmusic-menu-popup-renderer #divider,
 html.winamp-ytm-on ytd-multi-page-menu-renderer yt-divider-renderer,
-html.winamp-ytm-on ytd-multi-page-menu-renderer #divider,
-html.winamp-ytm-on ytmusic-menu-popup-renderer yt-divider-renderer {
-  border-top: 1px solid var(--wa-chassis-dark, #141520) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
-  margin: 3px 0 !important;
+html.winamp-ytm-on ytd-multi-page-menu-renderer #divider {
+  border-top: 1px solid #10111a !important;
+  border-bottom: 1px solid var(--wa-chassis-bevel-lt, #4c4f6f) !important;
+  border-left: none !important;
+  border-right: none !important;
+  height: 0 !important;
+  margin: 3px 2px !important;
+  padding: 0 !important;
 }
 
 /* ============================================================================

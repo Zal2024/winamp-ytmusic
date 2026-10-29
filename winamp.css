@@ -14,6 +14,12 @@
 
 :root,
 :root[data-wa-skin="classic"] {
+  /* Brushed-metal grain for the bars (too busy on the full-page background): a pre-rendered tile of
+     streaks along x (an SVG noise filter here stalls repaints) */
+  --wa-grain: url("data:image/png;base64,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");
+}
+:root,
+:root[data-wa-skin="classic"] {
   /* Chassis: metallic dark navy/slate */
   --wa-chassis: #222436;
   --wa-chassis-dark: #141520;
@@ -23,12 +29,24 @@
   --wa-panel-bg: #11121d;
 
   /* Button System Recipe */
-  --wa-btn-face: #b4b8c4;
-  --wa-btn-face-pressed: #a0a4b0;
-  --wa-btn-highlight: #ffffff;
-  --wa-btn-shadow: #5a5a66;
-  --wa-btn-outline: #1a1a1a;
-  --wa-btn-glyph: #1c1c28;
+  --wa-btn-face: #bdced6;
+  --wa-btn-face-pressed: #a4b2be;
+  --wa-btn-highlight: #efffff;
+  --wa-btn-shadow: #4a5a6b;
+  --wa-btn-outline: #202034;
+  /* Bevel traced from the Winamp 2.x base skin: top/left is a soft outer line
+     then a bright inner one; bottom/right steps soft > mid > dark outward.
+     Other skins derive the soft/mid tones from their own face/shadow colors */
+  --wa-btn-inner-lt: color-mix(in srgb, var(--wa-btn-face) 85%, var(--wa-btn-shadow));
+  --wa-btn-inner-dk: color-mix(in srgb, var(--wa-btn-face) 45%, var(--wa-btn-shadow));
+  --wa-btn-face-hover: color-mix(in srgb, var(--wa-btn-face) 85%, var(--wa-btn-highlight));
+  --wa-bevel-up: inset 1px 1px 0 var(--wa-btn-inner-lt), inset -1px -1px 0 var(--wa-btn-shadow),
+    inset 2px 2px 0 var(--wa-btn-highlight), inset -2px -2px 0 var(--wa-btn-inner-dk),
+    inset -3px -3px 0 var(--wa-btn-inner-lt);
+  --wa-bevel-down: inset 1px 1px 0 var(--wa-btn-shadow), inset 2px 2px 0 var(--wa-btn-inner-dk),
+    inset 3px 3px 0 var(--wa-btn-inner-lt), inset -1px -1px 0 var(--wa-btn-inner-lt),
+    inset -2px -2px 0 var(--wa-btn-highlight);
+  --wa-btn-glyph: #2f374d;
   --wa-btn-glyph-shadow: 1px 1px 0 rgba(255, 255, 255, 0.65);
 
   /* Screens: pure black */
@@ -44,6 +62,12 @@
   --wa-playlist-selected: #0000c6;
   --wa-playlist-selected-text: #ffffff;
   --wa-titlebar-btn: #6b6648;
+}
+
+:root:not([data-wa-skin]),
+:root[data-wa-skin="classic"] {
+  --wa-btn-inner-lt: #adb5c6;
+  --wa-btn-inner-dk: #7b8494;
 }
 
 /* Skin 1: Modern Onyx / Bento */
@@ -138,9 +162,98 @@ html.winamp-ytm-on body {
   background-attachment: fixed !important;
   background-size: cover !important;
   background-repeat: no-repeat !important;
-  scrollbar-color: #5a5a66 #1a1a1a;
   -webkit-font-smoothing: none !important;
   image-rendering: pixelated !important;
+}
+
+/* ---- Scrollbars: recessed black groove, beveled silver thumb + arrow buttons
+   Chrome 121+ ignores every ::-webkit-scrollbar rule on an element that has
+   scrollbar-color (which inherits), so clear it app-wide first. */
+html.winamp-ytm-on,
+html.winamp-ytm-on * {
+  scrollbar-color: auto !important;
+}
+html.winamp-ytm-on::-webkit-scrollbar,
+html.winamp-ytm-on ::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+  background: var(--wa-chassis-dark);
+}
+html.winamp-ytm-on::-webkit-scrollbar-track,
+html.winamp-ytm-on ::-webkit-scrollbar-track {
+  background: var(--wa-screen-bg);
+  box-shadow: inset 1px 1px 0 var(--wa-screen-bevel-dk),
+    inset -1px -1px 0 var(--wa-screen-bevel-lt);
+}
+html.winamp-ytm-on::-webkit-scrollbar-thumb,
+html.winamp-ytm-on ::-webkit-scrollbar-thumb {
+  background-color: var(--wa-btn-face);
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 0;
+  box-shadow: var(--wa-bevel-up);
+}
+/* Three-line grip, like the Winamp playlist scroller */
+html.winamp-ytm-on::-webkit-scrollbar-thumb:vertical,
+html.winamp-ytm-on ::-webkit-scrollbar-thumb:vertical {
+  min-height: 24px;
+  background-size: 6px 8px;
+  background-image: linear-gradient(to bottom,
+    var(--wa-btn-shadow) 0 1px, var(--wa-btn-highlight) 1px 2px, transparent 2px 3px,
+    var(--wa-btn-shadow) 3px 4px, var(--wa-btn-highlight) 4px 5px, transparent 5px 6px,
+    var(--wa-btn-shadow) 6px 7px, var(--wa-btn-highlight) 7px 8px);
+}
+html.winamp-ytm-on::-webkit-scrollbar-thumb:horizontal,
+html.winamp-ytm-on ::-webkit-scrollbar-thumb:horizontal {
+  min-width: 24px;
+  background-size: 8px 6px;
+  background-image: linear-gradient(to right,
+    var(--wa-btn-shadow) 0 1px, var(--wa-btn-highlight) 1px 2px, transparent 2px 3px,
+    var(--wa-btn-shadow) 3px 4px, var(--wa-btn-highlight) 4px 5px, transparent 5px 6px,
+    var(--wa-btn-shadow) 6px 7px, var(--wa-btn-highlight) 7px 8px);
+}
+html.winamp-ytm-on::-webkit-scrollbar-thumb:active,
+html.winamp-ytm-on ::-webkit-scrollbar-thumb:active {
+  background-color: var(--wa-btn-face-pressed);
+}
+html.winamp-ytm-on::-webkit-scrollbar-button:single-button,
+html.winamp-ytm-on ::-webkit-scrollbar-button:single-button {
+  display: block;
+  width: 12px;
+  height: 12px;
+  background-color: var(--wa-btn-face);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 7px 4px;
+  border: 0;
+  box-shadow: var(--wa-bevel-up);
+}
+html.winamp-ytm-on::-webkit-scrollbar-button:single-button:active,
+html.winamp-ytm-on ::-webkit-scrollbar-button:single-button:active {
+  background-color: var(--wa-btn-face-pressed);
+  box-shadow: var(--wa-bevel-down);
+}
+html.winamp-ytm-on::-webkit-scrollbar-button:vertical:decrement,
+html.winamp-ytm-on ::-webkit-scrollbar-button:vertical:decrement {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 4' shape-rendering='crispEdges'%3E%3Crect x='3' y='0' width='1' height='1' fill='%231c1c28'/%3E%3Crect x='2' y='1' width='3' height='1' fill='%231c1c28'/%3E%3Crect x='1' y='2' width='5' height='1' fill='%231c1c28'/%3E%3Crect x='0' y='3' width='7' height='1' fill='%231c1c28'/%3E%3C/svg%3E");
+}
+html.winamp-ytm-on::-webkit-scrollbar-button:vertical:increment,
+html.winamp-ytm-on ::-webkit-scrollbar-button:vertical:increment {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 4' shape-rendering='crispEdges'%3E%3Crect x='0' y='0' width='7' height='1' fill='%231c1c28'/%3E%3Crect x='1' y='1' width='5' height='1' fill='%231c1c28'/%3E%3Crect x='2' y='2' width='3' height='1' fill='%231c1c28'/%3E%3Crect x='3' y='3' width='1' height='1' fill='%231c1c28'/%3E%3C/svg%3E");
+}
+html.winamp-ytm-on::-webkit-scrollbar-button:horizontal:decrement,
+html.winamp-ytm-on ::-webkit-scrollbar-button:horizontal:decrement {
+  background-size: 4px 7px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 7' shape-rendering='crispEdges'%3E%3Crect x='0' y='3' width='1' height='1' fill='%231c1c28'/%3E%3Crect x='1' y='2' width='1' height='3' fill='%231c1c28'/%3E%3Crect x='2' y='1' width='1' height='5' fill='%231c1c28'/%3E%3Crect x='3' y='0' width='1' height='7' fill='%231c1c28'/%3E%3C/svg%3E");
+}
+html.winamp-ytm-on::-webkit-scrollbar-button:horizontal:increment,
+html.winamp-ytm-on ::-webkit-scrollbar-button:horizontal:increment {
+  background-size: 4px 7px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 7' shape-rendering='crispEdges'%3E%3Crect x='0' y='0' width='1' height='7' fill='%231c1c28'/%3E%3Crect x='1' y='1' width='1' height='5' fill='%231c1c28'/%3E%3Crect x='2' y='2' width='1' height='3' fill='%231c1c28'/%3E%3Crect x='3' y='3' width='1' height='1' fill='%231c1c28'/%3E%3C/svg%3E");
+}
+html.winamp-ytm-on::-webkit-scrollbar-corner,
+html.winamp-ytm-on ::-webkit-scrollbar-corner {
+  background: var(--wa-chassis-dark);
 }
 
 /* Intermediate containers: transparent so realistic lighting never tiles */
@@ -155,7 +268,6 @@ html.winamp-ytm-on ytmusic-section-list-renderer,
 html.winamp-ytm-on ytmusic-tabbed-search-results-renderer {
   background: transparent !important;
   background-image: none !important;
-  scrollbar-color: #5a5a66 #1a1a1a;
 }
 
 /* Player Page (Full screen view): Solid chassis background during slide-up/down animations */
@@ -165,7 +277,6 @@ html.winamp-ytm-on ytmusic-player-page {
   background-attachment: fixed !important;
   background-size: cover !important;
   background-repeat: no-repeat !important;
-  scrollbar-color: #5a5a66 #1a1a1a;
 }
 
 /* Strict zero radius app-wide: real hardware has sharp pixel corners */
@@ -253,6 +364,11 @@ html.winamp-ytm-on #header.ytmusic-browse-response {
 html.winamp-ytm-on ytmusic-browse-response ytmusic-section-list-renderer {
   padding-top: 4px !important;
 }
+/* Sticky tabs (Library / Downloads) are pushed down by the nav height and would
+   otherwise cover the filter chips and sort menu at the top of the list */
+html.winamp-ytm-on ytmusic-browse-response ytmusic-tabs:not([hidden]) ~ ytmusic-section-list-renderer {
+  padding-top: calc(var(--ytmusic-nav-bar-height) + 4px) !important;
+}
 
 /* ---- 2. Top Title Bar: Authentic Winamp 2.x Metallic Title Bar ------------ */
 html.winamp-ytm-on,
@@ -281,7 +397,7 @@ html.winamp-ytm-on ytmusic-player-page {
 }
 
 html.winamp-ytm-on ytmusic-nav-bar {
-  background: var(--wa-chassis-topbar, linear-gradient(to bottom, #343750 0%, #222436 45%, #181926 100%)) !important;
+  background: var(--wa-grain), var(--wa-chassis-topbar, linear-gradient(to bottom, #343750 0%, #222436 45%, #181926 100%)) !important;
   border-bottom: 2px solid #0d0e16 !important;
   box-shadow: inset 0 1px 0 #54587c,
     inset 0 -1px 0 #12131d,
@@ -312,8 +428,8 @@ html.winamp-ytm-on #guide-button {
   min-height: 18px !important;
   margin-right: 8px !important;
   background: var(--wa-btn-face) !important;
-  border: 1px solid var(--wa-btn-outline) !important;
-  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight), inset -1px -1px 0 var(--wa-btn-shadow) !important;
+  border: 0 !important;
+  box-shadow: var(--wa-bevel-up) !important;
   padding: 0 !important;
   display: inline-flex !important;
   align-items: center !important;
@@ -322,7 +438,7 @@ html.winamp-ytm-on #guide-button {
 }
 html.winamp-ytm-on #guide-button:active {
   background: var(--wa-btn-face-pressed) !important;
-  box-shadow: inset 1px 1px 0 var(--wa-btn-shadow), inset -1px -1px 0 var(--wa-btn-highlight) !important;
+  box-shadow: var(--wa-bevel-down) !important;
 }
 html.winamp-ytm-on #guide-button yt-icon svg {
   display: none !important;
@@ -477,8 +593,8 @@ html.winamp-ytm-on ytmusic-search-box #clear-button {
   min-height: 16px !important;
   margin-right: 6px !important;
   background: var(--wa-btn-face) !important;
-  border: 1px solid var(--wa-btn-outline) !important;
-  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight), inset -1px -1px 0 var(--wa-btn-shadow) !important;
+  border: 0 !important;
+  box-shadow: var(--wa-bevel-up) !important;
 }
 html.winamp-ytm-on ytmusic-search-box #clear-button yt-icon {
   width: 10px !important;
@@ -535,10 +651,9 @@ html.winamp-ytm-on ytmusic-chip-cloud-chip-renderer .gradient-box,
 html.winamp-ytm-on ytmusic-carousel-shelf-basic-header-renderer #previous-button,
 html.winamp-ytm-on ytmusic-carousel-shelf-basic-header-renderer #next-button {
   background: var(--wa-btn-face) !important;
-  border: 1px solid var(--wa-btn-outline) !important;
+  border: 0 !important;
   border-radius: 0 !important;
-  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight),
-    inset -1px -1px 0 var(--wa-btn-shadow) !important;
+  box-shadow: var(--wa-bevel-up) !important;
   image-rendering: pixelated !important;
   color: var(--wa-btn-glyph) !important;
   fill: var(--wa-btn-glyph) !important;
@@ -565,7 +680,7 @@ html.winamp-ytm-on ytmusic-player-bar .left-controls-buttons yt-icon-button:hove
 html.winamp-ytm-on ytmusic-player-bar #play-pause-button:hover,
 html.winamp-ytm-on ytmusic-chip-cloud-chip-renderer:hover .gradient-box,
 html.winamp-ytm-on ytmusic-guide-signin-promo-renderer #sign-in-button button:hover {
-  background: #c0c4d0 !important;
+  background: var(--wa-btn-face-hover) !important;
 }
 
 /* Pressed / Active */
@@ -582,8 +697,7 @@ html.winamp-ytm-on ytmusic-player-bar #play-pause-button:active,
 html.winamp-ytm-on ytmusic-chip-cloud-chip-renderer .gradient-box:active,
 html.winamp-ytm-on ytmusic-guide-signin-promo-renderer #sign-in-button button:active {
   background: var(--wa-btn-face-pressed) !important;
-  box-shadow: inset 1px 1px 0 var(--wa-btn-shadow),
-    inset -1px -1px 0 var(--wa-btn-highlight) !important;
+  box-shadow: var(--wa-bevel-down) !important;
   transform: translate(1px, 1px) !important;
 }
 
@@ -598,18 +712,34 @@ html.winamp-ytm-on ytmusic-chip-cloud-chip-renderer {
   display: inline-block !important;
   height: auto !important;
   min-height: 0 !important;
-  margin: 2px 3px 2px 0 !important;
+  margin: 2px 4px 2px 0 !important;
   padding: 0 !important;
   background: transparent !important;
   border: 0 !important;
   box-shadow: none !important;
 }
+/* Winamp toggle buttons (EQ / PL / SHUFFLE): 18px tall with an LED on the left */
 html.winamp-ytm-on ytmusic-chip-cloud-chip-renderer .gradient-box {
-  height: 24px !important;
-  padding: 0 8px !important;
+  height: 18px !important;
+  padding: 0 8px 0 6px !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
+  gap: 5px !important;
+}
+html.winamp-ytm-on ytmusic-chip-cloud-chip-renderer .gradient-box::before {
+  content: "" !important;
+  flex: 0 0 auto !important;
+  width: 5px !important;
+  height: 4px !important;
+  box-sizing: border-box !important;
+  background: #105a00 !important;
+  border: 0 !important;
+  box-shadow: inset 1px 1px 0 #4a5a6b, inset -1px -1px 0 #d5def2 !important;
+}
+html.winamp-ytm-on ytmusic-chip-cloud-chip-renderer[is-selected] .gradient-box::before,
+html.winamp-ytm-on ytmusic-chip-cloud-chip-renderer[selected] .gradient-box::before {
+  background: #00d600 !important;
 }
 html.winamp-ytm-on ytmusic-chip-cloud-chip-renderer a.yt-simple-endpoint {
   height: 100% !important;
@@ -634,14 +764,7 @@ html.winamp-ytm-on ytmusic-chip-cloud-chip-renderer[is-selected] .gradient-box,
 html.winamp-ytm-on ytmusic-chip-cloud-chip-renderer a[aria-selected="true"] .gradient-box,
 html.winamp-ytm-on ytmusic-chip-cloud-chip-renderer[selected] .gradient-box {
   background: var(--wa-btn-face-pressed) !important;
-  box-shadow: inset 1px 1px 0 var(--wa-btn-shadow),
-    inset -1px -1px 0 var(--wa-btn-highlight) !important;
-}
-html.winamp-ytm-on ytmusic-chip-cloud-chip-renderer[is-selected] .text,
-html.winamp-ytm-on ytmusic-chip-cloud-chip-renderer a[aria-selected="true"] .text,
-html.winamp-ytm-on ytmusic-chip-cloud-chip-renderer[selected] .text {
-  color: #008800 !important;
-  text-shadow: 1px 1px 0 #ffffff !important;
+  box-shadow: var(--wa-bevel-down) !important;
 }
 
 /* Explore & Mood/Genre Grid Buttons (Requirement 5) */
@@ -1004,9 +1127,8 @@ html.winamp-ytm-on ytmusic-shelf-renderer .header yt-button-shape button {
   text-transform: uppercase !important;
   color: var(--wa-btn-glyph) !important;
   background: var(--wa-btn-face) !important;
-  border: 1px solid var(--wa-btn-outline) !important;
-  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight),
-              inset -1px -1px 0 var(--wa-btn-shadow),
+  border: 0 !important;
+  box-shadow: var(--wa-bevel-up),
               0 1px 2px rgba(0, 0, 0, 0.6) !important;
   border-radius: 0 !important;
   text-shadow: var(--wa-btn-glyph-shadow, 1px 1px 0 rgba(255, 255, 255, 0.65)) !important;
@@ -1021,8 +1143,7 @@ html.winamp-ytm-on ytmusic-shelf-renderer .header yt-button-shape button:hover {
 html.winamp-ytm-on ytmusic-carousel-shelf-basic-header-renderer yt-button-shape button:active,
 html.winamp-ytm-on ytmusic-shelf-renderer .header yt-button-shape button:active {
   background: var(--wa-btn-face-pressed) !important;
-  box-shadow: inset 1px 1px 0 var(--wa-btn-shadow),
-              inset -1px -1px 0 var(--wa-btn-highlight) !important;
+  box-shadow: var(--wa-bevel-down) !important;
   transform: translate(1px, 1px) !important;
 }
 
@@ -1216,17 +1337,6 @@ html.winamp-ytm-on ytmusic-tabbed-search-results-renderer #contents.ytmusic-sect
   overflow-y: auto !important;
   overflow-x: hidden !important;
   padding: 2px !important;
-  scrollbar-width: thin;
-  scrollbar-color: #6b6648 #000000;
-}
-html.winamp-ytm-on ytmusic-tabbed-search-results-renderer #contents.ytmusic-section-list-renderer::-webkit-scrollbar {
-  width: 12px !important;
-  background: #000000 !important;
-}
-html.winamp-ytm-on ytmusic-tabbed-search-results-renderer #contents.ytmusic-section-list-renderer::-webkit-scrollbar-thumb {
-  background: #6b6648 !important;
-  border: 1px solid #1a1a1a !important;
-  box-shadow: inset 1px 1px 0 #9e976c, inset -1px -1px 0 #3e3b2a !important;
 }
 
 /* Search results rows: flush thumbnails, green text, blue hover */
@@ -1293,8 +1403,8 @@ html.winamp-ytm-on ytmusic-card-shelf-renderer ytmusic-play-button-renderer {
   width: 90px !important;
   height: 24px !important;
   background: var(--wa-btn-face) !important;
-  border: 1px solid var(--wa-btn-outline) !important;
-  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight), inset -1px -1px 0 var(--wa-btn-shadow) !important;
+  border: 0 !important;
+  box-shadow: var(--wa-bevel-up) !important;
   color: var(--wa-btn-glyph) !important;
   display: inline-flex !important;
   align-items: center !important;
@@ -1579,8 +1689,8 @@ html.winamp-ytm-on .action-buttons yt-button-renderer button {
   justify-content: center !important;
   box-sizing: border-box !important;
   background: var(--wa-btn-face) !important;
-  border: 1px solid var(--wa-btn-outline) !important;
-  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight), inset -1px -1px 0 var(--wa-btn-shadow) !important;
+  border: 0 !important;
+  box-shadow: var(--wa-bevel-up) !important;
   border-radius: 0 !important;
   cursor: default !important;
 }
@@ -1599,8 +1709,8 @@ html.winamp-ytm-on .action-buttons ytmusic-play-button-renderer {
   align-items: center !important;
   justify-content: center !important;
   background: var(--wa-btn-face) !important;
-  border: 1px solid var(--wa-btn-outline) !important;
-  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight), inset -1px -1px 0 var(--wa-btn-shadow) !important;
+  border: 0 !important;
+  box-shadow: var(--wa-bevel-up) !important;
   border-radius: 0 !important;
   box-sizing: border-box !important;
   cursor: default !important;
@@ -1637,7 +1747,7 @@ html.winamp-ytm-on .action-buttons yt-button-shape > button:hover,
 html.winamp-ytm-on .action-buttons yt-icon-button > button:hover,
 html.winamp-ytm-on .action-buttons tp-yt-paper-icon-button:hover,
 html.winamp-ytm-on .action-buttons ytmusic-play-button-renderer:hover {
-  background: #c0c4d0 !important;
+  background: var(--wa-btn-face-hover) !important;
 }
 
 html.winamp-ytm-on .action-buttons yt-button-shape > button:active,
@@ -1645,12 +1755,12 @@ html.winamp-ytm-on .action-buttons yt-icon-button > button:active,
 html.winamp-ytm-on .action-buttons tp-yt-paper-icon-button:active,
 html.winamp-ytm-on .action-buttons ytmusic-play-button-renderer:active {
   background: var(--wa-btn-face-pressed) !important;
-  box-shadow: inset 1px 1px 0 var(--wa-btn-shadow), inset -1px -1px 0 var(--wa-btn-highlight) !important;
+  box-shadow: var(--wa-bevel-down) !important;
 }
 
 /* ====================  7. THE WINAMP PLAYER BAR (Requirement 6) ============ */
 html.winamp-ytm-on ytmusic-player-bar {
-  background: var(--wa-chassis) !important;
+  background: var(--wa-grain), var(--wa-chassis) !important;
   border-top: 1px solid var(--wa-btn-outline) !important;
   box-shadow: inset 0 1px 0 var(--wa-chassis-bevel-lt),
     inset 0 -1px 0 var(--wa-chassis-bevel-dk) !important;
@@ -1662,6 +1772,24 @@ html.winamp-ytm-on ytmusic-player-bar {
   width: 100% !important;
   z-index: 1000 !important;
   overflow: visible !important;
+}
+/* YTM sizes the start column for its own 3 buttons; ours carry the LCD,
+   stats and time, so let the column grow instead of spilling under the art */
+html.winamp-ytm-on ytmusic-player-bar {
+  grid-template-columns: auto minmax(0, 1fr) auto !important;
+}
+html.winamp-ytm-on ytmusic-player-bar .left-controls,
+html.winamp-ytm-on ytmusic-player-bar #right-controls {
+  width: auto !important;
+  min-width: 0 !important;
+}
+html.winamp-ytm-on ytmusic-player-bar .middle-controls {
+  min-width: 0 !important;
+  width: 100% !important;
+  justify-self: stretch !important;
+}
+html.winamp-ytm-on ytmusic-player-bar .content-info-wrapper {
+  flex: 0 1 252px !important;
 }
 html.winamp-ytm-on ytmusic-player-bar[inert] {
   display: none !important;
@@ -1710,7 +1838,9 @@ html.winamp-ytm-on ytmusic-player-bar .left-controls-buttons {
 }
 html.winamp-ytm-on ytmusic-player-bar .left-controls-buttons yt-icon-button,
 html.winamp-ytm-on ytmusic-player-bar #play-pause-button,
-html.winamp-ytm-on ytmusic-player-bar .wa-stop-btn {
+html.winamp-ytm-on ytmusic-player-bar .wa-stop-btn,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsMainControls button,
+html.winamp-ytm-on ytmusic-miniplayer .wa-stop-btn {
   width: 23px !important;
   height: 18px !important;
   min-width: 23px !important;
@@ -1720,12 +1850,9 @@ html.winamp-ytm-on ytmusic-player-bar .wa-stop-btn {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  background: #bdced6 !important;
-  border: 1px solid #202034 !important;
-  box-shadow: inset 1px 1px 0 #efffff,
-              inset -1px -1px 0 #4a5a6b,
-              inset 2px 2px 0 #adb5c6,
-              inset -2px -2px 0 #7b8494 !important;
+  background: var(--wa-btn-face) !important;
+  border: 0 !important;
+  box-shadow: var(--wa-bevel-up) !important;
   box-sizing: border-box !important;
   cursor: pointer !important;
 }
@@ -1746,31 +1873,34 @@ html.winamp-ytm-on ytmusic-player-bar #play-pause-button > #button {
 html.winamp-ytm-on ytmusic-player-bar .left-controls-buttons yt-icon-button:active,
 html.winamp-ytm-on ytmusic-player-bar #play-pause-button:active,
 html.winamp-ytm-on ytmusic-player-bar .wa-stop-btn:active,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsMainControls button:active,
+html.winamp-ytm-on ytmusic-miniplayer .wa-stop-btn:active,
+html.winamp-ytm-on ytmusic-miniplayer[is-playing] .ytmusicPlayerControlsPlayPauseButton button,
 html.winamp-ytm-on ytmusic-player-bar[is-playing] #play-pause-button,
 html.winamp-ytm-on ytmusic-player-bar #play-pause-button.is-playing,
 html.winamp-ytm-on ytmusic-player-bar #play-pause-button[data-wa-playstate="playing"],
 html.winamp-ytm-on ytmusic-player-bar:has(.winamp-viz.is-playing) #play-pause-button,
 html.winamp-ytm-on ytmusic-player-bar #play-pause-button[aria-label*="Pause"],
 html.winamp-ytm-on ytmusic-player-bar #play-pause-button[title*="Pause"] {
-  background: #a4b2be !important;
-  box-shadow: inset 1px 1px 0 #4a5a6b,
-              inset -1px -1px 0 #efffff,
-              inset 2px 2px 0 #7b8494,
-              inset -2px -2px 0 #adb5c6 !important;
+  background: var(--wa-btn-face-pressed) !important;
+  box-shadow: var(--wa-bevel-down) !important;
 }
 
 /* Hide YouTube native SVG shapes inside left buttons */
 html.winamp-ytm-on ytmusic-player-bar .left-controls-buttons yt-icon svg,
 html.winamp-ytm-on ytmusic-player-bar #play-pause-button yt-icon svg,
 html.winamp-ytm-on ytmusic-player-bar .left-controls-buttons yt-icon .yt-icon-shape,
-html.winamp-ytm-on ytmusic-player-bar #play-pause-button yt-icon .yt-icon-shape {
+html.winamp-ytm-on ytmusic-player-bar #play-pause-button yt-icon .yt-icon-shape,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsMainControls .ytSpecButtonShapeNextIcon > * {
   display: none !important;
 }
 
 /* Pixel-art Winamp 2.x transport glyphs: 3-tone recessed metallic style */
 html.winamp-ytm-on ytmusic-player-bar .left-controls-buttons yt-icon,
 html.winamp-ytm-on ytmusic-player-bar #play-pause-button yt-icon,
-html.winamp-ytm-on ytmusic-player-bar .wa-stop-btn .wa-stop-icon {
+html.winamp-ytm-on ytmusic-player-bar .wa-stop-btn .wa-stop-icon,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsMainControls .ytSpecButtonShapeNextIcon,
+html.winamp-ytm-on ytmusic-miniplayer .wa-stop-btn .wa-stop-icon {
   width: 14px !important;
   height: 10px !important;
   display: inline-block !important;
@@ -1783,18 +1913,21 @@ html.winamp-ytm-on ytmusic-player-bar .wa-stop-btn .wa-stop-icon {
   image-rendering: pixelated !important;
 }
 /* 1. Previous: |◀ */
-html.winamp-ytm-on ytmusic-player-bar .previous-button yt-icon {
+html.winamp-ytm-on ytmusic-player-bar .previous-button yt-icon,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsPreviousButton .ytSpecButtonShapeNextIcon {
   background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2014%2010'%20shape-rendering='crispEdges'%3E%3Crect%20x='2'%20y='0'%20width='3'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='0'%20width='2'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='1'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='1'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='1'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='9'%20y='1'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='1'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='1'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='2'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='2'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='2'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='8'%20y='2'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='2'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='2'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='3'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='3'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='3'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='7'%20y='3'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='8'%20y='3'%20width='3'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='3'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='4'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='4'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='4'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='6'%20y='4'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='7'%20y='4'%20width='4'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='4'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='5'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='5'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='5'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='6'%20y='5'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='7'%20y='5'%20width='4'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='5'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='6'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='6'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='6'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='7'%20y='6'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='8'%20y='6'%20width='3'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='6'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='7'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='7'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='7'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='8'%20y='7'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='9'%20y='7'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='7'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='8'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='8'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='8'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='9'%20y='8'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='10'%20y='8'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='8'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='9'%20width='3'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='10'%20y='9'%20width='2'%20height='1'%20fill='%23efffff'/%3E%3C/svg%3E") !important;
 }
 /* 2. Rewind 10s: ◀◀ */
-html.winamp-ytm-on ytmusic-player-bar .rewind-button yt-icon {
+html.winamp-ytm-on ytmusic-player-bar .rewind-button yt-icon,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsSeekBackwardButton .ytSpecButtonShapeNextIcon {
   background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2014%2010%27%20shape-rendering%3D%27crispEdges%27%3E%3Crect%20x%3D%275%27%20y%3D%270%27%20width%3D%272%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%274%27%20y%3D%271%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%275%27%20y%3D%271%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%276%27%20y%3D%271%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%273%27%20y%3D%272%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%274%27%20y%3D%272%27%20width%3D%272%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%276%27%20y%3D%272%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%272%27%20y%3D%273%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%273%27%20y%3D%273%27%20width%3D%273%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%276%27%20y%3D%273%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%271%27%20y%3D%274%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%272%27%20y%3D%274%27%20width%3D%274%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%276%27%20y%3D%274%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%271%27%20y%3D%275%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%272%27%20y%3D%275%27%20width%3D%274%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%276%27%20y%3D%275%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%272%27%20y%3D%276%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%273%27%20y%3D%276%27%20width%3D%273%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%276%27%20y%3D%276%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%273%27%20y%3D%277%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%274%27%20y%3D%277%27%20width%3D%272%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%276%27%20y%3D%277%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%274%27%20y%3D%278%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%275%27%20y%3D%278%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%276%27%20y%3D%278%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%275%27%20y%3D%279%27%20width%3D%272%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%2711%27%20y%3D%270%27%20width%3D%272%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%2710%27%20y%3D%271%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%2711%27%20y%3D%271%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%2712%27%20y%3D%271%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%279%27%20y%3D%272%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%2710%27%20y%3D%272%27%20width%3D%272%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%2712%27%20y%3D%272%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%278%27%20y%3D%273%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%279%27%20y%3D%273%27%20width%3D%273%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%2712%27%20y%3D%273%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%277%27%20y%3D%274%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%278%27%20y%3D%274%27%20width%3D%274%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%2712%27%20y%3D%274%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%277%27%20y%3D%275%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%278%27%20y%3D%275%27%20width%3D%274%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%2712%27%20y%3D%275%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%278%27%20y%3D%276%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%279%27%20y%3D%276%27%20width%3D%273%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%2712%27%20y%3D%276%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%279%27%20y%3D%277%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%2710%27%20y%3D%277%27%20width%3D%272%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%2712%27%20y%3D%277%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%2710%27%20y%3D%278%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%2711%27%20y%3D%278%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%2712%27%20y%3D%278%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%2711%27%20y%3D%279%27%20width%3D%272%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3C/svg%3E") !important;
 }
 /* 3. Play / Pause */
 html.winamp-ytm-on ytmusic-player-bar #play-pause-button yt-icon,
 html.winamp-ytm-on ytmusic-player-bar[is-paused] #play-pause-button yt-icon,
 html.winamp-ytm-on ytmusic-player-bar #play-pause-button.is-paused yt-icon,
-html.winamp-ytm-on ytmusic-player-bar #play-pause-button[data-wa-playstate="paused"] yt-icon {
+html.winamp-ytm-on ytmusic-player-bar #play-pause-button[data-wa-playstate="paused"] yt-icon,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsPlayPauseButton .ytSpecButtonShapeNextIcon {
   background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2014%2010'%20shape-rendering='crispEdges'%3E%3Crect%20x='2'%20y='0'%20width='2'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='1'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='1'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='1'%20width='2'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='2'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='2'%20width='3'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='6'%20y='2'%20width='2'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='3'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='3'%20width='5'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='8'%20y='3'%20width='2'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='4'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='4'%20width='7'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='10'%20y='4'%20width='2'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='5'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='5'%20width='7'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='10'%20y='5'%20width='2'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='6'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='6'%20width='5'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='8'%20y='6'%20width='2'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='7'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='7'%20width='3'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='6'%20y='7'%20width='2'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='8'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='8'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='8'%20width='2'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='9'%20width='2'%20height='1'%20fill='%23efffff'/%3E%3C/svg%3E") !important;
 }
 html.winamp-ytm-on ytmusic-player-bar[is-playing] #play-pause-button yt-icon,
@@ -1802,24 +1935,29 @@ html.winamp-ytm-on ytmusic-player-bar #play-pause-button.is-playing yt-icon,
 html.winamp-ytm-on ytmusic-player-bar #play-pause-button[data-wa-playstate="playing"] yt-icon,
 html.winamp-ytm-on ytmusic-player-bar:has(.winamp-viz.is-playing) #play-pause-button yt-icon,
 html.winamp-ytm-on ytmusic-player-bar #play-pause-button[aria-label*="Pause"] yt-icon,
-html.winamp-ytm-on ytmusic-player-bar #play-pause-button[title*="Pause"] yt-icon {
+html.winamp-ytm-on ytmusic-player-bar #play-pause-button[title*="Pause"] yt-icon,
+html.winamp-ytm-on ytmusic-miniplayer[is-playing] .ytmusicPlayerControlsPlayPauseButton .ytSpecButtonShapeNextIcon {
   background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2014%2010'%20shape-rendering='crispEdges'%3E%3Crect%20x='1'%20y='0'%20width='4'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='8'%20y='0'%20width='4'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='1'%20y='1'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='1'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='1'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='8'%20y='1'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='1'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='1'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='1'%20y='2'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='2'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='2'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='8'%20y='2'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='2'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='2'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='1'%20y='3'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='3'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='3'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='8'%20y='3'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='3'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='3'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='1'%20y='4'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='4'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='4'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='8'%20y='4'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='4'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='4'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='1'%20y='5'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='5'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='5'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='8'%20y='5'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='5'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='5'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='1'%20y='6'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='6'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='6'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='8'%20y='6'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='6'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='6'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='1'%20y='7'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='7'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='7'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='8'%20y='7'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='7'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='7'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='1'%20y='8'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='8'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='8'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='8'%20y='8'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='8'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='8'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='1'%20y='9'%20width='4'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='8'%20y='9'%20width='4'%20height='1'%20fill='%23efffff'/%3E%3C/svg%3E") !important;
 }
 /* 4. Stop: ■ */
-html.winamp-ytm-on ytmusic-player-bar .wa-stop-btn .wa-stop-icon {
+html.winamp-ytm-on ytmusic-player-bar .wa-stop-btn .wa-stop-icon,
+html.winamp-ytm-on ytmusic-miniplayer .wa-stop-btn .wa-stop-icon {
   background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2014%2010'%20shape-rendering='crispEdges'%3E%3Crect%20x='2'%20y='0'%20width='10'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='1'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='1'%20width='8'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='1'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='2'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='2'%20width='8'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='2'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='3'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='3'%20width='8'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='3'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='4'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='4'%20width='8'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='4'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='5'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='5'%20width='8'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='5'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='6'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='6'%20width='8'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='6'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='7'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='7'%20width='8'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='7'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='8'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='8'%20width='8'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='8'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='9'%20width='10'%20height='1'%20fill='%23efffff'/%3E%3C/svg%3E") !important;
 }
 /* 5. Fast forward 30s: ▶▶ */
-html.winamp-ytm-on ytmusic-player-bar .fast-forward-button yt-icon {
+html.winamp-ytm-on ytmusic-player-bar .fast-forward-button yt-icon,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsSeekForwardButton .ytSpecButtonShapeNextIcon {
   background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2014%2010%27%20shape-rendering%3D%27crispEdges%27%3E%3Crect%20x%3D%271%27%20y%3D%270%27%20width%3D%272%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%271%27%20y%3D%271%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%272%27%20y%3D%271%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%273%27%20y%3D%271%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%271%27%20y%3D%272%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%272%27%20y%3D%272%27%20width%3D%272%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%274%27%20y%3D%272%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%271%27%20y%3D%273%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%272%27%20y%3D%273%27%20width%3D%273%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%275%27%20y%3D%273%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%271%27%20y%3D%274%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%272%27%20y%3D%274%27%20width%3D%274%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%276%27%20y%3D%274%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%271%27%20y%3D%275%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%272%27%20y%3D%275%27%20width%3D%274%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%276%27%20y%3D%275%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%271%27%20y%3D%276%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%272%27%20y%3D%276%27%20width%3D%273%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%275%27%20y%3D%276%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%271%27%20y%3D%277%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%272%27%20y%3D%277%27%20width%3D%272%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%274%27%20y%3D%277%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%271%27%20y%3D%278%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%272%27%20y%3D%278%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%273%27%20y%3D%278%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%271%27%20y%3D%279%27%20width%3D%272%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%277%27%20y%3D%270%27%20width%3D%272%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%277%27%20y%3D%271%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%278%27%20y%3D%271%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%279%27%20y%3D%271%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%277%27%20y%3D%272%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%278%27%20y%3D%272%27%20width%3D%272%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%2710%27%20y%3D%272%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%277%27%20y%3D%273%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%278%27%20y%3D%273%27%20width%3D%273%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%2711%27%20y%3D%273%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%277%27%20y%3D%274%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%278%27%20y%3D%274%27%20width%3D%274%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%2712%27%20y%3D%274%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%277%27%20y%3D%275%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%278%27%20y%3D%275%27%20width%3D%274%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%2712%27%20y%3D%275%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%277%27%20y%3D%276%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%278%27%20y%3D%276%27%20width%3D%273%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%2711%27%20y%3D%276%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%277%27%20y%3D%277%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%278%27%20y%3D%277%27%20width%3D%272%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%2710%27%20y%3D%277%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%277%27%20y%3D%278%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%234a5a6b%27/%3E%3Crect%20x%3D%278%27%20y%3D%278%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%2397a8b9%27/%3E%3Crect%20x%3D%279%27%20y%3D%278%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3Crect%20x%3D%277%27%20y%3D%279%27%20width%3D%272%27%20height%3D%271%27%20fill%3D%27%23efffff%27/%3E%3C/svg%3E") !important;
 }
 /* 6. Next: ▶| */
-html.winamp-ytm-on ytmusic-player-bar .next-button yt-icon {
+html.winamp-ytm-on ytmusic-player-bar .next-button yt-icon,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsNextButton .ytSpecButtonShapeNextIcon {
   background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2014%2010'%20shape-rendering='crispEdges'%3E%3Crect%20x='2'%20y='0'%20width='2'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='0'%20width='3'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='1'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='1'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='1'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='1'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='1'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='1'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='2'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='2'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='5'%20y='2'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='2'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='2'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='2'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='3'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='3'%20width='3'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='6'%20y='3'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='3'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='3'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='3'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='4'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='4'%20width='4'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='7'%20y='4'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='9'%20y='4'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='4'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='4'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='5'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='5'%20width='4'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='7'%20y='5'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='9'%20y='5'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='5'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='5'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='6'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='6'%20width='3'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='6'%20y='6'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='9'%20y='6'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='6'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='6'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='7'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='7'%20width='2'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='5'%20y='7'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='9'%20y='7'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='7'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='7'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='8'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='3'%20y='8'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='4'%20y='8'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='9'%20y='8'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='10'%20y='8'%20width='1'%20height='1'%20fill='%2397a8b9'/%3E%3Crect%20x='11'%20y='8'%20width='1'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='2'%20y='9'%20width='2'%20height='1'%20fill='%23efffff'/%3E%3Crect%20x='9'%20y='9'%20width='3'%20height='1'%20fill='%23efffff'/%3E%3C/svg%3E") !important;
 }
 
 /* Song thumbnail in player bar: inset beveled frame, centered with clearance below seek bar */
-html.winamp-ytm-on ytmusic-player-bar .thumbnail-image-wrapper {
+html.winamp-ytm-on ytmusic-player-bar .thumbnail-image-wrapper,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicTrackInfoThumbnailWrapper {
   height: 34px !important;
   width: 34px !important;
   min-width: 34px !important;
@@ -1835,7 +1973,8 @@ html.winamp-ytm-on ytmusic-player-bar .thumbnail-image-wrapper {
   align-items: center !important;
   justify-content: center !important;
 }
-html.winamp-ytm-on ytmusic-player-bar .thumbnail-image-wrapper img.image {
+html.winamp-ytm-on ytmusic-player-bar .thumbnail-image-wrapper img.image,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicTrackInfoThumbnail {
   height: 100% !important;
   width: 100% !important;
   object-fit: cover !important;
@@ -1847,28 +1986,33 @@ html.winamp-ytm-on ytmusic-player-bar .middle-controls .content-info-wrapper {
 }
 
 /* Song Title Marquee: Pure black recessed strip with green LED text */
-html.winamp-ytm-on ytmusic-player-bar .content-info-wrapper {
+html.winamp-ytm-on ytmusic-player-bar .content-info-wrapper,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicTrackInfoContentInfoWrapper {
   background: var(--wa-screen-bg) !important;
   border: 1px solid var(--wa-btn-outline) !important;
   box-shadow: inset 1px 1px 0 #000, inset -1px -1px 0 var(--wa-chassis-bevel-lt) !important;
   padding: 2px 8px !important;
   max-height: 34px !important;
 }
-html.winamp-ytm-on ytmusic-player-bar .content-info-wrapper .title {
+html.winamp-ytm-on ytmusic-player-bar .content-info-wrapper .title,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicTrackInfoTitle {
   color: var(--wa-led-green) !important;
   font-family: "Lucida Console", "Consolas", monospace !important;
   font-size: 11px !important;
   font-weight: 700 !important;
   letter-spacing: 0.5px !important;
 }
-html.winamp-ytm-on ytmusic-player-bar .content-info-wrapper {
+html.winamp-ytm-on ytmusic-player-bar .content-info-wrapper,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicTrackInfoContentInfoWrapper {
   min-width: 0 !important;
   max-width: 252px !important;
   box-sizing: border-box !important;
   overflow: hidden !important;
 }
 html.winamp-ytm-on ytmusic-player-bar .content-info-wrapper .title,
-html.winamp-ytm-on ytmusic-player-bar .content-info-wrapper .subtitle {
+html.winamp-ytm-on ytmusic-player-bar .content-info-wrapper .subtitle,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicTrackInfoTitle,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicTrackInfoByline {
   display: block !important;
   width: 100% !important;
   max-width: 100% !important;
@@ -1879,14 +2023,17 @@ html.winamp-ytm-on ytmusic-player-bar .content-info-wrapper .subtitle {
 }
 
 html.winamp-ytm-on ytmusic-player-bar .content-info-wrapper .subtitle,
-html.winamp-ytm-on ytmusic-player-bar .content-info-wrapper .subtitle a {
+html.winamp-ytm-on ytmusic-player-bar .content-info-wrapper .subtitle a,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicTrackInfoByline,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicTrackInfoByline a {
   color: #00aa00 !important;
   font-family: "Lucida Console", "Consolas", monospace !important;
   font-size: 10px !important;
 }
 
 /* Time readout: Pure black inset LCD box with large green digits */
-html.winamp-ytm-on ytmusic-player-bar .time-info {
+html.winamp-ytm-on ytmusic-player-bar .time-info,
+html.winamp-ytm-on ytmusic-miniplayer .ytMusicMiniPlayerTimeInfo {
   color: var(--wa-led-green) !important;
   font-family: "Lucida Console", "Consolas", monospace !important;
   font-size: 11px !important;
@@ -1895,6 +2042,235 @@ html.winamp-ytm-on ytmusic-player-bar .time-info {
   border: 1px solid var(--wa-btn-outline) !important;
   box-shadow: inset 1px 1px 0 #000, inset -1px -1px 0 var(--wa-chassis-bevel-lt) !important;
   padding: 2px 6px !important;
+}
+
+/* ---- 7b. Wiz miniplayer as the Winamp main window -------------------------
+   Behind YTM's "wiz miniplayer" experiment the bottom bar is <ytmusic-miniplayer>
+   instead of <ytmusic-player-bar>. Transport glyphs, toggles, the title LCD and
+   the time readout share the classic rules above; this lays the bar out as
+   LCD | title + stats ... transport + toggles ... time, rating, volume, emblem. */
+html.winamp-ytm-on ytmusic-miniplayer {
+  display: flex !important;
+  align-items: center !important;
+  gap: 1px !important;
+  height: 55px !important;
+  padding: 11px 8px 0 !important;
+  box-sizing: border-box !important;
+  background: var(--wa-chassis) !important;
+  background-image: var(--wa-grain), var(--wa-chassis-topbar) !important;
+  border-top: 1px solid var(--wa-btn-outline) !important;
+  box-shadow: inset 0 1px 0 var(--wa-chassis-bevel-lt) !important;
+  z-index: 1000 !important;
+  overflow: visible !important;
+}
+
+/* Seek bar: black LCD groove along the top of the bar. YTM paints played /
+   buffered progress as an inline gradient from its color tokens, so remap those
+   to LED green instead of overriding the gradient; the olive thumb is ridged */
+html.winamp-ytm-on ytmusic-miniplayer .ytMusicMiniPlayerProgressBarWrapper {
+  position: absolute !important;
+  transform: none !important;
+  top: 1px !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 10px !important;
+  margin: 0 !important;
+}
+html.winamp-ytm-on ytmusic-miniplayer input.ytMusicMiniPlayerProgressBar {
+  --yt-sys-color-baseline--static-brand-red: var(--wa-led-green) !important;
+  --yt-sys-color-baseline--static-magenta: var(--wa-led-green) !important;
+  --yt-sys-color-baseline--mono-tonal-hover: color-mix(in srgb, var(--wa-led-green) 18%, var(--wa-screen-bg)) !important;
+  --yt-sys-color-baseline--ten-percent-layer: transparent !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  display: block !important;
+  width: 100% !important;
+  height: 8px !important;
+  margin: 1px 0 !important;
+  background-color: var(--wa-screen-bg) !important;
+  border: 1px solid var(--wa-btn-outline) !important;
+  box-shadow: inset 1px 1px 0 #000, inset -1px -1px 0 var(--wa-chassis-bevel-lt) !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+  cursor: default !important;
+}
+html.winamp-ytm-on ytmusic-miniplayer input.ytMusicMiniPlayerProgressBar::-webkit-slider-runnable-track {
+  height: 6px !important;
+  background: transparent !important;
+}
+html.winamp-ytm-on ytmusic-miniplayer input.ytMusicMiniPlayerProgressBar::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  width: 29px !important;
+  height: 10px !important;
+  margin-top: -2px !important;
+  background: repeating-linear-gradient(to bottom, #7a7450 0 1px, #ffffff 1px 2px) center / 17px 6px no-repeat,
+    var(--wa-seek-thumb) !important;
+  border: 1px solid var(--wa-btn-outline) !important;
+  box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #7a7450 !important;
+  border-radius: 0 !important;
+  box-sizing: border-box !important;
+  /* YTM only fades the thumb in on hover; Winamp always shows it */
+  opacity: 1 !important;
+  transition: none !important;
+}
+
+/* Layout, as on the classic bar: transport, LCD, stats and time on the left;
+   art + title + rating centered; volume, toggles and emblem on the right.
+   YTM nests these in three grid boxes, so flatten them (display: contents)
+   and place every piece on the bar's own flex row with `order` */
+html.winamp-ytm-on ytmusic-miniplayer .ytMusicMiniPlayerLeftSection,
+html.winamp-ytm-on ytmusic-miniplayer .ytMusicMiniPlayerMiddleSection,
+html.winamp-ytm-on ytmusic-miniplayer .ytMusicMiniPlayerRightSection,
+html.winamp-ytm-on ytmusic-miniplayer ytmusic-wiz-player-controls,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsMainControls {
+  display: contents !important;
+}
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsControlButton {
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+/* left: |< << > [] >> >|, then the LCD, kbps/kHz and the time readout */
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsPreviousButton { order: 1 !important; }
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsSeekBackwardButton { order: 2 !important; }
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsPlayPauseButton { order: 3 !important; }
+html.winamp-ytm-on ytmusic-miniplayer .wa-stop-btn { order: 4 !important; }
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsSeekForwardButton { order: 5 !important; }
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsNextButton { order: 6 !important; }
+html.winamp-ytm-on ytmusic-miniplayer .winamp-viz { order: 10 !important; margin: 0 0 0 8px !important; }
+html.winamp-ytm-on ytmusic-miniplayer .wa-audio-stats { order: 11 !important; margin: 0 0 0 6px !important; }
+html.winamp-ytm-on ytmusic-miniplayer .ytMusicMiniPlayerTimeInfo { order: 12 !important; margin: 0 0 0 6px !important; }
+/* center (auto margins on both ends): art + title, rating, overflow menu */
+html.winamp-ytm-on ytmusic-miniplayer ytmusic-track-info { order: 20 !important; margin: 0 0 0 auto !important; }
+html.winamp-ytm-on ytmusic-miniplayer yt-video-action-bar-view-model { order: 21 !important; margin: 0 0 0 6px !important; }
+html.winamp-ytm-on ytmusic-miniplayer .ytMusicMiniPlayerMenuButton { order: 22 !important; margin: 0 auto 0 1px !important; }
+/* right: volume, repeat, SHUFFLE, emblem */
+html.winamp-ytm-on ytmusic-miniplayer .ytMusicMiniPlayerVolumeWrapper { order: 30 !important; margin: 0 !important; }
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsRepeatButton { order: 31 !important; margin: 0 0 0 6px !important; }
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsShuffleButton { order: 32 !important; margin: 0 0 0 1px !important; }
+html.winamp-ytm-on ytmusic-miniplayer .wa-diamond-badge { order: 33 !important; margin: 0 0 0 8px !important; }
+
+/* Fixed width: a long (marquee) title must not stretch the left cluster and
+   push the transport off to the right */
+html.winamp-ytm-on ytmusic-miniplayer ytmusic-track-info {
+  display: flex !important;
+  align-items: center !important;
+  flex: 0 1 300px !important;
+  width: 300px !important;
+  min-width: 0 !important;
+  gap: 6px !important;
+}
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicTrackInfoThumbnailWrapper {
+  margin: 0 !important;
+}
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicTrackInfoContentInfoWrapper {
+  flex: 1 1 auto !important;
+  max-width: none !important;
+}
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicTrackInfoTitle,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicTrackInfoByline {
+  height: auto !important;
+  line-height: 15px !important;
+}
+
+/* Toggles: same 18px height as the volume button next to them */
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsShuffleButton button,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsRepeatButton button {
+  position: relative !important;
+  height: 18px !important;
+  min-height: 18px !important;
+}
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsShuffleButton button::before,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsRepeatButton button::before {
+  top: 7px !important;
+}
+/* Toggles draw their own LED + sprite, so drop YTM's icon box */
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsShuffleButton .ytSpecButtonShapeNextIcon,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsRepeatButton .ytSpecButtonShapeNextIcon,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsMainControls yt-touch-feedback-shape {
+  display: none !important;
+}
+
+/* Right side: rating, volume and overflow as small chassis buttons */
+html.winamp-ytm-on ytmusic-miniplayer .ytMusicMiniPlayerRightSection button {
+  width: 23px !important;
+  min-width: 23px !important;
+  height: 18px !important;
+  min-height: 18px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  background: var(--wa-btn-face) !important;
+  border: 0 !important;
+  box-shadow: var(--wa-bevel-up) !important;
+  color: var(--wa-btn-glyph) !important;
+  font-family: "Lucida Console", "Consolas", monospace !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+}
+/* Like carries its count ("30K"), so it sizes to fit; the pair sits 1px apart
+   like the transport row */
+html.winamp-ytm-on ytmusic-miniplayer .ytMusicMiniPlayerRightSection like-button-view-model button {
+  width: auto !important;
+  padding: 0 5px !important;
+  gap: 3px !important;
+}
+html.winamp-ytm-on ytmusic-miniplayer like-button-view-model button .ytSpecButtonShapeNextIcon {
+  margin: 0 !important;
+  flex: none !important;
+}
+html.winamp-ytm-on ytmusic-miniplayer like-button-view-model button .ytSpecButtonShapeNextButtonTextContent {
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 18px !important;
+  line-height: 18px !important;
+  flex: none !important;
+}
+html.winamp-ytm-on ytmusic-miniplayer .ytSegmentedLikeDislikeButtonViewModelSegmentedButtonsWrapper {
+  display: flex !important;
+  gap: 1px !important;
+}
+html.winamp-ytm-on ytmusic-miniplayer .ytMusicMiniPlayerRightSection button:active,
+html.winamp-ytm-on ytmusic-miniplayer .ytMusicMiniPlayerRightSection button[aria-pressed="true"] {
+  background: var(--wa-btn-face-pressed) !important;
+  box-shadow: var(--wa-bevel-down) !important;
+}
+html.winamp-ytm-on ytmusic-miniplayer .ytMusicMiniPlayerRightSection button .ytSpecButtonShapeNextIcon > * {
+  display: none !important;
+}
+html.winamp-ytm-on ytmusic-miniplayer .ytMusicMiniPlayerRightSection button .ytSpecButtonShapeNextIcon,
+html.winamp-ytm-on ytmusic-miniplayer .ytMusicMiniPlayerRightSection button yt-icon {
+  color: var(--wa-btn-glyph) !important;
+  fill: var(--wa-btn-glyph) !important;
+}
+html.winamp-ytm-on ytmusic-miniplayer .ytMusicMiniPlayerVolumePopup {
+  background: var(--wa-chassis) !important;
+  border: 1px solid var(--wa-btn-outline) !important;
+  box-shadow: inset 1px 1px 0 var(--wa-chassis-bevel-lt), inset -1px -1px 0 var(--wa-chassis-dark) !important;
+}
+
+/* LCD action hint, painted over the title so YTM's own nodes stay untouched */
+html.winamp-ytm-on ytmusic-player-bar .content-info-wrapper .title[data-wa-hint],
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicTrackInfoTitle[data-wa-hint] {
+  position: relative !important;
+  color: transparent !important;
+}
+html.winamp-ytm-on ytmusic-player-bar .content-info-wrapper .title[data-wa-hint] *,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicTrackInfoTitle[data-wa-hint] * {
+  visibility: hidden !important;
+}
+html.winamp-ytm-on ytmusic-player-bar .content-info-wrapper .title[data-wa-hint]::after,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicTrackInfoTitle[data-wa-hint]::after {
+  content: attr(data-wa-hint) !important;
+  position: absolute !important;
+  inset: 0 !important;
+  color: var(--wa-led-green) !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
 }
 
 /* ============================================================================
@@ -2519,9 +2895,9 @@ html.winamp-ytm-on ytmusic-player-bar #right-controls tp-yt-paper-icon-button {
   position: relative !important;
   height: 18px !important;
   min-height: 18px !important;
-  background: #bdced6 !important;
-  border: 1px solid #202034 !important;
-  box-shadow: inset 1px 1px 0 #efffff, inset -1px -1px 0 #4a5a6b, inset 2px 2px 0 #adb5c6, inset -2px -2px 0 #7b8494 !important;
+  background: var(--wa-btn-face) !important;
+  border: 0 !important;
+  box-shadow: var(--wa-bevel-up) !important;
   margin: 0 1px !important;
   padding: 0 !important;
   display: inline-flex !important;
@@ -2554,9 +2930,11 @@ html.winamp-ytm-on ytmusic-player-bar #right-controls button#button {
 html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn].is-on,
 html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn]:active,
 html.winamp-ytm-on ytmusic-player-bar[data-wa-shuffle="on"] #right-controls [data-wa-btn="shuf"],
-html.winamp-ytm-on ytmusic-player-bar[data-wa-repeat="on"] #right-controls [data-wa-btn="rep"] {
-  background: #a4b2be !important;
-  box-shadow: inset 1px 1px 0 #4a5a6b, inset -1px -1px 0 #efffff, inset 2px 2px 0 #7b8494, inset -2px -2px 0 #adb5c6 !important;
+html.winamp-ytm-on ytmusic-player-bar[data-wa-repeat="on"] #right-controls [data-wa-btn="rep"],
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsShuffleButton button[aria-pressed="true"],
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsRepeatButton button[aria-pressed="true"] {
+  background: var(--wa-btn-face-pressed) !important;
+  box-shadow: var(--wa-bevel-down) !important;
 }
 
 /* Hide native SVGs in right controls buttons */
@@ -2569,18 +2947,18 @@ html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn] yt-interacti
 
 /* 3D recessed LED indicator for REP and SHUF */
 html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="rep"]::before,
-html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"]::before {
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"]::before,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsShuffleButton button::before,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsRepeatButton button::before {
   content: "" !important;
   position: absolute !important;
   top: 5px !important;
   left: 4px !important;
-  width: 6px !important;
-  height: 5px !important;
+  width: 5px !important;
+  height: 4px !important;
   background: #105a00 !important;
-  border-top: 1px solid #4a5a6b !important;
-  border-left: 1px solid #4a5a6b !important;
-  border-right: 1px solid #d5def2 !important;
-  border-bottom: 1px solid #d5def2 !important;
+  border: 0 !important;
+  box-shadow: inset 1px 1px 0 #4a5a6b, inset -1px -1px 0 #d5def2 !important;
   box-sizing: border-box !important;
   z-index: 2 !important;
   pointer-events: none !important;
@@ -2589,9 +2967,10 @@ html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"]::befo
 html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="rep"].is-on::before,
 html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"].is-on::before,
 html.winamp-ytm-on ytmusic-player-bar[data-wa-shuffle="on"] #right-controls [data-wa-btn="shuf"]::before,
-html.winamp-ytm-on ytmusic-player-bar[data-wa-repeat="on"] #right-controls [data-wa-btn="rep"]::before {
-  background: #00ff00 !important;
-  box-shadow: 0 0 3px #00ff00 !important;
+html.winamp-ytm-on ytmusic-player-bar[data-wa-repeat="on"] #right-controls [data-wa-btn="rep"]::before,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsShuffleButton button[aria-pressed="true"]::before,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsRepeatButton button[aria-pressed="true"]::before {
+  background: #00d600 !important;
 }
 
 /* 1. VOLUME / MUTE BUTTON (Centered pixel horn) */
@@ -2619,32 +2998,36 @@ html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="vol"]::after
 }
 
 /* 2. REPEAT BUTTON with authentic Winamp loop arrow */
-html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="rep"] {
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="rep"],
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsRepeatButton button {
   width: 28px !important;
   min-width: 28px !important;
 }
-html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="rep"]::after {
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="rep"]::after,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsRepeatButton button::after {
   content: "" !important;
   position: absolute !important;
   top: 50% !important;
-  left: 12px !important;
+  left: 11px !important;
   transform: translateY(-50%) !important;
-  width: 11px !important;
-  height: 8px !important;
-  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2013%208'%20shape-rendering='crispEdges'%3E%3Crect%20x='1'%20y='1'%20width='1'%20height='1'%20fill='%234a5a6b'/%3E%3Crect%20x='2'%20y='1'%20width='6'%20height='1'%20fill='%232f374d'/%3E%3Crect%20x='0'%20y='2'%20width='1'%20height='1'%20fill='%238494a5'/%3E%3Crect%20x='8'%20y='2'%20width='1'%20height='1'%20fill='%232f374d'/%3E%3Crect%20x='0'%20y='3'%20width='3'%20height='1'%20fill='%232f374d'/%3E%3Crect%20x='8'%20y='3'%20width='1'%20height='1'%20fill='%232f374d'/%3E%3Crect%20x='0'%20y='4'%20width='2'%20height='1'%20fill='%232f374d'/%3E%3Crect%20x='8'%20y='4'%20width='1'%20height='1'%20fill='%232f374d'/%3E%3Crect%20x='0'%20y='5'%20width='1'%20height='1'%20fill='%232f374d'/%3E%3Crect%20x='2'%20y='5'%20width='6'%20height='1'%20fill='%232f374d'/%3E%3C/svg%3E") !important;
+  width: 9px !important;
+  height: 5px !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 5' shape-rendering='crispEdges'%3E%3Crect x='0' y='0' width='1' height='1' fill='%23adb5c6'/%3E%3Crect x='1' y='0' width='1' height='1' fill='%234a5a6b'/%3E%3Crect x='2' y='0' width='6' height='1' fill='%232f374d'/%3E%3Crect x='0' y='1' width='1' height='1' fill='%238494a5'/%3E%3Crect x='8' y='1' width='1' height='1' fill='%232f374d'/%3E%3Crect x='0' y='2' width='3' height='1' fill='%232f374d'/%3E%3Crect x='8' y='2' width='1' height='1' fill='%232f374d'/%3E%3Crect x='0' y='3' width='2' height='1' fill='%232f374d'/%3E%3Crect x='8' y='3' width='1' height='1' fill='%232f374d'/%3E%3Crect x='0' y='4' width='1' height='1' fill='%232f374d'/%3E%3Crect x='2' y='4' width='6' height='1' fill='%232f374d'/%3E%3C/svg%3E") !important;
   background-repeat: no-repeat !important;
-  background-size: 11px 8px !important;
+  background-size: 9px 5px !important;
   image-rendering: pixelated !important;
   pointer-events: none !important;
   z-index: 1 !important;
 }
 
 /* 3. SHUFFLE BUTTON (Authentic Winamp 3x5 Bitmap Font Sprite) */
-html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"] {
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"],
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsShuffleButton button {
   width: 47px !important;
   min-width: 47px !important;
 }
-html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"]::after {
+html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"]::after,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsShuffleButton button::after {
   content: "" !important;
   position: absolute !important;
   top: 50% !important;
@@ -2661,7 +3044,9 @@ html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"]::afte
 }
 html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"]:active::after,
 html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="shuf"].is-on::after,
-html.winamp-ytm-on ytmusic-player-bar[data-wa-shuffle="on"] #right-controls [data-wa-btn="shuf"]::after {
+html.winamp-ytm-on ytmusic-player-bar[data-wa-shuffle="on"] #right-controls [data-wa-btn="shuf"]::after,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsShuffleButton button:active::after,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsShuffleButton button[aria-pressed="true"]::after {
   transform: translate(1px, calc(-50% + 1px)) !important;
 }
 
@@ -2778,10 +3163,10 @@ html.winamp-ytm-on ytmusic-player-bar #right-controls #expand-repeat,
 html.winamp-ytm-on ytmusic-player-bar #right-controls #expand-shuffle,
 html.winamp-ytm-on ytmusic-player-bar #right-controls .expand-button,
 html.winamp-ytm-on ytmusic-player-bar #right-controls #expanding-menu,
-html.winamp-ytm-on ytmusic-miniplayer,
-html.winamp-ytm-on .ytMusicMiniPlayerLeftSection,
-html.winamp-ytm-on .ytmusicTrackInfoThumbnailWrapper,
-html.winamp-ytm-on .ytmusicTrackInfoThumbnail {
+html.winamp-ytm-on ytmusic-app-layout:not([is-wiz-miniplayer-enabled]) ytmusic-miniplayer,
+html.winamp-ytm-on ytmusic-app-layout:not([is-wiz-miniplayer-enabled]) .ytMusicMiniPlayerLeftSection,
+html.winamp-ytm-on ytmusic-app-layout:not([is-wiz-miniplayer-enabled]) .ytmusicTrackInfoThumbnailWrapper,
+html.winamp-ytm-on ytmusic-app-layout:not([is-wiz-miniplayer-enabled]) .ytmusicTrackInfoThumbnail {
   display: none !important;
 }
 
@@ -2793,8 +3178,8 @@ html.winamp-ytm-on ytmusic-card-shelf-renderer ytmusic-menu-renderer {
   min-width: 22px !important;
   min-height: 22px !important;
   background: var(--wa-btn-face) !important;
-  border: 1px solid var(--wa-btn-outline) !important;
-  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight), inset -1px -1px 0 var(--wa-btn-shadow) !important;
+  border: 0 !important;
+  box-shadow: var(--wa-bevel-up) !important;
   padding: 0 !important;
   display: inline-flex !important;
   align-items: center !important;
@@ -2848,23 +3233,6 @@ html.winamp-ytm-on ytmusic-player-page #side-panel ytmusic-tab-renderer {
   max-height: 100% !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
-  scrollbar-width: thin !important;
-  scrollbar-color: #5a5a66 #1a1a1a !important;
-}
-
-html.winamp-ytm-on ytmusic-player-page #tab-renderer::-webkit-scrollbar,
-html.winamp-ytm-on ytmusic-player-page #queue::-webkit-scrollbar,
-html.winamp-ytm-on ytmusic-player-page ytmusic-player-queue::-webkit-scrollbar {
-  width: 10px !important;
-  background: #000000 !important;
-}
-
-html.winamp-ytm-on ytmusic-player-page #tab-renderer::-webkit-scrollbar-thumb,
-html.winamp-ytm-on ytmusic-player-page #queue::-webkit-scrollbar-thumb,
-html.winamp-ytm-on ytmusic-player-page ytmusic-player-queue::-webkit-scrollbar-thumb {
-  background: var(--wa-btn-face, #b4b8c4) !important;
-  border: 1px solid var(--wa-btn-outline, #1a1a1a) !important;
-  box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #5a5a66 !important;
 }
 
 /* Player host container centered */
@@ -3050,8 +3418,8 @@ html.winamp-ytm-on ytmusic-av-toggle yt-touch-feedback-shape {
 /* Now Playing Tab Strip (UP NEXT / LYRICS / COMMENTS / RELATED) */
 html.winamp-ytm-on ytmusic-player-page tp-yt-paper-tab {
   background: var(--wa-btn-face) !important;
-  border: 1px solid var(--wa-btn-outline) !important;
-  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight), inset -1px -1px 0 var(--wa-btn-shadow) !important;
+  border: 0 !important;
+  box-shadow: var(--wa-bevel-up) !important;
   height: 24px !important;
   min-height: 24px !important;
   padding: 0 8px !important;
@@ -3063,7 +3431,7 @@ html.winamp-ytm-on ytmusic-player-page tp-yt-paper-tab {
 }
 html.winamp-ytm-on ytmusic-player-page tp-yt-paper-tab.iron-selected {
   background: var(--wa-btn-face-pressed) !important;
-  box-shadow: inset 1px 1px 0 var(--wa-btn-shadow), inset -1px -1px 0 var(--wa-btn-highlight) !important;
+  box-shadow: var(--wa-bevel-down) !important;
   color: #008800 !important;
 }
 html.winamp-ytm-on ytmusic-player-page tp-yt-paper-tabs #selectionBar {
@@ -3189,6 +3557,14 @@ html.winamp-ytm-on tp-yt-paper-dialog {
   padding: 6px !important;
   box-sizing: border-box !important;
 }
+/* The promo is absolutely positioned out of its dialog, which would otherwise
+   be left behind as an empty 14x14 bordered box */
+html.winamp-ytm-on tp-yt-paper-dialog:has(> ytmusic-mealbar-promo-renderer, > yt-mealbar-promo-renderer) {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
 /* Hide modern red YouTube play icon */
 html.winamp-ytm-on ytmusic-mealbar-promo-renderer yt-icon,
 html.winamp-ytm-on ytmusic-mealbar-promo-renderer .ytSpecIconShapeHost,
@@ -3230,8 +3606,8 @@ html.winamp-ytm-on ytmusic-mealbar-promo-renderer yt-button-renderer button {
   height: 24px !important;
   padding: 0 12px !important;
   background: var(--wa-btn-face) !important;
-  border: 1px solid var(--wa-btn-outline) !important;
-  box-shadow: inset 1px 1px 0 var(--wa-btn-highlight), inset -1px -1px 0 var(--wa-btn-shadow) !important;
+  border: 0 !important;
+  box-shadow: var(--wa-bevel-up) !important;
   color: var(--wa-btn-glyph) !important;
   font-size: 10px !important;
   font-weight: 700 !important;
@@ -3471,11 +3847,11 @@ html.winamp-ytm-on #sections > ytmusic-guide-section-renderer:first-child ytmusi
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect x='11' y='2' width='2' height='4' fill='%23000'/%3E%3Crect x='7' y='2' width='2' height='1' fill='%23000'/%3E%3Crect x='6' y='3' width='4' height='1' fill='%23000'/%3E%3Crect x='5' y='4' width='6' height='1' fill='%23000'/%3E%3Crect x='4' y='5' width='8' height='1' fill='%23000'/%3E%3Crect x='3' y='6' width='10' height='1' fill='%23000'/%3E%3Crect x='2' y='7' width='12' height='1' fill='%23000'/%3E%3Crect x='1' y='8' width='14' height='1' fill='%23000'/%3E%3Crect x='3' y='9' width='3' height='5' fill='%23000'/%3E%3Crect x='10' y='9' width='3' height='5' fill='%23000'/%3E%3Crect x='3' y='13' width='10' height='1' fill='%23000'/%3E%3Crect x='6' y='9' width='4' height='1' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 16px 16px !important;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect x='11' y='2' width='2' height='4' fill='%23000'/%3E%3Crect x='7' y='2' width='2' height='1' fill='%23000'/%3E%3Crect x='6' y='3' width='4' height='1' fill='%23000'/%3E%3Crect x='5' y='4' width='6' height='1' fill='%23000'/%3E%3Crect x='4' y='5' width='8' height='1' fill='%23000'/%3E%3Crect x='3' y='6' width='10' height='1' fill='%23000'/%3E%3Crect x='2' y='7' width='12' height='1' fill='%23000'/%3E%3Crect x='1' y='8' width='14' height='1' fill='%23000'/%3E%3Crect x='3' y='9' width='3' height='5' fill='%23000'/%3E%3Crect x='10' y='9' width='3' height='5' fill='%23000'/%3E%3Crect x='3' y='13' width='10' height='1' fill='%23000'/%3E%3Crect x='6' y='9' width='4' height='1' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 16px 16px !important;
 }
-/* Explore: Crisp 16x16 octagonal compass with bold diagonal needle */
+/* Explore: Crisp 16x16 compass with a filled-north / hollow-south needle */
 html.winamp-ytm-on ytmusic-guide-entry-renderer[data-wa-icon="explore"] .guide-icon,
 html.winamp-ytm-on #sections > ytmusic-guide-section-renderer:first-child ytmusic-guide-entry-renderer:nth-child(2) .guide-icon {
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect x='5' y='1' width='6' height='2' fill='%23000'/%3E%3Crect x='5' y='13' width='6' height='2' fill='%23000'/%3E%3Crect x='1' y='5' width='2' height='6' fill='%23000'/%3E%3Crect x='13' y='5' width='2' height='6' fill='%23000'/%3E%3Crect x='3' y='2' width='2' height='2' fill='%23000'/%3E%3Crect x='11' y='2' width='2' height='2' fill='%23000'/%3E%3Crect x='2' y='3' width='2' height='2' fill='%23000'/%3E%3Crect x='12' y='3' width='2' height='2' fill='%23000'/%3E%3Crect x='2' y='11' width='2' height='2' fill='%23000'/%3E%3Crect x='12' y='11' width='2' height='2' fill='%23000'/%3E%3Crect x='3' y='12' width='2' height='2' fill='%23000'/%3E%3Crect x='11' y='12' width='2' height='2' fill='%23000'/%3E%3Crect x='9' y='4' width='2' height='2' fill='%23000'/%3E%3Crect x='7' y='6' width='3' height='3' fill='%23000'/%3E%3Crect x='5' y='9' width='2' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 16px 16px !important;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect x='5' y='1' width='6' height='2' fill='%23000'/%3E%3Crect x='5' y='13' width='6' height='2' fill='%23000'/%3E%3Crect x='1' y='5' width='2' height='6' fill='%23000'/%3E%3Crect x='13' y='5' width='2' height='6' fill='%23000'/%3E%3Crect x='3' y='2' width='2' height='2' fill='%23000'/%3E%3Crect x='11' y='2' width='2' height='2' fill='%23000'/%3E%3Crect x='2' y='3' width='2' height='2' fill='%23000'/%3E%3Crect x='12' y='3' width='2' height='2' fill='%23000'/%3E%3Crect x='2' y='11' width='2' height='2' fill='%23000'/%3E%3Crect x='12' y='11' width='2' height='2' fill='%23000'/%3E%3Crect x='3' y='12' width='2' height='2' fill='%23000'/%3E%3Crect x='11' y='12' width='2' height='2' fill='%23000'/%3E%3Crect x='9' y='4' width='2' height='2' fill='%23000'/%3E%3Crect x='7' y='6' width='3' height='3' fill='%23000'/%3E%3Crect x='5' y='9' width='2' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 16px 16px !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2016%2016'%20shape-rendering='crispEdges'%3E%3Crect%20x='5'%20y='1'%20width='6'%20height='1'%20fill='%23000'/%3E%3Crect%20x='3'%20y='2'%20width='10'%20height='1'%20fill='%23000'/%3E%3Crect%20x='2'%20y='3'%20width='3'%20height='1'%20fill='%23000'/%3E%3Crect%20x='11'%20y='3'%20width='3'%20height='1'%20fill='%23000'/%3E%3Crect%20x='2'%20y='4'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='7'%20y='4'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='12'%20y='4'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='5'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='7'%20y='5'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='13'%20y='5'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='6'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='6'%20y='6'%20width='4'%20height='1'%20fill='%23000'/%3E%3Crect%20x='13'%20y='6'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='7'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='6'%20y='7'%20width='4'%20height='1'%20fill='%23000'/%3E%3Crect%20x='13'%20y='7'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='8'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='6'%20y='8'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='9'%20y='8'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='13'%20y='8'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='9'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='6'%20y='9'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='9'%20y='9'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='13'%20y='9'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='10'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='7'%20y='10'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='13'%20y='10'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='2'%20y='11'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='12'%20y='11'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='2'%20y='12'%20width='3'%20height='1'%20fill='%23000'/%3E%3Crect%20x='11'%20y='12'%20width='3'%20height='1'%20fill='%23000'/%3E%3Crect%20x='3'%20y='13'%20width='10'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='14'%20width='6'%20height='1'%20fill='%23000'/%3E%3C/svg%3E") no-repeat center / 16px 16px !important;
+  mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2016%2016'%20shape-rendering='crispEdges'%3E%3Crect%20x='5'%20y='1'%20width='6'%20height='1'%20fill='%23000'/%3E%3Crect%20x='3'%20y='2'%20width='10'%20height='1'%20fill='%23000'/%3E%3Crect%20x='2'%20y='3'%20width='3'%20height='1'%20fill='%23000'/%3E%3Crect%20x='11'%20y='3'%20width='3'%20height='1'%20fill='%23000'/%3E%3Crect%20x='2'%20y='4'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='7'%20y='4'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='12'%20y='4'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='5'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='7'%20y='5'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='13'%20y='5'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='6'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='6'%20y='6'%20width='4'%20height='1'%20fill='%23000'/%3E%3Crect%20x='13'%20y='6'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='7'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='6'%20y='7'%20width='4'%20height='1'%20fill='%23000'/%3E%3Crect%20x='13'%20y='7'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='8'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='6'%20y='8'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='9'%20y='8'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='13'%20y='8'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='9'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='6'%20y='9'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='9'%20y='9'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='13'%20y='9'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='10'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='7'%20y='10'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='13'%20y='10'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='2'%20y='11'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='12'%20y='11'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='2'%20y='12'%20width='3'%20height='1'%20fill='%23000'/%3E%3Crect%20x='11'%20y='12'%20width='3'%20height='1'%20fill='%23000'/%3E%3Crect%20x='3'%20y='13'%20width='10'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='14'%20width='6'%20height='1'%20fill='%23000'/%3E%3C/svg%3E") no-repeat center / 16px 16px !important;
 }
 /* Library: Crisp 16x16 Winamp media cabinet / tabbed folder with solid lines */
 html.winamp-ytm-on ytmusic-guide-entry-renderer[data-wa-icon="library"] .guide-icon,
@@ -3487,7 +3863,8 @@ html.winamp-ytm-on #sections > ytmusic-guide-section-renderer:first-child ytmusi
 /* 3-dots: square pixel blocks */
 html.winamp-ytm-on #menu-button yt-icon,
 html.winamp-ytm-on ytmusic-menu-renderer yt-icon-button yt-icon,
-html.winamp-ytm-on ytmusic-menu-renderer tp-yt-paper-icon-button yt-icon {
+html.winamp-ytm-on ytmusic-menu-renderer tp-yt-paper-icon-button yt-icon,
+html.winamp-ytm-on ytmusic-miniplayer .ytMusicMiniPlayerMenuButton .ytSpecButtonShapeNextIcon {
   width: 14px !important;
   height: 12px !important;
   display: inline-block !important;
@@ -3498,7 +3875,8 @@ html.winamp-ytm-on ytmusic-menu-renderer tp-yt-paper-icon-button yt-icon {
 
 /* Thumbs Up / Down */
 html.winamp-ytm-on ytmusic-like-button-renderer .like yt-icon,
-html.winamp-ytm-on ytmusic-like-button-renderer #button-shape-like .ytSpecButtonShapeNextIcon {
+html.winamp-ytm-on ytmusic-like-button-renderer #button-shape-like .ytSpecButtonShapeNextIcon,
+html.winamp-ytm-on ytmusic-miniplayer like-button-view-model .ytSpecButtonShapeNextIcon {
   width: 14px !important;
   height: 12px !important;
   display: inline-block !important;
@@ -3507,7 +3885,8 @@ html.winamp-ytm-on ytmusic-like-button-renderer #button-shape-like .ytSpecButton
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='1' y='5' width='2' height='6' fill='%23000'/%3E%3Crect x='4' y='5' width='7' height='6' fill='%23000'/%3E%3Crect x='4' y='3' width='3' height='2' fill='%23000'/%3E%3Crect x='5' y='1' width='2' height='2' fill='%23000'/%3E%3Crect x='11' y='6' width='1' height='4' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
 }
 html.winamp-ytm-on ytmusic-like-button-renderer .dislike yt-icon,
-html.winamp-ytm-on ytmusic-like-button-renderer #button-shape-dislike .ytSpecButtonShapeNextIcon {
+html.winamp-ytm-on ytmusic-like-button-renderer #button-shape-dislike .ytSpecButtonShapeNextIcon,
+html.winamp-ytm-on ytmusic-miniplayer dislike-button-view-model .ytSpecButtonShapeNextIcon {
   width: 14px !important;
   height: 12px !important;
   display: inline-block !important;
@@ -3637,7 +4016,8 @@ html.winamp-ytm-on tp-yt-paper-toggle-button:not([checked]) #toggleButton::after
 
 /* Volume: Stepped pixel speaker horn (1:1 14x14 grid) */
 html.winamp-ytm-on ytmusic-player-bar .volume yt-icon,
-html.winamp-ytm-on ytmusic-player-bar [data-wa-icon="volume"] yt-icon {
+html.winamp-ytm-on ytmusic-player-bar [data-wa-icon="volume"] yt-icon,
+html.winamp-ytm-on ytmusic-miniplayer .ytMusicMiniPlayerMuteButton .ytSpecButtonShapeNextIcon {
   width: 14px !important;
   height: 14px !important;
   display: inline-block !important;
@@ -3664,8 +4044,8 @@ html.winamp-ytm-on ytmusic-player-bar [data-wa-icon="shuffle"] yt-icon {
   height: 14px !important;
   display: inline-block !important;
   background-color: var(--wa-btn-glyph) !important;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' shape-rendering='crispEdges'%3E%3Crect x='1' y='3' width='3' height='2' fill='%23000'/%3E%3Crect x='4' y='4' width='2' height='2' fill='%23000'/%3E%3Crect x='6' y='6' width='2' height='2' fill='%23000'/%3E%3Crect x='8' y='8' width='2' height='2' fill='%23000'/%3E%3Crect x='10' y='9' width='3' height='2' fill='%23000'/%3E%3Crect x='1' y='9' width='3' height='2' fill='%23000'/%3E%3Crect x='4' y='8' width='2' height='2' fill='%23000'/%3E%3Crect x='8' y='4' width='2' height='2' fill='%23000'/%3E%3Crect x='10' y='3' width='3' height='2' fill='%23000'/%3E%3Crect x='11' y='1' width='2' height='2' fill='%23000'/%3E%3Crect x='11' y='11' width='2' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 14px 14px !important;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' shape-rendering='crispEdges'%3E%3Crect x='1' y='3' width='3' height='2' fill='%23000'/%3E%3Crect x='4' y='4' width='2' height='2' fill='%23000'/%3E%3Crect x='6' y='6' width='2' height='2' fill='%23000'/%3E%3Crect x='8' y='8' width='2' height='2' fill='%23000'/%3E%3Crect x='10' y='9' width='3' height='2' fill='%23000'/%3E%3Crect x='1' y='9' width='3' height='2' fill='%23000'/%3E%3Crect x='4' y='8' width='2' height='2' fill='%23000'/%3E%3Crect x='8' y='4' width='2' height='2' fill='%23000'/%3E%3Crect x='10' y='3' width='3' height='2' fill='%23000'/%3E%3Crect x='11' y='1' width='2' height='2' fill='%23000'/%3E%3Crect x='11' y='11' width='2' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 14px 14px !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2014%2014'%20shape-rendering='crispEdges'%3E%3Crect%20x='11'%20y='1'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='2'%20width='3'%20height='1'%20fill='%23000'/%3E%3Crect%20x='9'%20y='2'%20width='4'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='3'%20width='4'%20height='1'%20fill='%23000'/%3E%3Crect%20x='8'%20y='3'%20width='6'%20height='1'%20fill='%23000'/%3E%3Crect%20x='4'%20y='4'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='7'%20y='4'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='10'%20y='4'%20width='3'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='5'%20width='3'%20height='1'%20fill='%23000'/%3E%3Crect%20x='11'%20y='5'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='6'%20y='6'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='7'%20width='3'%20height='1'%20fill='%23000'/%3E%3Crect%20x='11'%20y='7'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='4'%20y='8'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='7'%20y='8'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='10'%20y='8'%20width='3'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='9'%20width='4'%20height='1'%20fill='%23000'/%3E%3Crect%20x='8'%20y='9'%20width='6'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='10'%20width='3'%20height='1'%20fill='%23000'/%3E%3Crect%20x='9'%20y='10'%20width='4'%20height='1'%20fill='%23000'/%3E%3Crect%20x='11'%20y='11'%20width='1'%20height='1'%20fill='%23000'/%3E%3C/svg%3E") no-repeat center / 14px 14px !important;
+  mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2014%2014'%20shape-rendering='crispEdges'%3E%3Crect%20x='11'%20y='1'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='2'%20width='3'%20height='1'%20fill='%23000'/%3E%3Crect%20x='9'%20y='2'%20width='4'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='3'%20width='4'%20height='1'%20fill='%23000'/%3E%3Crect%20x='8'%20y='3'%20width='6'%20height='1'%20fill='%23000'/%3E%3Crect%20x='4'%20y='4'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='7'%20y='4'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='10'%20y='4'%20width='3'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='5'%20width='3'%20height='1'%20fill='%23000'/%3E%3Crect%20x='11'%20y='5'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='6'%20y='6'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='7'%20width='3'%20height='1'%20fill='%23000'/%3E%3Crect%20x='11'%20y='7'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='4'%20y='8'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='7'%20y='8'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='10'%20y='8'%20width='3'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='9'%20width='4'%20height='1'%20fill='%23000'/%3E%3Crect%20x='8'%20y='9'%20width='6'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='10'%20width='3'%20height='1'%20fill='%23000'/%3E%3Crect%20x='9'%20y='10'%20width='4'%20height='1'%20fill='%23000'/%3E%3Crect%20x='11'%20y='11'%20width='1'%20height='1'%20fill='%23000'/%3E%3C/svg%3E") no-repeat center / 14px 14px !important;
 }
 
 /* Floppy Disk Glyph on Save Button (1:1 14x14 pixel grid) */
@@ -3987,8 +4367,8 @@ html.winamp-ytm-on tp-yt-paper-checkbox[checked] #checkmark {
   transform: translate(-50%, -50%) !important;
   border: none !important;
   background-color: #00ff00 !important;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' shape-rendering='crispEdges'%3E%3Crect x='7' y='1' width='2' height='2' fill='%23000'/%3E%3Crect x='6' y='3' width='2' height='2' fill='%23000'/%3E%3Crect x='5' y='5' width='2' height='2' fill='%23000'/%3E%3Crect x='1' y='4' width='2' height='2' fill='%23000'/%3E%3Crect x='3' y='6' width='3' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 10px 10px !important;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' shape-rendering='crispEdges'%3E%3Crect x='7' y='1' width='2' height='2' fill='%23000'/%3E%3Crect x='6' y='3' width='2' height='2' fill='%23000'/%3E%3Crect x='5' y='5' width='2' height='2' fill='%23000'/%3E%3Crect x='1' y='4' width='2' height='2' fill='%23000'/%3E%3Crect x='3' y='6' width='3' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 10px 10px !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2010%2010'%20shape-rendering='crispEdges'%3E%3Crect%20x='8'%20y='2'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='7'%20y='3'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='6'%20y='4'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='5'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='5'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='2'%20y='6'%20width='4'%20height='1'%20fill='%23000'/%3E%3Crect%20x='3'%20y='7'%20width='2'%20height='1'%20fill='%23000'/%3E%3C/svg%3E") no-repeat center / 10px 10px !important;
+  mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2010%2010'%20shape-rendering='crispEdges'%3E%3Crect%20x='8'%20y='2'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='7'%20y='3'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='6'%20y='4'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='5'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='5'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='2'%20y='6'%20width='4'%20height='1'%20fill='%23000'/%3E%3Crect%20x='3'%20y='7'%20width='2'%20height='1'%20fill='%23000'/%3E%3C/svg%3E") no-repeat center / 10px 10px !important;
   box-shadow: 0 0 4px #00ff00 !important;
 }
 
@@ -4028,8 +4408,8 @@ html.winamp-ytm-on yt-checkbox-renderer[checked] yt-icon::after {
   left: 50% !important;
   transform: translate(-50%, -50%) !important;
   background-color: #00ff00 !important;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' shape-rendering='crispEdges'%3E%3Crect x='7' y='1' width='2' height='2' fill='%23000'/%3E%3Crect x='6' y='3' width='2' height='2' fill='%23000'/%3E%3Crect x='5' y='5' width='2' height='2' fill='%23000'/%3E%3Crect x='1' y='4' width='2' height='2' fill='%23000'/%3E%3Crect x='3' y='6' width='3' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 10px 10px !important;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' shape-rendering='crispEdges'%3E%3Crect x='7' y='1' width='2' height='2' fill='%23000'/%3E%3Crect x='6' y='3' width='2' height='2' fill='%23000'/%3E%3Crect x='5' y='5' width='2' height='2' fill='%23000'/%3E%3Crect x='1' y='4' width='2' height='2' fill='%23000'/%3E%3Crect x='3' y='6' width='3' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 10px 10px !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2010%2010'%20shape-rendering='crispEdges'%3E%3Crect%20x='8'%20y='2'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='7'%20y='3'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='6'%20y='4'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='5'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='5'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='2'%20y='6'%20width='4'%20height='1'%20fill='%23000'/%3E%3Crect%20x='3'%20y='7'%20width='2'%20height='1'%20fill='%23000'/%3E%3C/svg%3E") no-repeat center / 10px 10px !important;
+  mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2010%2010'%20shape-rendering='crispEdges'%3E%3Crect%20x='8'%20y='2'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='7'%20y='3'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='6'%20y='4'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='5'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='5'%20width='2'%20height='1'%20fill='%23000'/%3E%3Crect%20x='2'%20y='6'%20width='4'%20height='1'%20fill='%23000'/%3E%3Crect%20x='3'%20y='7'%20width='2'%20height='1'%20fill='%23000'/%3E%3C/svg%3E") no-repeat center / 10px 10px !important;
   box-shadow: 0 0 4px #00ff00 !important;
 }
 
@@ -4213,14 +4593,19 @@ html.winamp-ytm-on ytmusic-player-bar #play-pause-button.is-playing yt-icon,
 html.winamp-ytm-on ytmusic-player-bar #play-pause-button[data-wa-playstate="playing"] yt-icon,
 html.winamp-ytm-on ytmusic-player-bar:has(.winamp-viz.is-playing) #play-pause-button yt-icon,
 html.winamp-ytm-on ytmusic-player-bar #play-pause-button[aria-label*="Pause"] yt-icon,
-html.winamp-ytm-on ytmusic-player-bar #play-pause-button[title*="Pause"] yt-icon {
+html.winamp-ytm-on ytmusic-player-bar #play-pause-button[title*="Pause"] yt-icon,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsMainControls button:active .ytSpecButtonShapeNextIcon,
+html.winamp-ytm-on ytmusic-miniplayer .wa-stop-btn:active .wa-stop-icon,
+html.winamp-ytm-on ytmusic-miniplayer[is-playing] .ytmusicPlayerControlsPlayPauseButton .ytSpecButtonShapeNextIcon {
   transform: translate(1px, 1px) !important;
 }
 
 /* Toggle glyphs active translation */
 html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="rep"]:active::after,
 html.winamp-ytm-on ytmusic-player-bar #right-controls [data-wa-btn="rep"].is-on::after,
-html.winamp-ytm-on ytmusic-player-bar[data-wa-repeat="on"] #right-controls [data-wa-btn="rep"]::after {
+html.winamp-ytm-on ytmusic-player-bar[data-wa-repeat="on"] #right-controls [data-wa-btn="rep"]::after,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsRepeatButton button:active::after,
+html.winamp-ytm-on ytmusic-miniplayer .ytmusicPlayerControlsRepeatButton button[aria-pressed="true"]::after {
   transform: translate(1px, calc(-50% + 1px)) !important;
 }
 

@@ -56,6 +56,45 @@
     -24, -25, -27, -29, -31, -33, -35, -37, -38, -39, -41, -43, -45, -48, -52, -56,
   ];
 
+  // ---- bottom bar: classic <ytmusic-player-bar> or the wiz <ytmusic-miniplayer>
+  // YTM serves the miniplayer as the player bar behind its "wiz miniplayer"
+  // experiment; resolve whichever one is live and where our parts go in it.
+  const MINI_SEL = "ytmusic-app-layout[is-wiz-miniplayer-enabled] ytmusic-miniplayer";
+  const BAR_SEL = "ytmusic-player-bar, " + MINI_SEL;
+  const TITLE_SEL =
+    "ytmusic-player-bar .content-info-wrapper .title, " + MINI_SEL + " .ytmusicTrackInfoTitle";
+  const SUBTITLE_SEL =
+    "ytmusic-player-bar .content-info-wrapper .subtitle, " + MINI_SEL + " .ytmusicTrackInfoByline";
+  const PLAY_SEL =
+    "ytmusic-player-bar #play-pause-button, " + MINI_SEL + " .ytmusicPlayerControlsPlayPauseButton";
+
+  function getBar() {
+    return document.querySelector("ytmusic-player-bar") || document.querySelector(MINI_SEL);
+  }
+
+  function getBarParts() {
+    const classic = document.querySelector("ytmusic-player-bar");
+    if (classic) {
+      const controls = classic.querySelector(".left-controls-buttons");
+      return controls && {
+        bar: classic,
+        placeViz: (viz) => controls.insertAdjacentElement("afterend", viz),
+        placeStats: (stats, viz) => viz.insertAdjacentElement("afterend", stats),
+        playPause: controls.querySelector("#play-pause-button"),
+        badgeHost: classic.querySelector("#right-controls"),
+      };
+    }
+    const mini = document.querySelector(MINI_SEL);
+    const left = mini && mini.querySelector(".ytMusicMiniPlayerLeftSection");
+    return left && {
+      bar: mini,
+      placeViz: (viz) => left.insertAdjacentElement("afterbegin", viz),
+      placeStats: (stats) => left.appendChild(stats),
+      playPause: mini.querySelector(".ytmusicPlayerControlsPlayPauseButton"),
+      badgeHost: mini.querySelector(".ytMusicMiniPlayerRightSection"),
+    };
+  }
+
   // ---- apply <html> classes & attributes ------------------------------------
   function applyClasses() {
     root.classList.toggle("winamp-ytm-on", state.themeOn);
@@ -81,11 +120,10 @@
 
   // ---- Winamp Main LCD Display (Visualizer + 7-Segment Clock + Clutterbar) ----
   function ensureViz() {
-    const host = document.querySelector(
-      "ytmusic-player-bar .left-controls-buttons"
-    );
-    if (!host) return;
-    const existing = host.parentElement.querySelector("[data-winamp-viz]");
+    const parts = getBarParts();
+    if (!parts) return;
+    const { bar } = parts;
+    const existing = bar.querySelector("[data-winamp-viz]");
     if (state.themeOn) {
       let viz = existing;
       // Recreate if it's the old version without the authentic LCD subcomponents
@@ -170,12 +208,12 @@
         main.appendChild(spec);
         viz.appendChild(main);
 
-        host.insertAdjacentElement("afterend", viz);
+        parts.placeViz(viz);
       }
 
       // 3. Winamp Stop Button (|◀, ▶, ||, ■, ▶|)
-      const playPauseBtn = host.querySelector("#play-pause-button");
-      if (playPauseBtn && !host.querySelector(".wa-stop-btn")) {
+      const playPauseBtn = parts.playPause;
+      if (playPauseBtn && !bar.querySelector(".wa-stop-btn")) {
         const stopBtn = document.createElement("button");
         stopBtn.className = "wa-stop-btn";
         stopBtn.setAttribute("type", "button");
@@ -198,7 +236,7 @@
       }
 
       // 4. Winamp Audio Stats (192 kbps 48 kHz mono stereo)
-      let stats = host.parentElement.querySelector(".wa-audio-stats");
+      let stats = bar.querySelector(".wa-audio-stats");
       if (stats && !stats.querySelector(".is-mono")) {
         stats.remove();
         stats = null;
@@ -218,16 +256,16 @@
         addSpan("lbl", "kHz");
         addSpan("mode is-mono", "mono");
         addSpan("mode is-stereo", "stereo");
-        viz.insertAdjacentElement("afterend", stats);
+        parts.placeStats(stats, viz);
       }
       updatePlayState();
       attachVideoListeners();
       startVisualizerLoop();
     } else {
       if (existing) existing.remove();
-      const stats = host.parentElement.querySelector(".wa-audio-stats");
+      const stats = bar.querySelector(".wa-audio-stats");
       if (stats) stats.remove();
-      const stopBtn = host.querySelector(".wa-stop-btn");
+      const stopBtn = bar.querySelector(".wa-stop-btn");
       if (stopBtn) stopBtn.remove();
       stopVisualizerLoop();
     }
@@ -286,6 +324,17 @@
     }
 
     try {
+      // Release the old capture before asking for a new one: the element's captures share one
+      // audio tap, and stopping an old track after the new one exists silences the new one too
+      if (audioSourceNode) {
+        try {
+          audioSourceNode.disconnect();
+        } catch (e) {}
+        audioSourceNode = null;
+      }
+      stopTracksExcept(audioStream, null);
+      audioStream = null;
+
       // Request a fresh captureStream when song changes or after decoder spin-up so we get the live audio track
       const stream = video.captureStream
         ? video.captureStream()
@@ -306,14 +355,6 @@
       }
       // Each captureStream() call spawns new tracks (video included); keep only the one we analyse
       stopTracksExcept(stream, latestTrack);
-
-      if (audioSourceNode) {
-        try {
-          audioSourceNode.disconnect();
-        } catch (e) {}
-        audioSourceNode = null;
-      }
-      stopTracksExcept(audioStream, latestTrack);
 
       audioStream = new MediaStream([latestTrack]);
       audioSourceNode = audioCtx.createMediaStreamSource(audioStream);
@@ -477,11 +518,15 @@
       } else {
         zeroEnergyFrames++;
         // If playback is active and unmuted but captureStream was bound before the audio decoder was ready,
-        // rebind a fresh stream once readyState >= 3. Only a few tries before the
-        // procedural fallback takes over, and a retry must not reset the silence count
+        // rebind a fresh stream once readyState >= 3. A few quick tries, then one every ~2s so a
+        // dead binding (quiet intro, ad gap, same blob src across songs) still recovers; a retry
+        // must not reset the silence count or the procedural fallback would flicker off
+        const retryDue =
+          zeroEnergyFrames < 120
+            ? zeroEnergyFrames % 40 === 25
+            : zeroEnergyFrames % 120 === 0;
         if (
-          zeroEnergyFrames % 40 === 25 &&
-          zeroEnergyFrames < 120 &&
+          retryDue &&
           video &&
           video.readyState >= 3 &&
           !video.muted &&
@@ -513,6 +558,7 @@
       // Only use procedural simulation if audio capture is genuinely unavailable after 120+ frames (~2 seconds)
       const useProceduralFallback =
         !hasLiveSignal && zeroEnergyFrames > 120;
+      viz.dataset.waSignal = hasLiveSignal ? "live" : useProceduralFallback ? "sim" : "wait";
 
       const envAttack = 0.95;
       const envRelease = 0.78;
@@ -711,13 +757,13 @@
       viz.classList.toggle("is-playing", !isPaused);
     }
 
-    const pb = document.querySelector("ytmusic-player-bar");
+    const pb = getBar();
     if (pb) {
       pb.toggleAttribute("is-playing", !isPaused);
       pb.toggleAttribute("is-paused", isPaused);
     }
 
-    const playPauseBtn = document.querySelector("ytmusic-player-bar #play-pause-button");
+    const playPauseBtn = document.querySelector(PLAY_SEL);
     if (playPauseBtn) {
       playPauseBtn.classList.toggle("is-playing", !isPaused);
       playPauseBtn.classList.toggle("is-paused", isPaused);
@@ -1005,7 +1051,7 @@
     });
 
     // Ensure Winamp Gold Lightning Diamond emblem on right edge of player bar
-    const rightControls = document.querySelector('ytmusic-player-bar #right-controls');
+    const rightControls = getBarParts()?.badgeHost;
     if (rightControls && !rightControls.querySelector('.wa-diamond-badge')) {
       const diamond = document.createElement('div');
       diamond.className = 'wa-diamond-badge';
@@ -1110,10 +1156,11 @@
     if (document.hidden) return;
     if (marqueeScan-- <= 0) {
       marqueeScan = 12;
-      marqueeEls = Array.from(document.querySelectorAll(
-        'ytmusic-player-bar .content-info-wrapper .title, ytmusic-player-bar .content-info-wrapper .subtitle'));
+      marqueeEls = Array.from(document.querySelectorAll(TITLE_SEL + ', ' + SUBTITLE_SEL));
     }
     for (const el of marqueeEls) {
+      // A hover hint is drawn over the title from its left edge; hold still meanwhile
+      if (el.hasAttribute('data-wa-hint')) { el.scrollLeft = 0; continue; }
       let st = marqueeState.get(el);
       if (!st) { st = { dir: 1, wait: 12, text: null, max: 0, measure: 0 }; marqueeState.set(el, st); }
       if (st.measure-- <= 0 || st.text === null) {
@@ -1138,21 +1185,19 @@
 
   // ---- Winamp 2.x Hover Tooltips & LCD Action Hints ------------------------
   let activeTooltipEl = null;
-  let savedMarqueeTitle = null;
-  let hoverHintActive = false;
-  let hoverLcdText = null;
 
+  // Each hint matches both the classic player bar and the wiz miniplayer
   const HINTS = [
-    { sel: '.previous-button', text: 'Previous Track (Z)', lcd: 'WINAMP: PREVIOUS TRACK' },
-    { sel: '.rewind-button', text: 'Rewind 10s (Left)', lcd: 'WINAMP: REWIND 10S' },
-    { sel: '#play-pause-button', text: 'Play / Pause (Space / C)', lcd: 'WINAMP: PLAY/PAUSE' },
-    { sel: '.wa-stop-btn', text: 'Stop (V)', lcd: 'WINAMP: STOP' },
-    { sel: '.fast-forward-button', text: 'Fast Forward 30s (Right)', lcd: 'WINAMP: FAST FORWARD' },
-    { sel: '.next-button', text: 'Next Track (B)', lcd: 'WINAMP: NEXT TRACK' },
-    { sel: '[data-wa-btn="rep"]', text: 'Toggle Repeat (R)', lcd: 'WINAMP: REPEAT' },
-    { sel: '[data-wa-btn="shuf"]', text: 'Toggle Shuffle (S)', lcd: 'WINAMP: SHUFFLE' },
-    { sel: '[data-wa-btn="vol"]', text: 'Volume', lcd: 'WINAMP: VOLUME' },
-    { sel: '[data-wa-btn="pl"]', text: 'Toggle Playlist Window (Alt+E)', lcd: 'WINAMP: PLAYLIST' },
+    { sel: '.previous-button, .ytmusicPlayerControlsPreviousButton', text: 'Previous Track', lcd: 'WINAMP: PREVIOUS TRACK' },
+    { sel: '.rewind-button, .ytmusicPlayerControlsSeekBackwardButton', text: 'Rewind 10s', lcd: 'WINAMP: REWIND 10S' },
+    { sel: PLAY_SEL, play: true },
+    { sel: '.wa-stop-btn', text: 'Stop', lcd: 'WINAMP: STOP' },
+    { sel: '.fast-forward-button, .ytmusicPlayerControlsSeekForwardButton', text: 'Fast Forward 30s', lcd: 'WINAMP: FAST FORWARD' },
+    { sel: '.next-button, .ytmusicPlayerControlsNextButton', text: 'Next Track', lcd: 'WINAMP: NEXT TRACK' },
+    { sel: '[data-wa-btn="rep"], .ytmusicPlayerControlsRepeatButton', text: 'Toggle Repeat', lcd: 'WINAMP: REPEAT' },
+    { sel: '[data-wa-btn="shuf"], .ytmusicPlayerControlsShuffleButton', text: 'Toggle Shuffle', lcd: 'WINAMP: SHUFFLE' },
+    { sel: '[data-wa-btn="vol"], .ytMusicMiniPlayerVolumeWrapper', text: 'Volume', lcd: 'WINAMP: VOLUME' },
+    { sel: '[data-wa-btn="pl"]', text: 'Toggle Playlist Window', lcd: 'WINAMP: PLAYLIST' },
     { sel: '[data-wa-btn="fs"]', text: 'Toggle Fullscreen', lcd: 'WINAMP: FULLSCREEN' },
     { sel: '.wa-diamond-badge', text: "Winamp 2.x — It really whips the llama's ass!", lcd: 'WINAMP 2.x CLASSIC' }
   ];
@@ -1176,17 +1221,12 @@
     activeTooltipEl.style.left = Math.round(left) + 'px';
     activeTooltipEl.style.top = Math.round(top) + 'px';
 
-    if (lcd) {
-      const titleEl = document.querySelector('ytmusic-player-bar .content-info-wrapper .title');
-      if (titleEl) {
-        // Re-save if YTM swapped in a new song title while a hint was showing
-        if (!hoverHintActive || titleEl.textContent !== hoverLcdText) {
-          hoverHintActive = true;
-          savedMarqueeTitle = titleEl.textContent;
-        }
-        titleEl.textContent = lcd;
-        hoverLcdText = lcd;
-      }
+    // The LCD hint is painted over the title by CSS (attr(data-wa-hint)), so
+    // YTM's own title nodes are never touched and keep updating underneath
+    const titleEl = document.querySelector(TITLE_SEL);
+    if (titleEl) {
+      if (lcd) titleEl.setAttribute('data-wa-hint', lcd);
+      else titleEl.removeAttribute('data-wa-hint');
     }
   }
 
@@ -1194,48 +1234,35 @@
     if (activeTooltipEl) {
       activeTooltipEl.style.display = 'none';
     }
-    if (hoverHintActive) {
-      hoverHintActive = false;
-      const titleEl = document.querySelector('ytmusic-player-bar .content-info-wrapper .title');
-      // Only restore if our hint is still showing; otherwise YTM has already
-      // written a newer title (e.g. Next was clicked) and restoring would be stale
-      if (titleEl && savedMarqueeTitle !== null && titleEl.textContent === hoverLcdText) {
-        titleEl.textContent = savedMarqueeTitle;
-      }
-      savedMarqueeTitle = null;
-      hoverLcdText = null;
-    }
+    document.querySelectorAll('[data-wa-hint]').forEach(el => el.removeAttribute('data-wa-hint'));
   }
 
   function setupTooltips() {
     document.addEventListener('pointerover', (e) => {
       if (!state.themeOn) return;
-      const pb = e.target.closest('ytmusic-player-bar');
+      const pb = e.target.closest(BAR_SEL);
       if (!pb) return;
       for (const h of HINTS) {
         const match = e.target.closest(h.sel);
         if (match) {
-          let customLcd = h.lcd;
-          let customText = h.text;
-          if (h.sel === '#play-pause-button') {
-            const isPlaying = pb.hasAttribute('is-playing') || match.classList.contains('is-playing');
-            customText = isPlaying ? 'Pause (Space / C)' : 'Play (Space / X)';
-            customLcd = isPlaying ? 'WINAMP: PAUSE' : 'WINAMP: PLAY';
+          let { text, lcd } = h;
+          if (h.play) {
+            const isPlaying = pb.hasAttribute('is-playing');
+            text = isPlaying ? 'Pause (Space)' : 'Play (Space)';
+            lcd = isPlaying ? 'WINAMP: PAUSE' : 'WINAMP: PLAY';
           }
-          showTooltip(match, customText, customLcd);
+          showTooltip(match, text, lcd);
           return;
         }
       }
+      // Over a bar control without a hint: don't leave the last one showing
+      hideTooltip();
     }, true);
 
     document.addEventListener('pointerout', (e) => {
-      const pb = e.target.closest('ytmusic-player-bar');
-      if (pb) {
-        const next = e.relatedTarget;
-        if (!next || !next.closest('ytmusic-player-bar button, ytmusic-player-bar yt-icon-button, ytmusic-player-bar .wa-diamond-badge, ytmusic-player-bar .wa-stop-btn')) {
-          hideTooltip();
-        }
-      }
+      if (!e.target.closest(BAR_SEL)) return;
+      const next = e.relatedTarget;
+      if (!next || !next.closest(BAR_SEL)) hideTooltip();
     }, true);
   }
 

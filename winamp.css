@@ -179,6 +179,17 @@ html.winamp-ytm-on ::-webkit-scrollbar {
   height: 12px;
   background: var(--wa-chassis-dark);
 }
+/* The page itself scrolls with no visible bar; inner panels keep theirs */
+html.winamp-ytm-on {
+  scrollbar-width: none !important;
+  /* YTM insets its fixed bars by the scrollbar it measured; there is none now */
+  --ytmusic-scrollbar-width: 0px !important;
+}
+html.winamp-ytm-on::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
 html.winamp-ytm-on::-webkit-scrollbar-track,
 html.winamp-ytm-on ::-webkit-scrollbar-track {
   background: var(--wa-screen-bg);
@@ -3871,6 +3882,19 @@ html.winamp-ytm-on ytmusic-miniplayer .ytMusicMiniPlayerMenuButton .ytSpecButton
   background-color: var(--wa-btn-glyph) !important;
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='6' y='1' width='2' height='2' fill='%23000'/%3E%3Crect x='6' y='5' width='2' height='2' fill='%23000'/%3E%3Crect x='6' y='9' width='2' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12' shape-rendering='crispEdges'%3E%3Crect x='6' y='1' width='2' height='2' fill='%23000'/%3E%3Crect x='6' y='5' width='2' height='2' fill='%23000'/%3E%3Crect x='6' y='9' width='2' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+}
+
+/* New Playlist: 12x12 pixel plus, 2px strokes like the other glyphs */
+html.winamp-ytm-on ytmusic-guide-renderer button .ytSpecButtonShapeNextIcon {
+  width: 12px !important;
+  height: 12px !important;
+  display: inline-block !important;
+  background-color: var(--wa-btn-glyph) !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' shape-rendering='crispEdges'%3E%3Crect x='5' y='1' width='2' height='10' fill='%23000'/%3E%3Crect x='1' y='5' width='10' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' shape-rendering='crispEdges'%3E%3Crect x='5' y='1' width='2' height='10' fill='%23000'/%3E%3Crect x='1' y='5' width='10' height='2' fill='%23000'/%3E%3C/svg%3E") no-repeat center !important;
+}
+html.winamp-ytm-on ytmusic-guide-renderer button .ytSpecButtonShapeNextIcon > * {
+  display: none !important;
 }
 
 /* Thumbs Up / Down */

@@ -26,11 +26,15 @@
     if (shufBtn && !shufBtn.hasAttribute('data-wa-bridge-hook')) {
       shufBtn.setAttribute('data-wa-bridge-hook', '1');
       const handler = (e) => {
+        // If YTM renamed its internal handler, let the native click through
+        // instead of swallowing it and leaving shuffle dead
+        if (typeof pb.onShuffleButtonClick !== 'function') {
+          setTimeout(syncState, 50);
+          return;
+        }
         e.stopImmediatePropagation();
         e.preventDefault();
-        if (typeof pb.onShuffleButtonClick === 'function') {
-          pb.onShuffleButtonClick(new CustomEvent('click', { detail: 1, bubbles: true }));
-        }
+        pb.onShuffleButtonClick(new CustomEvent('click', { detail: 1, bubbles: true }));
         syncState();
       };
       shufBtn.addEventListener('click', handler, true);

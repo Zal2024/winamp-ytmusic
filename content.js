@@ -257,6 +257,18 @@
     return true;
   }
 
+  // stop() never fires "ended", so this won't trigger the rebind listener below
+  function stopTracksExcept(stream, keep) {
+    if (!stream || !stream.getTracks) return;
+    stream.getTracks().forEach((t) => {
+      if (t !== keep) {
+        try {
+          t.stop();
+        } catch (e) {}
+      }
+    });
+  }
+
   function initAudioEngine(video, forceRebind = false) {
     if (!video) return;
     if (!ensureAudioContextAndAnalyser()) return;
@@ -289,8 +301,11 @@
       const latestTrack =
         liveTracks[liveTracks.length - 1] || tracks[tracks.length - 1] || null;
       if (!latestTrack || latestTrack.readyState !== "live") {
+        stopTracksExcept(stream, null);
         return;
       }
+      // Each captureStream() call spawns new tracks (video included); keep only the one we analyse
+      stopTracksExcept(stream, latestTrack);
 
       if (audioSourceNode) {
         try {
@@ -298,6 +313,7 @@
         } catch (e) {}
         audioSourceNode = null;
       }
+      stopTracksExcept(audioStream, latestTrack);
 
       audioStream = new MediaStream([latestTrack]);
       audioSourceNode = audioCtx.createMediaStreamSource(audioStream);
@@ -426,7 +442,10 @@
       if (video) {
         const curSrc = video.currentSrc || video.src || "";
         const nowMs = performance.now();
-        if ((curSrc && curSrc !== lastBoundSrc) || (!audioSourceNode && nowMs - lastEngineAttemptT > 1000)) {
+        // play/playing/loadeddata already rebind promptly; this is the throttled fallback
+        // so a failing bind can't call captureStream() every frame
+        const needsBind = (curSrc && curSrc !== lastBoundSrc) || !audioSourceNode;
+        if (needsBind && nowMs - lastEngineAttemptT > 500) {
           lastEngineAttemptT = nowMs;
           initAudioEngine(video, true);
         }
@@ -458,16 +477,20 @@
       } else {
         zeroEnergyFrames++;
         // If playback is active and unmuted but captureStream was bound before the audio decoder was ready,
-        // rebind a fresh stream once readyState >= 3
+        // rebind a fresh stream once readyState >= 3. Only a few tries before the
+        // procedural fallback takes over, and a retry must not reset the silence count
         if (
           zeroEnergyFrames % 40 === 25 &&
+          zeroEnergyFrames < 120 &&
           video &&
           video.readyState >= 3 &&
           !video.muted &&
           video.volume > 0 &&
           video.currentTime > 0.1
         ) {
+          const silentFrames = zeroEnergyFrames;
           initAudioEngine(video, true);
+          zeroEnergyFrames = silentFrames;
         }
       }
 
@@ -699,14 +722,22 @@
       playPauseBtn.classList.toggle("is-playing", !isPaused);
       playPauseBtn.classList.toggle("is-paused", isPaused);
       playPauseBtn.setAttribute("data-wa-playstate", isPaused ? "paused" : "playing");
-      if (playPauseBtn.hasAttribute("hidden")) {
+      if (state.themeOn && playPauseBtn.hasAttribute("hidden")) {
         playPauseBtn.removeAttribute("hidden");
       }
     }
 
+    // Winamp has no loading spinner; hide YTM's only while the skin is on,
+    // and hand it back when the skin is turned off
     const spinner = document.querySelector("ytmusic-player-bar .spinner-container");
     if (spinner) {
-      spinner.style.setProperty("display", "none", "important");
+      if (state.themeOn) {
+        spinner.style.setProperty("display", "none", "important");
+        spinner.setAttribute("data-wa-hidden", "1");
+      } else if (spinner.hasAttribute("data-wa-hidden")) {
+        spinner.style.removeProperty("display");
+        spinner.removeAttribute("data-wa-hidden");
+      }
     }
 
     updateLcdTime();
@@ -1109,6 +1140,7 @@
   let activeTooltipEl = null;
   let savedMarqueeTitle = null;
   let hoverHintActive = false;
+  let hoverLcdText = null;
 
   const HINTS = [
     { sel: '.previous-button', text: 'Previous Track (Z)', lcd: 'WINAMP: PREVIOUS TRACK' },
@@ -1147,11 +1179,13 @@
     if (lcd) {
       const titleEl = document.querySelector('ytmusic-player-bar .content-info-wrapper .title');
       if (titleEl) {
-        if (!hoverHintActive) {
+        // Re-save if YTM swapped in a new song title while a hint was showing
+        if (!hoverHintActive || titleEl.textContent !== hoverLcdText) {
           hoverHintActive = true;
           savedMarqueeTitle = titleEl.textContent;
         }
         titleEl.textContent = lcd;
+        hoverLcdText = lcd;
       }
     }
   }
@@ -1163,10 +1197,13 @@
     if (hoverHintActive) {
       hoverHintActive = false;
       const titleEl = document.querySelector('ytmusic-player-bar .content-info-wrapper .title');
-      if (titleEl && savedMarqueeTitle !== null) {
+      // Only restore if our hint is still showing; otherwise YTM has already
+      // written a newer title (e.g. Next was clicked) and restoring would be stale
+      if (titleEl && savedMarqueeTitle !== null && titleEl.textContent === hoverLcdText) {
         titleEl.textContent = savedMarqueeTitle;
-        savedMarqueeTitle = null;
       }
+      savedMarqueeTitle = null;
+      hoverLcdText = null;
     }
   }
 

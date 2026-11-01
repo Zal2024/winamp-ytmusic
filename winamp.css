@@ -4199,14 +4199,14 @@ html.winamp-ytm-on ytd-active-account-header-renderer #manage-account {
 }
 
 /* Universal Menu Item Rows: Compact Winamp Playlist/Menu Profile */
-html.winamp-ytm-on tp-yt-paper-listbox > ytmusic-menu-navigation-item-renderer,
-html.winamp-ytm-on tp-yt-paper-listbox > ytmusic-menu-service-item-renderer,
-html.winamp-ytm-on tp-yt-paper-listbox > ytmusic-toggle-menu-service-item-renderer,
-html.winamp-ytm-on tp-yt-paper-listbox > ytmusic-menu-service-item-download-renderer,
-html.winamp-ytm-on tp-yt-paper-listbox > ytd-compact-link-renderer,
-html.winamp-ytm-on tp-yt-paper-listbox > ytd-menu-service-item-renderer,
-html.winamp-ytm-on ytmusic-menu-popup-renderer tp-yt-paper-item,
-html.winamp-ytm-on tp-yt-paper-listbox > [role="menuitem"] {
+html.winamp-ytm-on tp-yt-paper-listbox > ytmusic-menu-navigation-item-renderer:not([hidden]),
+html.winamp-ytm-on tp-yt-paper-listbox > ytmusic-menu-service-item-renderer:not([hidden]),
+html.winamp-ytm-on tp-yt-paper-listbox > ytmusic-toggle-menu-service-item-renderer:not([hidden]),
+html.winamp-ytm-on tp-yt-paper-listbox > ytmusic-menu-service-item-download-renderer:not([hidden]),
+html.winamp-ytm-on tp-yt-paper-listbox > ytd-compact-link-renderer:not([hidden]),
+html.winamp-ytm-on tp-yt-paper-listbox > ytd-menu-service-item-renderer:not([hidden]),
+html.winamp-ytm-on tp-yt-paper-listbox > tp-yt-paper-item:not([hidden]),
+html.winamp-ytm-on tp-yt-paper-listbox > [role="menuitem"]:not([hidden]) {
   display: flex !important;
   align-items: center !important;
   height: 24px !important;
@@ -4226,14 +4226,15 @@ html.winamp-ytm-on tp-yt-paper-listbox > [role="menuitem"] {
   letter-spacing: 0.5px !important;
   user-select: none !important;
   transition: none !important;
+  overflow: hidden !important;
 }
 
 /* Inner elements: links, paper-items inside renderers */
 html.winamp-ytm-on ytmusic-menu-navigation-item-renderer a#navigation-endpoint,
 html.winamp-ytm-on ytmusic-menu-navigation-item-renderer a.yt-simple-endpoint,
-html.winamp-ytm-on ytmusic-menu-service-item-download-renderer tp-yt-paper-item,
-html.winamp-ytm-on ytd-compact-link-renderer tp-yt-paper-item,
-html.winamp-ytm-on ytd-menu-service-item-renderer tp-yt-paper-item {
+html.winamp-ytm-on ytmusic-menu-service-item-download-renderer tp-yt-paper-item:not([hidden]),
+html.winamp-ytm-on ytd-compact-link-renderer tp-yt-paper-item:not([hidden]),
+html.winamp-ytm-on ytd-menu-service-item-renderer tp-yt-paper-item:not([hidden]) {
   display: flex !important;
   align-items: center !important;
   width: 100% !important;
@@ -4254,21 +4255,37 @@ html.winamp-ytm-on ytd-menu-service-item-renderer tp-yt-paper-item {
   text-decoration: none !important;
 }
 
-/* Hide secondary entry inside download renderer if empty */
-html.winamp-ytm-on ytmusic-menu-service-item-download-renderer #secondary-entry:empty {
+/* Hide hidden items, inactive secondary entries, and empty entries from stealing clicks */
+html.winamp-ytm-on tp-yt-paper-listbox [hidden],
+html.winamp-ytm-on tp-yt-paper-listbox [hidden] *,
+html.winamp-ytm-on ytmusic-menu-popup-renderer [hidden],
+html.winamp-ytm-on ytmusic-menu-popup-renderer [hidden] *,
+html.winamp-ytm-on ytmusic-menu-service-item-download-renderer [hidden],
+html.winamp-ytm-on ytmusic-menu-service-item-download-renderer #secondary-entry[hidden],
+html.winamp-ytm-on ytmusic-menu-service-item-download-renderer tp-yt-paper-item[hidden],
+html.winamp-ytm-on ytmusic-menu-service-item-download-renderer #secondary-entry:empty,
+html.winamp-ytm-on ytmusic-menu-service-item-download-renderer #secondary-entry:has(yt-formatted-string[is-empty]) {
   display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  height: 0 !important;
+  max-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  position: absolute !important;
 }
 
 /* Menu Item Hover / Active / Focus: Signature Winamp Royal Blue Selection Bar */
-html.winamp-ytm-on tp-yt-paper-listbox > ytmusic-menu-navigation-item-renderer:hover,
-html.winamp-ytm-on tp-yt-paper-listbox > ytmusic-menu-service-item-renderer:hover,
-html.winamp-ytm-on tp-yt-paper-listbox > ytmusic-toggle-menu-service-item-renderer:hover,
-html.winamp-ytm-on tp-yt-paper-listbox > ytmusic-menu-service-item-download-renderer:hover,
-html.winamp-ytm-on tp-yt-paper-listbox > ytd-compact-link-renderer:hover,
-html.winamp-ytm-on tp-yt-paper-listbox > ytd-menu-service-item-renderer:hover,
-html.winamp-ytm-on ytmusic-menu-popup-renderer tp-yt-paper-item:hover,
-html.winamp-ytm-on tp-yt-paper-listbox > [role="menuitem"]:hover,
-html.winamp-ytm-on tp-yt-paper-listbox > *:hover {
+html.winamp-ytm-on tp-yt-paper-listbox > ytmusic-menu-navigation-item-renderer:not([hidden]):hover,
+html.winamp-ytm-on tp-yt-paper-listbox > ytmusic-menu-service-item-renderer:not([hidden]):hover,
+html.winamp-ytm-on tp-yt-paper-listbox > ytmusic-toggle-menu-service-item-renderer:not([hidden]):hover,
+html.winamp-ytm-on tp-yt-paper-listbox > ytmusic-menu-service-item-download-renderer:not([hidden]):hover,
+html.winamp-ytm-on tp-yt-paper-listbox > ytd-compact-link-renderer:not([hidden]):hover,
+html.winamp-ytm-on tp-yt-paper-listbox > ytd-menu-service-item-renderer:not([hidden]):hover,
+html.winamp-ytm-on tp-yt-paper-listbox > tp-yt-paper-item:not([hidden]):hover,
+html.winamp-ytm-on tp-yt-paper-listbox > [role="menuitem"]:not([hidden]):hover,
+html.winamp-ytm-on tp-yt-paper-listbox > *:not([hidden]):hover {
   background: var(--wa-playlist-selected, #0000c6) !important;
   color: #ffffff !important;
   box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.35),
